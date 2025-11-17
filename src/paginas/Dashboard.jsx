@@ -87,7 +87,7 @@ const Dashboard = () => {
             {/* Header de bienvenida */}
             <div className="space-y-2">
                 <h1 className="text-3xl md:text-4xl font-bold text-slate-900">
-                    ¡Bienvenido, {auth?.nombre}! 👋
+                    ¡Bienvenido, {auth?.nombre}!
                 </h1>
                 <p className="text-muted-foreground text-lg">
                     Panel de control de tu clínica veterinaria
