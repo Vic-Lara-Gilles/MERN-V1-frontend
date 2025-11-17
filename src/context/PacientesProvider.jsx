@@ -55,7 +55,7 @@ export const PacientesProvider = ({children}) => {
                 
                 setPacientes([pacienteAlmacenado, ...pacientes])
             } catch (error) {
-                console.log(error.response.data.msg)
+                console.log(error.response?.data?.msg || error.message)
                 
             }
         } 

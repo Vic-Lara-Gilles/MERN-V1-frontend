@@ -25,7 +25,7 @@ const AuthProvider = ({children}) => {
                 const { data } = await clienteAxios('/veterinarios/perfil', config)
                 setAuth(data)
             } catch (error) {
-                console.log(error.response.data.msg)
+                console.log(error.response?.data?.msg || error.message)
                 setAuth({})
             }
 
@@ -62,7 +62,7 @@ const AuthProvider = ({children}) => {
             }
         } catch (error) {
             return {
-                msg: error.response.data.msg,
+                msg: error.response?.data?.msg || error.message,
                 error: true,
             }
         }
@@ -92,7 +92,7 @@ const AuthProvider = ({children}) => {
             }
         } catch (error) {
             return{
-                msg: error.response.data.msg,
+                msg: error.response?.data?.msg || error.message,
                 error: true
             }
         }
