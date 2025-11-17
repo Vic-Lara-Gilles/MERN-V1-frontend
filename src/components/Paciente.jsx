@@ -1,4 +1,8 @@
 import usePacientes from "../hooks/usePacientes"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Edit, Trash2, Calendar, Weight, Ruler, Cake, User, Phone, Mail, MapPin, FileText } from "lucide-react"
 
 const Paciente = ({paciente}) => {
 
@@ -55,99 +59,129 @@ const Paciente = ({paciente}) => {
     };
 
     return (
-        <div className="mx-10 my-10 bg-gray-200 bg-opacity-50 shadow-md rounded px-7 py-5 ">
+        <Card className="hover:shadow-lg transition-shadow">
+            <CardHeader className="pb-4">
+                <div className="flex items-start justify-between">
+                    <div className="space-y-1">
+                        <CardTitle className="text-2xl">{nombre}</CardTitle>
+                        <div className="flex gap-2 flex-wrap">
+                            <Badge variant="outline">{especie}</Badge>
+                            <Badge variant="secondary">{sexo}</Badge>
+                            <Badge variant="outline">{raza}</Badge>
+                        </div>
+                    </div>
+                    <div className="flex gap-2">
+                        <Button 
+                            size="icon" 
+                            variant="outline"
+                            onClick={() => setEdicion(paciente)}
+                        >
+                            <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button 
+                            size="icon" 
+                            variant="destructive"
+                            onClick={() => eliminarPaciente(_id)}
+                        >
+                            <Trash2 className="h-4 w-4" />
+                        </Button>
+                    </div>
+                </div>
+            </CardHeader>
             
-            <div className="flex justify-center pb-5 mx-3">
-                <h1 className="text-gray-700 font-bold text-xl uppercase">Datos Mascota</h1>
-            </div>
+            <CardContent className="space-y-6">
+                {/* Datos de la Mascota */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-3">
+                        <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">Datos de la Mascota</h3>
+                        <div className="space-y-2">
+                            <div className="flex items-center gap-2 text-sm">
+                                <Weight className="h-4 w-4 text-muted-foreground" />
+                                <span className="font-medium">Peso:</span>
+                                <span className="text-muted-foreground">{peso} Kg</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm">
+                                <Ruler className="h-4 w-4 text-muted-foreground" />
+                                <span className="font-medium">Altura:</span>
+                                <span className="text-muted-foreground">{altura} Cm</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm">
+                                <Cake className="h-4 w-4 text-muted-foreground" />
+                                <span className="font-medium">Edad:</span>
+                                <span className="text-muted-foreground">{calcularAños(fechaNac)} años, {calcularMeses(fechaNac)} meses</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm">
+                                <Calendar className="h-4 w-4 text-muted-foreground" />
+                                <span className="font-medium">Fecha Nac.:</span>
+                                <span className="text-muted-foreground">{formatearFecha(fechaNac)}</span>
+                            </div>
+                        </div>
+                    </div>
 
-            <div>
-                <div class="flex flex-col p-3 bg-gray-100  rounded mx-3 mb-6">
-                    <p className="font-bold text-gray-800 uppercase ml-4 my-2">Nombre : {' '}
-                        <span className="font-normal text-black normal-case">{nombre}</span>
-                    </p>
-                    <p className="font-bold text-gray-800 uppercase ml-4 my-2">Especie :{' '}
-                        <span className="font-normal text-black normal-case">{especie}</span>
-                    </p>
-                    <p className="font-bold text-gray-800 uppercase ml-4 my-2">Sexo :{' '}
-                        <span className="font-normal text-black normal-case">{sexo}</span>
-                    </p>
-                    <p className="font-bold text-gray-800 uppercase ml-4 my-2">peso :{' '}
-                        <span className="font-normal text-black normal-case">{peso} Kg</span>
-                    </p>
-                    <p className="font-bold text-gray-800 uppercase ml-4 my-2">edad :{' '}
-                        <span className="font-normal text-black normal-case">{calcularAños(fechaNac)} Años  /  {calcularMeses(fechaNac)} meses</span>
-                    </p>
-
-                    <p className="font-bold text-gray-800 uppercase ml-4 my-2">Raza :{' '}
-                        <span className="font-normal text-black normal-case">{raza}</span>
-                    </p>
-
-                    <p className="font-bold text-gray-800 uppercase ml-4 my-2">altura :{' '}
-                        <span className="font-normal text-black normal-case">{altura} Cm</span>
-                    </p>
-                    <p className="font-bold text-gray-800 uppercase ml-4 my-2">Fecha Nac :{' '}
-                        <span className="font-normal text-black normal-case">{formatearFecha(fechaNac)}</span>
-                    </p>
+                    {/* Historial Clínico */}
+                    <div className="space-y-3">
+                        <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">Historial Clínico</h3>
+                        <div className="space-y-2">
+                            <div className="flex items-center gap-2 text-sm">
+                                <Calendar className="h-4 w-4 text-muted-foreground" />
+                                <span className="font-medium">Ingreso:</span>
+                                <span className="text-muted-foreground">{formatearFecha(fechaIngreso)}</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm">
+                                <Calendar className="h-4 w-4 text-muted-foreground" />
+                                <span className="font-medium">Alta:</span>
+                                <span className="text-muted-foreground">{formatearFecha(fechaAlta)}</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div className="flex flex-col p-3 bg-gray-100  rounded mx-3 mb-6">
-                    <p className="font-bold  justify-center text-gray-800 uppercase ml-4 my-2">Fecha Ingreso:{' '}
-                        <span className="font-normal text-black normal-case">{formatearFecha(fechaIngreso)}</span>
-                    </p>
-                    <p className="font-bold justify-center text-gray-800 uppercase ml-4 my-2">Fecha de Alta:{' '}
-                        <span className="font-normal text-black normal-case">{formatearFecha(fechaAlta)}</span>
-                    </p>
-                </div> 
-            </div>
+                {/* Síntomas */}
+                {sintomas && (
+                    <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                            <FileText className="h-4 w-4 text-muted-foreground" />
+                            <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">Síntomas</h3>
+                        </div>
+                        <p className="text-sm text-muted-foreground bg-muted p-3 rounded-md">{sintomas}</p>
+                    </div>
+                )}
 
-            <div className="flex flex-row bg-gray-100  rounded mx-3 mb-6">
-                <p className="font-bold text-gray-800 ml-6 uppercase  mb-10 my-2">Sintomas:{' '}
-                    <span className="font-normal text-black normal-case">{sintomas}</span>
-                </p>
-            </div>
-
-            <div className="flex flex-row justify-center pb-5 mx-3">
-                <h1 className="text-black font-bold text-xl uppercase">Datos Propietario</h1>
-            </div>
-
-            <div className=" bg-gray-100 py-1 pl-3 mx-3 rounded">
-                    <p className="font-bold text-gray-800 uppercase ml-3 pt-3 my-4">Propietario:{' '}
-                        <span className="font-normal text-black normal-case">{propietario}</span>
-                    </p>
-
-                    <p className="font-bold text-gray-800 uppercase ml-3 my-6">Run:{' '}
-                        <span className="font-normal text-black normal-case">{run}</span>
-                    </p>
-                
-                    <p className="font-bold text-gray-800 ml-3 my-6 uppercase">Telefono:{' '}
-                        <span className="font-normal text-black normal-case">{telefono}</span>
-                    </p>
-
-                    <p className="font-bold text-gray-800 ml-3 my-6 uppercase">Email:{' '}
-                        <span className="font-normal text-black normal-case">{email}</span>
-                    </p>
-
-                    <p className="font-bold text-gray-800 uppercase ml-3 my-6">Domicilio:{' '}
-                        <span className="font-normal text-black normal-case">{domicilio}</span>
-                    </p>
-                
-            </div>
-
-            <div className="flex mt-5 py-2 pl-3 justify-between">
-                <button
-                    type="button"
-                    className="py-3 px-10 bg-black text-lime-400 hover:bg-sky-500 hover:text-white uppercase font-semibold rounded transition-colors duration-300"
-                    onClick={() => setEdicion(paciente)}
-                >Editar</button>
-
-                <button
-                    type="button"
-                    className=" py-3 px-10 bg-black text-lime-400 mr-2 hover:bg-red-500 hover:text-white uppercase font-semibold rounded transition-colors duration-300"
-                    onClick={() => eliminarPaciente(_id)}
-                >Eliminar</button>
-            </div>
-        </div>
+                {/* Datos del Propietario */}
+                <div className="space-y-3 pt-4 border-t">
+                    <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">Datos del Propietario</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div className="flex items-center gap-2 text-sm">
+                            <User className="h-4 w-4 text-muted-foreground" />
+                            <span className="font-medium">Nombre:</span>
+                            <span className="text-muted-foreground">{propietario}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm">
+                            <FileText className="h-4 w-4 text-muted-foreground" />
+                            <span className="font-medium">RUN:</span>
+                            <span className="text-muted-foreground">{run}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm">
+                            <Phone className="h-4 w-4 text-muted-foreground" />
+                            <span className="font-medium">Teléfono:</span>
+                            <span className="text-muted-foreground">{telefono}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm">
+                            <Mail className="h-4 w-4 text-muted-foreground" />
+                            <span className="font-medium">Email:</span>
+                            <span className="text-muted-foreground truncate">{email}</span>
+                        </div>
+                        <div className="flex items-start gap-2 text-sm md:col-span-2">
+                            <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
+                            <div className="flex-1">
+                                <span className="font-medium">Domicilio:</span>
+                                <span className="text-muted-foreground ml-2">{domicilio}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
     )
 }
 
