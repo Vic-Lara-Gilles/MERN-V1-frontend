@@ -1,13 +1,43 @@
 import { useState } from "react"
 import Formulario from "../components/Formulario"
 import ListadoPacientes from "../components/ListadoPacientes"
+import DashboardAdmin from "../components/DashboardAdmin"
+import DashboardVeterinario from "../components/DashboardVeterinario"
+import DashboardRecepcion from "../components/DashboardRecepcion"
+import useAuth from "../hooks/useAuth"
 import { Button } from "@/components/ui/button"
 import { PlusCircle, MinusCircle } from "lucide-react"
 
 const AdministrarPacientes = () => {
-
+    const { auth, esAdmin, esVeterinario, esRecepcion } = useAuth()
     const [mostrarFormulario, setMostrarFormulario] = useState(false)
 
+    // Mostrar dashboard específico según el rol
+    if (esAdmin()) {
+        return (
+            <div className="p-6">
+                <DashboardAdmin />
+            </div>
+        )
+    }
+
+    if (esVeterinario()) {
+        return (
+            <div className="p-6">
+                <DashboardVeterinario />
+            </div>
+        )
+    }
+
+    if (esRecepcion()) {
+        return (
+            <div className="p-6">
+                <DashboardRecepcion />
+            </div>
+        )
+    }
+
+    // Fallback: vista original de pacientes (por si hay otros roles en el futuro)
     return (
         <div className="flex flex-col md:flex-row gap-6 p-6">
             <Button
