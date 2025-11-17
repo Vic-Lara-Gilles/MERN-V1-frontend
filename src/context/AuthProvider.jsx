@@ -22,7 +22,8 @@ const AuthProvider = ({children}) => {
                 }
             }
             try {
-                const { data } = await clienteAxios('/veterinarios/perfil', config)
+                // Cambiar endpoint de veterinarios a usuarios
+                const { data } = await clienteAxios('/usuarios/perfil', config)
                 setAuth(data)
             } catch (error) {
                 console.log(error.response?.data?.msg || error.message)
@@ -54,8 +55,9 @@ const AuthProvider = ({children}) => {
         }
 
         try {
-            const url =`/veterinarios/perfil/${datos._id}`
-            const { data } = await clienteAxios.put(url, datos, config) // esto cambie ( data por datos )
+            // Cambiar endpoint de veterinarios a usuarios
+            const url =`/usuarios/perfil/${datos._id}`
+            const { data } = await clienteAxios.put(url, datos, config)
             
             return {
                 msg: 'Almacenado Correcto'
@@ -82,7 +84,8 @@ const AuthProvider = ({children}) => {
             }
         }
         try {
-            const url = '/veterinarios/actualizar-password'
+            // Cambiar endpoint de veterinarios a usuarios
+            const url = '/usuarios/actualizar-password'
 
             const { data } = await clienteAxios.put(url, datos, config)
             console.log(data)
@@ -98,6 +101,17 @@ const AuthProvider = ({children}) => {
         }
     }
 
+    // Función helper para verificar roles
+    const tieneRol = (rolesPermitidos) => {
+        if (!auth?.rol) return false
+        return rolesPermitidos.includes(auth.rol)
+    }
+
+    const esAdmin = () => tieneRol(['admin'])
+    const esVeterinario = () => tieneRol(['veterinario', 'admin'])
+    const esRecepcion = () => tieneRol(['recepcion', 'admin'])
+    const esPersonal = () => tieneRol(['admin', 'veterinario', 'recepcion'])
+
     return(
         <AuthContext.Provider
             value={{
@@ -107,6 +121,11 @@ const AuthProvider = ({children}) => {
                 cerrarSesion,
                 guardarPassword,
                 actualizarPerfil,
+                tieneRol,
+                esAdmin,
+                esVeterinario,
+                esRecepcion,
+                esPersonal,
             }}
         >
             {children}
