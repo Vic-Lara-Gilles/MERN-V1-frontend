@@ -1,11 +1,22 @@
 import { Link, useLocation } from "react-router-dom"
 import useAuth from "../hooks/useAuth"
 import { Button } from "@/components/ui/button"
-import { LogOut, Users, KeyRound, UserCog, LayoutDashboard } from "lucide-react"
+import { 
+    LogOut, 
+    Users, 
+    KeyRound, 
+    UserCog, 
+    LayoutDashboard,
+    UserCheck,
+    PawPrint,
+    Calendar,
+    FileText,
+    BarChart3
+} from "lucide-react"
 
 const Header = () => {
 
-    const { cerrarSesion } = useAuth()
+    const { cerrarSesion, auth, esAdmin, esVeterinario, esRecepcion } = useAuth()
     const location = useLocation()
 
     const isActive = (path) => location.pathname === path
@@ -21,11 +32,16 @@ const Header = () => {
                         </div>
                         <div>
                             <h1 className="text-xl font-bold text-foreground">Veterinaria</h1>
-                            <p className="text-sm text-muted-foreground">Gestión de Pacientes</p>
+                            <p className="text-sm text-muted-foreground">
+                                {esAdmin() && "Panel de Administración"}
+                                {esVeterinario() && "Panel Veterinario"}
+                                {esRecepcion() && "Panel de Recepción"}
+                            </p>
                         </div>
                     </div>
                     
                     <nav className="flex flex-wrap justify-center items-center gap-2">
+                        {/* Dashboard - Todos */}
                         <Button 
                             variant={isActive("/admin") ? "default" : "ghost"}
                             size="sm"
@@ -37,17 +53,87 @@ const Header = () => {
                             </Link>
                         </Button>
 
+                        {/* Usuarios - Solo Admin */}
+                        {esAdmin() && (
+                            <Button 
+                                variant={isActive("/admin/usuarios") ? "default" : "ghost"}
+                                size="sm"
+                                asChild
+                            >
+                                <Link to="/admin/usuarios" className="gap-2">
+                                    <Users className="h-4 w-4" />
+                                    Usuarios
+                                </Link>
+                            </Button>
+                        )}
+
+                        {/* Clientes - Admin y Recepción */}
+                        {(esAdmin() || esRecepcion()) && (
+                            <Button 
+                                variant={isActive("/admin/clientes") ? "default" : "ghost"}
+                                size="sm"
+                                asChild
+                            >
+                                <Link to="/admin/clientes" className="gap-2">
+                                    <UserCheck className="h-4 w-4" />
+                                    Clientes
+                                </Link>
+                            </Button>
+                        )}
+
+                        {/* Pacientes - Todos */}
                         <Button 
                             variant={isActive("/admin/pacientes") ? "default" : "ghost"}
                             size="sm"
                             asChild
                         >
                             <Link to="/admin/pacientes" className="gap-2">
-                                <Users className="h-4 w-4" />
+                                <PawPrint className="h-4 w-4" />
                                 Pacientes
                             </Link>
                         </Button>
 
+                        {/* Citas - Todos */}
+                        <Button 
+                            variant={isActive("/admin/citas") ? "default" : "ghost"}
+                            size="sm"
+                            asChild
+                        >
+                            <Link to="/admin/citas" className="gap-2">
+                                <Calendar className="h-4 w-4" />
+                                Citas
+                            </Link>
+                        </Button>
+
+                        {/* Consultas - Admin y Veterinarios */}
+                        {(esAdmin() || esVeterinario()) && (
+                            <Button 
+                                variant={isActive("/admin/consultas") ? "default" : "ghost"}
+                                size="sm"
+                                asChild
+                            >
+                                <Link to="/admin/consultas" className="gap-2">
+                                    <FileText className="h-4 w-4" />
+                                    Consultas
+                                </Link>
+                            </Button>
+                        )}
+
+                        {/* Reportes - Admin y Veterinarios */}
+                        {(esAdmin() || esVeterinario()) && (
+                            <Button 
+                                variant={isActive("/admin/reportes") ? "default" : "ghost"}
+                                size="sm"
+                                asChild
+                            >
+                                <Link to="/admin/reportes" className="gap-2">
+                                    <BarChart3 className="h-4 w-4" />
+                                    Reportes
+                                </Link>
+                            </Button>
+                        )}
+
+                        {/* Perfil - Todos */}
                         <Button 
                             variant={isActive("/admin/perfil") ? "default" : "ghost"}
                             size="sm"
@@ -59,6 +145,7 @@ const Header = () => {
                             </Link>
                         </Button>
 
+                        {/* Cambiar Contraseña - Todos */}
                         <Button 
                             variant={isActive("/admin/cambiar-password") ? "default" : "ghost"}
                             size="sm"
@@ -70,6 +157,7 @@ const Header = () => {
                             </Link>
                         </Button>
                         
+                        {/* Salir - Todos */}
                         <Button
                             variant="destructive"
                             size="sm"
