@@ -1,18 +1,33 @@
 import { useState } from "react"
 import Formulario from "../components/Formulario"
 import ListadoPacientes from "../components/ListadoPacientes"
+import { Button } from "@/components/ui/button"
+import { PlusCircle, MinusCircle } from "lucide-react"
 
 const AdministrarPacientes = () => {
 
     const [mostrarFormulario, setMostrarFormulario] = useState(false)
 
     return (
-        <div className="flex flex-col md:flex-row">
-            <button
+        <div className="flex flex-col md:flex-row gap-6 p-6">
+            <Button
                 type="button"
-                className="bg-black mx-10 p-4 mb-10 md:hidden text-sm text-lime-300 inline-flex items-center justify-center rounded-md hover:bg-lime-400 hover:text-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white uppercase font-bold transition-colors duration-300"
+                className="md:hidden mb-4 h-12 text-base font-semibold gap-2"
+                variant={mostrarFormulario ? "outline" : "default"}
                 onClick={() => setMostrarFormulario(!mostrarFormulario)}
-            >{mostrarFormulario ? 'Ocultar Formulario': 'Mostrar Formulario'}</button>
+            >
+                {mostrarFormulario ? (
+                    <>
+                        <MinusCircle className="h-5 w-5" />
+                        Ocultar Formulario
+                    </>
+                ) : (
+                    <>
+                        <PlusCircle className="h-5 w-5" />
+                        Nuevo Paciente
+                    </>
+                )}
+            </Button>
 
             <div className={`${mostrarFormulario ? 'block':'hidden' } md:block md:w-1/2 lg:w-2/5`}>
                 <Formulario />
