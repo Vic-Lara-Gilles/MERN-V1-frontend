@@ -2,6 +2,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Alerta from '../components/Alerta';
 import clienteAxios from "../config/axios";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 
 const OlvidePassword = () => {
@@ -31,53 +35,61 @@ const OlvidePassword = () => {
 
     return (
         <>
-            <div>
-                <h1 className="text-slate-600 font-black text-6xl">
-                    Recupera tu acceso y no pierdas {""}
-                    <span className="text-black"> tus Paciente</span>
+            <div className="space-y-2">
+                <h1 className="text-5xl md:text-6xl font-bold bg-linear-to-r from-slate-900 via-slate-600 to-slate-900 bg-clip-text text-transparent">
+                    ¿Olvidaste tu contraseña?
                 </h1>
+                <p className="text-xl text-muted-foreground">
+                    Recupera tu acceso y sigue administrando tus <span className="font-semibold text-slate-900">pacientes</span>
+                </p>
             </div>
             
-            <div className="mt-20 md:mt-5 shadow-lg px-5 py-10 my-20 rounded bg-slate-500 opacity-[94%]">
-                { msg && <Alerta
-                    alerta={alerta}
-                />}
-                <form
-                    onSubmit={handleSubmit}
-                >
-                    <div className="my-5">
-                        <label 
-                            className="uppercase text-white text-xl font-bold"
+            <Card className="w-full shadow-2xl border-0 bg-linear-to-br from-white to-slate-50">
+                <CardHeader className="space-y-1">
+                    <CardTitle className="text-2xl font-bold">Recuperar Contraseña</CardTitle>
+                    <CardDescription>
+                        Ingresa tu email para recibir instrucciones
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    { msg && <Alerta alerta={alerta} />}
+                    
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="email">Email</Label>
+                            <Input 
+                                id="email"
+                                type="email"
+                                placeholder="tu@email.com"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                                className="h-11"
+                            />
+                        </div>
+
+                        <Button 
+                            type="submit"
+                            className="w-full h-11 text-base font-semibold"
+                            size="lg"
                         >
-                            Email
-                        </label>
-                        <input 
-                            type="email"
-                            placeholder="Email de Registro"
-                            className="border w-full p-3 py-3 mt-3 bg-gray-50 rounded"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                        />
-                    </div>
+                            Enviar Instrucciones
+                        </Button>
 
-                    <input 
-                        type="submit"
-                        value="Enviar Intrucciones"
-                        className="bg-slate-800 w-full py-3  px-10 rounded text-white 
-                        uppercase font-bold mt-5 hover:cursor-pointer 
-                        hover:bg-indigo-800 md:w-auto"                
-                    />
-                </form>
-
-                <nav className="mt-10 lg:flex lg:justify-between">
-                    <Link
-                        className="block text-center my-5 text-white"
-                        to="/">¿Ya tienes una cuenta? Inicia Seción</Link>
-                    <Link 
-                        className="block text-center my-5 text-white"
-                        to="/registrar">¿No tienes cuenta? Regístrate</Link>
-                </nav>
-            </div>
+                        <div className="flex flex-col gap-3 mt-6 pt-6 border-t">
+                            <Link
+                                className="text-sm text-center text-muted-foreground hover:text-primary transition-colors"
+                                to="/">
+                                ¿Ya tienes una cuenta? <span className="font-semibold text-primary">Inicia sesión</span>
+                            </Link>
+                            <Link 
+                                className="text-sm text-center text-muted-foreground hover:text-primary transition-colors"
+                                to="/registrar">
+                                ¿No tienes cuenta? <span className="font-semibold text-primary">Regístrate</span>
+                            </Link>
+                        </div>
+                    </form>
+                </CardContent>
+            </Card>
         </>
     );
 };

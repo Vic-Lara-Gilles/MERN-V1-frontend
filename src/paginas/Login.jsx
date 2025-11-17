@@ -3,10 +3,12 @@ import { Link, useNavigate } from "react-router-dom"
 import Alerta from "../components/Alerta";
 import useAuth from "../hooks/useAuth"
 import clienteAxios from "../config/axios";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const Login = () => {
-
-    
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -44,63 +46,73 @@ const Login = () => {
     const { msg } = alerta
     return (
         <>
-            <div>
-                <h1 className="text-slate-700 font-black text-6xl">
-                    Inicia  Sesión y Administra tus <span className="text-black"> Pacientes</span>
+            <div className="space-y-2">
+                <h1 className="text-5xl md:text-6xl font-bold bg-linear-to-r from-slate-900 via-slate-700 to-slate-900 bg-clip-text text-transparent">
+                    Bienvenido de nuevo
                 </h1>
+                <p className="text-xl text-muted-foreground">
+                    Inicia sesión para administrar tus <span className="font-semibold text-slate-900">pacientes</span>
+                </p>
             </div>
 
-            <div className="mt-20 md:mt-5 shadow-lg px-5 py-10 rounded bg-slate-500 opacity-[94%]">
-                { msg && <Alerta
-                    alerta={alerta}
-                />}
+            <Card className="w-full shadow-2xl border-0 bg-linear-to-br from-white to-slate-50">
+                <CardHeader className="space-y-1">
+                    <CardTitle className="text-2xl font-bold">Iniciar Sesión</CardTitle>
+                    <CardDescription>
+                        Ingresa tus credenciales para acceder a tu cuenta
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    { msg && <Alerta alerta={alerta} />}
 
-                <form onSubmit={handleSubmit}>
-                    <div className="my-5">
-                        <label 
-                            className="uppercase text-white text-xl font-bold"
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="email">Email</Label>
+                            <Input 
+                                id="email"
+                                type="email"
+                                placeholder="tu@email.com"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                                className="h-11"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="password">Contraseña</Label>
+                            <Input 
+                                id="password"
+                                type="password"
+                                placeholder="••••••••"
+                                value={password}
+                                onChange={e => setPassword(e.target.value)}
+                                className="h-11"
+                            />
+                        </div>
+                        <Button 
+                            type="submit"
+                            className="w-full h-11 text-base font-semibold"
+                            size="lg"
                         >
-                            Email
-                        </label>
-                        <input 
-                            type="email"
-                            placeholder="Email de Registro"
-                            className="border w-full p-3 mt-3 bg-gray-50 rounded"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                        />
-                    </div>
-                    <div className="my-5">
-                        <label 
-                            className="uppercase text-white text-xl font-bold"
-                        >
-                            Password
-                        </label>
-                        <input 
-                            type="password"
-                            placeholder="Tu Password"
-                            className="border w-full p-3 mt-3 bg-gray-50 rounded"
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                        />
-                    </div>
-                    <input 
-                        type="submit"
-                        value="Iniciar Sesión"
-                        className="bg-slate-700 w-full rounded py-3 px-10  text-white uppercase font-bold mt-5 hover:cursor-pointer hover:bg-slate-600 md:w-auto"                
-                    />
-                    <nav className="mt-10 lg:flex lg:justify-between">
-                        <Link
-                            className="block text-center my-5 text-white"
-                            to="/registrar">¿No tienes cuenta? Regístrate</Link>
+                            Iniciar Sesión
+                        </Button>
                         
-                        <Link
-                            className="block text-center my-5 text-white"
-                            to="/olvide-password">Olvide mi Password</Link>
-                    </nav>
-                </form>
-            </div>
-        </ >
+                        <div className="flex flex-col gap-3 mt-6 pt-6 border-t">
+                            <Link
+                                className="text-sm text-center text-muted-foreground hover:text-primary transition-colors"
+                                to="/registrar">
+                                ¿No tienes cuenta? <span className="font-semibold text-primary">Regístrate</span>
+                            </Link>
+                            
+                            <Link
+                                className="text-sm text-center text-muted-foreground hover:text-primary transition-colors"
+                                to="/olvide-password">
+                                ¿Olvidaste tu contraseña?
+                            </Link>
+                        </div>
+                    </form>
+                </CardContent>
+            </Card>
+        </>
     );
 };
 

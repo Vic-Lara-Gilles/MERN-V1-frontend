@@ -2,6 +2,10 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import clienteAxios from '../config/axios'
 import Alerta  from '../components/Alerta'
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 
 const Resgistrar = () => {
@@ -49,92 +53,94 @@ const Resgistrar = () => {
 
     return (
         <>
-            <div>
-                <h1  className="text-sky-800 font-black text-6xl">
-                    Crea tu cuenta y Aministra {""}
-                    <span className="text-black"> tus Pacientes</span>
+            <div className="space-y-2">
+                <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-900 via-sky-700 to-blue-900 bg-clip-text text-transparent">
+                    Únete a nosotros
                 </h1>
+                <p className="text-xl text-muted-foreground">
+                    Crea tu cuenta y administra tus <span className="font-semibold text-slate-900">pacientes</span>
+                </p>
             </div>
 
-            <div className="mt-20 md:mt-5 shadow-lg px-5 py-10 rounded bg-slate-500 opacity-[94%]">
-                { msg && <Alerta
-                    alerta={alerta}
-                />}
-                <form
-                    onSubmit={handleSumit}
-                >
-                    <div className="my-5">
-                        <label 
-                            className="uppercase text-white text-xl font-bold"
-                        >
-                            Nombre
-                        </label>
-                        <input 
-                            type="text"
-                            placeholder="Tu Nombre"
-                            className="border w-full p-3 mt-3 bg-gray-50 rounded"
-                            value={nombre}
-                            onChange={ e => setNombre(e.target.value)}
-                        />
-                    </div>
-                    <div className="my-5">
-                        <label 
-                            className="uppercase text-white text-xl font-bold"
-                        >
-                            Email
-                        </label>
-                        <input 
-                            type="email"
-                            placeholder="Email de Registro"
-                            className="border w-full p-3 mt-3 bg-gray-50 rounded"
-                            value={email}
-                            onChange={ e => setEmail(e.target.value)}
-                        />
-                    </div>
-                    <div className="my-5">
-                        <label 
-                            className="uppercase text-white text-xl font-bold"
-                        >
-                            Password
-                        </label>
-                        <input 
-                            type="password"
-                            placeholder="Password"
-                            className="border w-full p-3 mt-3 bg-gray-50 rounded"
-                            value={password}
-                            onChange={ e => setPassword(e.target.value)}
-                        />
-                    </div>
-                    <div className="my-5">
-                        <label 
-                            className="uppercase text-white text-xl font-bold"
-                        >
-                            Repetir Password
-                        </label>
-                        <input 
-                            type="password"
-                            placeholder="Repetir password"
-                            className="border w-full p-3 mt-3 bg-gray-50 rounded"
-                            value={repetirPassword}
-                            onChange={ e => setRepetirPassword(e.target.value)}
-                        />
-                    </div>
+            <Card className="w-full shadow-2xl border-0 bg-gradient-to-br from-white to-slate-50">
+                <CardHeader className="space-y-1">
+                    <CardTitle className="text-2xl font-bold">Crear Cuenta</CardTitle>
+                    <CardDescription>
+                        Completa tus datos para registrarte
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    { msg && <Alerta alerta={alerta} />}
+                    
+                    <form onSubmit={handleSumit} className="space-y-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="nombre">Nombre completo</Label>
+                            <Input 
+                                id="nombre"
+                                type="text"
+                                placeholder="Juan Pérez"
+                                value={nombre}
+                                onChange={ e => setNombre(e.target.value)}
+                                className="h-11"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="email">Email</Label>
+                            <Input 
+                                id="email"
+                                type="email"
+                                placeholder="tu@email.com"
+                                value={email}
+                                onChange={ e => setEmail(e.target.value)}
+                                className="h-11"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="password">Contraseña</Label>
+                            <Input 
+                                id="password"
+                                type="password"
+                                placeholder="••••••••"
+                                value={password}
+                                onChange={ e => setPassword(e.target.value)}
+                                className="h-11"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="repetirPassword">Repetir contraseña</Label>
+                            <Input 
+                                id="repetirPassword"
+                                type="password"
+                                placeholder="••••••••"
+                                value={repetirPassword}
+                                onChange={ e => setRepetirPassword(e.target.value)}
+                                className="h-11"
+                            />
+                        </div>
 
-                    <input 
-                    type="submit"
-                    value="Crear Cuenta"
-                    className="bg-slate-800 w-full py-3 px-10 rounded text-white uppercase font-bold mt-5 hover:cursor-pointer hover:bg-slate-600 md:w-auto"                
-                    />
-                </form>
-                <nav className="mt-10 lg:flex lg:justify-between">
-                    <Link
-                        className="block text-center my-5 text-white"
-                        to="/">¿Ya tienes una cuenta? Inicia Sección</Link>
-                    <Link 
-                        className="block text-center my-5 text-white"
-                        to="/olvide-password">Olvide mi Password</Link>
-                </nav>
-            </div>
+                        <Button 
+                            type="submit"
+                            className="w-full h-11 text-base font-semibold"
+                            size="lg"
+                        >
+                            Crear Cuenta
+                        </Button>
+                        
+                        <div className="flex flex-col gap-3 mt-6 pt-6 border-t">
+                            <Link
+                                className="text-sm text-center text-muted-foreground hover:text-primary transition-colors"
+                                to="/">
+                                ¿Ya tienes una cuenta? <span className="font-semibold text-primary">Inicia sesión</span>
+                            </Link>
+                            <Link 
+                                className="text-sm text-center text-muted-foreground hover:text-primary transition-colors"
+                                to="/olvide-password">
+                                ¿Olvidaste tu contraseña?
+                            </Link>
+                        </div>
+                    </form>
+                </CardContent>
+            </Card>
         </>
     );
 };
