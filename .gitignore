@@ -46,3 +46,4 @@ frontend/.vite/
 .idea/
 *.swp
 *.swo
+dist/
