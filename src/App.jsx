@@ -7,6 +7,7 @@ import Registrar from './paginas/Registrar'
 import OlvidePassword from './paginas/OlvidePassword'
 import ConfirmarCuenta from './paginas/ConfirmarCuenta'
 import NuevoPassword from './paginas/NuevoPassword'
+import Dashboard from './paginas/Dashboard'
 import AdministrarPacientes from './paginas/AdministrarPacientes'
 import EditarPerfil from './paginas/EditarPerfil'
 import CambiarPassword from './paginas/CambiarPassword'
@@ -31,7 +32,8 @@ function App() {
                         </Route>
 
                         <Route path= "/admin" element={<RutaProtegida />}>
-                            <Route index element={<AdministrarPacientes />} />
+                            <Route index element={<Dashboard />} />
+                            <Route path="pacientes" element={<AdministrarPacientes />} />
                             <Route path="perfil" element={<EditarPerfil />} />
                             <Route path="cambiar-password" element={<CambiarPassword />} />
                         </Route>

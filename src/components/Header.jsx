@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom"
 import useAuth from "../hooks/useAuth"
 import { Button } from "@/components/ui/button"
-import { LogOut, Users, KeyRound, UserCog } from "lucide-react"
+import { LogOut, Users, KeyRound, UserCog, LayoutDashboard } from "lucide-react"
 
 const Header = () => {
 
@@ -32,6 +32,17 @@ const Header = () => {
                             asChild
                         >
                             <Link to="/admin" className="gap-2">
+                                <LayoutDashboard className="h-4 w-4" />
+                                Dashboard
+                            </Link>
+                        </Button>
+
+                        <Button 
+                            variant={isActive("/admin/pacientes") ? "default" : "ghost"}
+                            size="sm"
+                            asChild
+                        >
+                            <Link to="/admin/pacientes" className="gap-2">
                                 <Users className="h-4 w-4" />
                                 Pacientes
                             </Link>
