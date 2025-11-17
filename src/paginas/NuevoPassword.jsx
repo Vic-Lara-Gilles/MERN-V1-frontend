@@ -51,7 +51,7 @@ const NuevoPassword = () => {
             setPasswordModificado(true)
         } catch (error) {
             setAlerta({
-                msg: error.response.data.msg,
+                msg: error.response?.data?.msg || error.message,
                 error: true
             })
         }

@@ -43,7 +43,7 @@ const Resgistrar = () => {
             })
         } catch (error) {
             setAlerta({
-                msg: error.response.data.msg,
+                msg: error.response?.data?.msg || error.message,
                 error: true
             });
         }
@@ -54,7 +54,7 @@ const Resgistrar = () => {
     return (
         <>
             <div className="space-y-2">
-                <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-900 via-sky-700 to-blue-900 bg-clip-text text-transparent">
+                <h1 className="text-5xl md:text-6xl font-bold bg-linear-to-r from-blue-900 via-sky-700 to-blue-900 bg-clip-text text-transparent">
                     Únete a nosotros
                 </h1>
                 <p className="text-xl text-muted-foreground">
@@ -62,7 +62,7 @@ const Resgistrar = () => {
                 </p>
             </div>
 
-            <Card className="w-full shadow-2xl border-0 bg-gradient-to-br from-white to-slate-50">
+            <Card className="w-full shadow-2xl border-0 bg-linear-to-br from-white to-slate-50">
                 <CardHeader className="space-y-1">
                     <CardTitle className="text-2xl font-bold">Crear Cuenta</CardTitle>
                     <CardDescription>
