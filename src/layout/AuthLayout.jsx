@@ -3,9 +3,11 @@ import { Outlet } from "react-router-dom";
 const AuthLayout = () => {
     return (
         <>
-            <main className="container mx-auto md:grid md:grid-cols-2 mt-12 gap-10 p-5 items-center">
-                <Outlet />
-            </main>
+            <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50">
+                <main className="container mx-auto md:grid md:grid-cols-2 min-h-screen gap-12 p-6 md:p-10 items-center">
+                    <Outlet />
+                </main>
+            </div>
         </>
     )
 };
