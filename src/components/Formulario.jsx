@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react"
 import Alerta from "./Alerta"
 import usePacientes from "../hooks/usePacientes"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { PawPrint, User, Calendar, Save, X } from "lucide-react"
 
 const Formulario = () => {
     const [nombre, setNombre] = useState('')
@@ -88,280 +95,283 @@ const Formulario = () => {
     const { msg } = alerta
 
     return (
-        <>
-            <form
-                className="bg-gray-200 bg-opacity-50 py-7 px-6 mb-10 lg:mb-5 shadow-sm rounded-md"
-                onSubmit={handleSubmit}
-            >
-                
-                <h1 className="px-10 py-3 mb-6 text-gray-800 uppercase font-bold rounded text-center text-xl">Datos De Mascota</h1>
-                
-                <div className="flex flex-row -mx-3 mb-6">
-                    <div className="w-full px-3 mb-6 md:mb-0">
-                        <label
-                            htmlFor="nombre"
-                            className="text-gray-800 uppercase font-bold"
-                        >Nombre</label>
-                        <input 
-                            id="nombre"
-                            type="text"
-                            placeholder="Nombre Mascota"
-                            className="border-2 w-full p-2 mt-2 rounded"
-                            value={nombre}
-                            onChange={e => setNombre(e.target.value)}
-                        />
+        <Card className="shadow-xl border-0 bg-linear-to-br from-white to-slate-50">
+            <CardHeader className="space-y-1 border-b bg-card">
+                <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center">
+                        <PawPrint className="h-6 w-6 text-primary-foreground" />
                     </div>
+                    <div>
+                        <CardTitle className="text-2xl">
+                            {id ? "Editar Paciente" : "Nuevo Paciente"}
+                        </CardTitle>
+                        <CardDescription>
+                            {id ? "Actualiza la información del paciente" : "Registra un nuevo paciente en el sistema"}
+                        </CardDescription>
+                    </div>
+                </div>
+            </CardHeader>
 
-                    <div className="w-full px-3 md:mb-0">
-                        <label 
-                            htmlFor="especie"
-                            className="text-gray-800 uppercase font-bold"
-                        >Especie
-                        </label>
-                        <div className="border-2 w-full p-2 mt-2 bg-white rounded">
-                            <select
-                                className="bg-white "
-                                id="sexo"
-                                value={especie}
-                                onChange={e => setEspecie(e.target.value)}>
-                                // Opciones de Animal
-                                <option>-- Tipo Animal --</option>
-                                <option>Felino</option>
-                                <option>Canina</option>
-                                <option>Ave</option>
-                                <option>Reptil</option>
-                                <option>Peces</option>
-                            </select>
+            <CardContent className="pt-6">
+                <form onSubmit={handleSubmit} className="space-y-8">
+                    {/* Datos de la Mascota */}
+                    <div className="space-y-4">
+                        <div className="flex items-center gap-2 pb-2 border-b">
+                            <PawPrint className="h-5 w-5 text-primary" />
+                            <h3 className="text-lg font-semibold text-foreground">Datos de la Mascota</h3>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="nombre">Nombre de la Mascota</Label>
+                                <Input
+                                    id="nombre"
+                                    type="text"
+                                    placeholder="Ej: Max, Luna, Firulais"
+                                    value={nombre}
+                                    onChange={e => setNombre(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="especie">Especie</Label>
+                                <Select value={especie} onValueChange={setEspecie}>
+                                    <SelectTrigger id="especie">
+                                        <SelectValue placeholder="Selecciona una especie" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="Felino">Felino</SelectItem>
+                                        <SelectItem value="Canina">Canina</SelectItem>
+                                        <SelectItem value="Ave">Ave</SelectItem>
+                                        <SelectItem value="Reptil">Reptil</SelectItem>
+                                        <SelectItem value="Peces">Peces</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="fechaNac">Fecha de Nacimiento</Label>
+                                <Input
+                                    id="fechaNac"
+                                    type="date"
+                                    value={fechaNac}
+                                    onChange={e => setFechaNac(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="sexo">Sexo y Condición</Label>
+                                <Select value={sexo} onValueChange={setSexo}>
+                                    <SelectTrigger id="sexo">
+                                        <SelectValue placeholder="Selecciona el sexo" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="Macho">Macho</SelectItem>
+                                        <SelectItem value="Hembra">Hembra</SelectItem>
+                                        <SelectItem value="Macho Castrado">Macho Castrado</SelectItem>
+                                        <SelectItem value="Hembra Esteril">Hembra Esteril</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="peso">Peso (Kg)</Label>
+                                <Input
+                                    id="peso"
+                                    type="text"
+                                    placeholder="Ej: 15.5"
+                                    value={peso}
+                                    onChange={e => setPeso(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="raza">Raza</Label>
+                                <Input
+                                    id="raza"
+                                    type="text"
+                                    placeholder="Ej: Mestizo, Labrador"
+                                    value={raza}
+                                    onChange={e => setRaza(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="altura">Altura (Cm)</Label>
+                                <Input
+                                    id="altura"
+                                    type="text"
+                                    placeholder="Ej: 45"
+                                    value={altura}
+                                    onChange={e => setAltura(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="fechaIngreso">
+                                    <div className="flex items-center gap-2">
+                                        <Calendar className="h-4 w-4" />
+                                        Fecha de Ingreso
+                                    </div>
+                                </Label>
+                                <Input
+                                    id="fechaIngreso"
+                                    type="date"
+                                    value={fechaIngreso}
+                                    onChange={e => setFechaIngreso(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="fechaAlta">
+                                    <div className="flex items-center gap-2">
+                                        <Calendar className="h-4 w-4" />
+                                        Fecha de Alta
+                                    </div>
+                                </Label>
+                                <Input
+                                    id="fechaAlta"
+                                    type="date"
+                                    value={fechaAlta}
+                                    onChange={e => setFechaAlta(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label htmlFor="sintomas">Síntomas o Motivo de Consulta</Label>
+                            <Textarea
+                                id="sintomas"
+                                placeholder="Describe los síntomas o motivo de la visita..."
+                                className="min-h-[100px] resize-none"
+                                value={sintomas}
+                                onChange={e => setSintomas(e.target.value)}
+                            />
                         </div>
                     </div>
-                </div>
-                
-                <div className="flex flex-row -mx-3 mb-6">
-                    <div className="w-full px-3 mb-6 md:mb-0">
-                        <label
-                            htmlFor="fechaNac"
-                            className="text-gray-800 uppercase font-bold"
-                        >Fecha Nacimiento</label>
-                        <input 
-                            id="fechaNac"
-                            type="date"
-                            placeholder="Nombre Mascota"
-                            className="border-2 w-full p-2 mt-2 rounded"
-                            value={fechaNac}
-                            onChange={e => setFechaNac(e.target.value)}
-                        />
-                    </div>
-                    <div className="w-full px-3 md:mb-0">
-                        <label 
-                            htmlFor="sexo"
-                            className="text-gray-800 uppercase font-bold"
-                        >Sexo y Condición
-                        </label>
-                        <div className="border-2 w-full p-2 mt-2 bg-white rounded">
-                            <select
-                                className="bg-white "
-                                id="sexo"
-                                value={sexo}
-                                onChange={e => setSexo(e.target.value)}>
-                                // Opciones de Sexo
-                                <option>-- Seleccione Sexo --</option>
-                                <option>Macho</option>
-                                <option>Hembra</option>
-                                <option>Macho Castrado</option>
-                                <option>Hembra Esteril</option>
-                            </select>
+
+                    {/* Datos del Propietario */}
+                    <div className="space-y-4">
+                        <div className="flex items-center gap-2 pb-2 border-b">
+                            <User className="h-5 w-5 text-primary" />
+                            <h3 className="text-lg font-semibold text-foreground">Datos del Propietario</h3>
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label htmlFor="propietario">Nombre Completo</Label>
+                            <Input
+                                id="propietario"
+                                type="text"
+                                placeholder="Nombre del propietario"
+                                value={propietario}
+                                onChange={e => setPropietario(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="run">RUN</Label>
+                                <Input
+                                    id="run"
+                                    type="text"
+                                    placeholder="12.345.678-9"
+                                    value={run}
+                                    onChange={e => setRun(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="domicilio">Domicilio</Label>
+                                <Input
+                                    id="domicilio"
+                                    type="text"
+                                    placeholder="Dirección completa"
+                                    value={domicilio}
+                                    onChange={e => setDomicilio(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="telefono">Teléfono</Label>
+                                <Input
+                                    id="telefono"
+                                    type="tel"
+                                    placeholder="+56 9 1234 5678"
+                                    value={telefono}
+                                    onChange={e => setTelefono(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="email">Email</Label>
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    placeholder="correo@ejemplo.com"
+                                    value={email}
+                                    onChange={e => setEmail(e.target.value)}
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <div className="flex flex-row -mx-3 mb-6">
-                    <div className="w-full px-3 mb-6 md:mb-0">
-                        <label
-                            htmlFor="peso"
-                            className="text-gray-800 uppercase font-bold"
-                        >Peso
-                        </label>
-                        <input 
-                            id="peso"
-                            type="text"
-                            placeholder="Pesaje en Kg"
-                            className="border-2 w-full p-2 mt-2 rounded"
-                            value={peso}
-                            onChange={e => setPeso(e.target.value)}
-                        />
-                    </div>
-                    <div className="w-full px-3 mb-6 md:mb-0">
-                        <label
-                            htmlFor="raza"
-                            className="text-gray-800 uppercase font-bold"
-                        >Raza
-                        </label>
-                        <input 
-                            id="raza"
-                            type="text"
-                            placeholder="Ej: Mestizo u Otro"
-                            className="border-2 w-full p-2 mt-2 rounded"
-                            value={raza}
-                            onChange={e => setRaza(e.target.value)}
-                        />
-                    </div>
 
-                    <div className="w-full px-3 mb-6 md:mb-0">
-                        <label
-                            htmlFor="altura"
-                            className="text-gray-800 px uppercase font-bold"
-                        >Altura
-                        </label>
-                        <input 
-                            id="altura"
-                            type="text"
-                            placeholder="Talla en Cm"
-                            className="border-2 w-full p-2 mt-2 rounded"
-                            value={altura}
-                            onChange={e => setAltura(e.target.value)}
-                        />
-                    </div>
-                </div>
-
-                <div className="flex flex-row -mx-3 my-6">
-                    <div className="w-full px-3 md:mb-0">
-                        <label
-                            htmlFor="fechaIngreso"
-                            className="text-gray-800 uppercase font-bold"
-                        >Fecha Ingreso</label>
-                        <input 
-                            id="fechaIngreso"
-                            type="date"
-                            className="border-2 w-full p-2 mt-2 rounded"
-                            value={fechaIngreso}
-                            onChange={e => setFechaIngreso(e.target.value)}
-                        />
+                    {/* Botones de Acción */}
+                    <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                        <Button 
+                            type="submit" 
+                            className="flex-1 gap-2"
+                            size="lg"
+                        >
+                            <Save className="h-4 w-4" />
+                            {id ? "Guardar Cambios" : "Agregar Paciente"}
+                        </Button>
+                        {id && (
+                            <Button 
+                                type="button"
+                                variant="outline"
+                                size="lg"
+                                onClick={() => {
+                                    setNombre('')
+                                    setSexo('')
+                                    setEspecie('')
+                                    setPeso('')
+                                    setRaza('')
+                                    setAltura('')
+                                    setFechaIngreso('')
+                                    setFechaAlta('')
+                                    setFechaNac('')
+                                    setSintomas('')
+                                    setPropietario('')
+                                    setRun('')
+                                    setDomicilio('')
+                                    setTelefono('')
+                                    setEmail('')
+                                    setId('')
+                                }}
+                                className="gap-2"
+                            >
+                                <X className="h-4 w-4" />
+                                Cancelar
+                            </Button>
+                        )}
                     </div>
 
-                    <div className="w-full px-3 mb-6 md:mb-0">
-                        <label
-                            htmlFor="fechaAlta"
-                            className="text-gray-800 uppercase font-bold"
-                        >Fecha Alta</label>
-                        <input 
-                            id="fechaAlta"
-                            type="date"
-                            className="border-2 w-full p-2 mt-2 rounded"
-                            value={fechaAlta}
-                            onChange={e => setFechaAlta(e.target.value)}
-                        />
-                    </div>
-                </div>
-
-                <div className="mb-5">
-                    <label
-                        htmlFor="sintomas"
-                        className="text-gray-800 uppercase font-bold"
-                    >Sintomas</label>
-                    <textarea
-                        id="sintomas"
-                        placeholder="Descrición de los Sintomas"
-                        className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded"
-                        value={sintomas}
-                        onChange={e => setSintomas(e.target.value)}
-                    />
-                </div>
-
-                <div className="flex flex-row justify-center mb-6 py-3 mx-3">
-                    <h1 className="text-gray-800 font-bold text-xl uppercase">Datos Propietario</h1>
-                </div>
-
-                <div className="mb-5">
-                    <label
-                        htmlFor="propietario"
-                        className="text-gray-800 uppercase font-bold "
-                    >Nombre Propietario</label>
-                    <input 
-                        id="propietario"
-                        type="text"
-                        placeholder="Nombre del Propietario"
-                        className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded"
-                        value={propietario}
-                        onChange={e => setPropietario(e.target.value)}
-                    />
-                </div>
-
-                <div className="flex flex-row -mx-3 mb-6">
-                    <div className="w-full px-3 mb-6 md:mb-0">
-                        <label
-                            htmlFor="run"
-                            className="text-gray-800 uppercase font-bold"
-                        >Run
-                        </label>
-                        <input 
-                            id="run"
-                            type="text"
-                            placeholder="Run"
-                            className="border-2 w-full p-2 mt-2 rounded"
-                            value={run}
-                            onChange={e => setRun(e.target.value)}
-                        />
-                    </div>
-
-                    <div className="w-full px-3 mb-6 md:mb-0">
-                        <label
-                            htmlFor="domicilio"
-                            className="text-gray-800 uppercase font-bold"
-                        >Domicilio
-                        </label>
-                        <input 
-                            id="domicilio"
-                            type="text"
-                            placeholder="Domicilio"
-                            className="border-2 w-full p-2 mt-2 rounded"
-                            value={domicilio}
-                            onChange={e => setDomicilio(e.target.value)}
-                        />
-                    </div>
-                </div>
-
-                <div className="flex flex-row -mx-3 mb-6">
-                    <div className="w-full px-3 mb-6 md:mb-0">
-                        <label
-                            htmlFor="telefono"
-                            className="text-gray-800 uppercase font-bold"
-                        >Telefono
-                        </label>
-                        <input 
-                            id="telefono"
-                            type="telefono"
-                            placeholder="Telefono"
-                            className="border-2 w-full p-2 mt-2 rounded"
-                            value={telefono}
-                            onChange={e => setTelefono(e.target.value)}
-                        />
-                    </div>
-
-                    <div className="w-full px-3 mb-6 md:mb-0">
-                        <label
-                            htmlFor="email"
-                            className="text-gray-800 px uppercase font-bold"
-                        >Email
-                        </label>
-                        <input 
-                            id="email"
-                            type="email"
-                            placeholder="E-mail"
-                            className="border-2 w-full p-2 mt-2 rounded"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                        />
-                    </div>
-                    
-                </div>
-                <input 
-                    type="submit"
-                    className="bg-black w-full p-3 rounded text-lime-400 uppercase font-bold hover:bg-lime-300 hover:text-black cursor-pointer transition-colors duration-300"
-                    value={ id ? "Guardar Cambios": "Agregar Paciente"} 
-                />
-            </form>
-        {msg && <Alerta alerta={alerta} />}
-        </> 
+                    {msg && (
+                        <div className="pt-2">
+                            <Alerta alerta={alerta} />
+                        </div>
+                    )}
+                </form>
+            </CardContent>
+        </Card>
     )
 }
 
