@@ -16,7 +16,8 @@ const NuevoPassword = () => {
     useEffect(() => {
         const comprobarToken = async () => {
             try {
-                await clienteAxios(`/veterinarios/olvide-password/${token}`)
+                // Cambiar endpoint de veterinarios a usuarios
+                await clienteAxios(`/usuarios/olvide-password/${token}`)
                 setAlerta({
                     msg: 'Coloca tu nuevo Password'
                 })
@@ -43,8 +44,9 @@ const NuevoPassword = () => {
         }
 
         try {
-            const url = `/veterinarios/olvide-password/${token}`
-            const { data } = await clienteAxios.post(url, { password } )
+            // Cambiar endpoint de veterinarios a usuarios
+            const url = `/usuarios/olvide-password/${token}`
+            const { data } = await clienteAxios.post(url, { password })
             setAlerta({
                 msg: data.msg,
             })

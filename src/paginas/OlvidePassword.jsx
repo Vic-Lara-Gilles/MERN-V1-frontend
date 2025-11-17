@@ -21,7 +21,8 @@ const OlvidePassword = () => {
         }
 
         try {
-            const { data } = await clienteAxios.post('/veterinarios/olvide-password', { email })
+            // Cambiar endpoint de veterinarios a usuarios
+            const { data } = await clienteAxios.post('/usuarios/olvide-password', { email })
             setAlerta({msg: data.msg})
         } catch (error) {
             setAlerta({

@@ -35,7 +35,8 @@ const Resgistrar = () => {
 
         // Crear el usuario en la api
         try {
-            await clienteAxios.post('/veterinarios', {nombre, email, password })
+            // Cambiar endpoint de veterinarios a usuarios
+            await clienteAxios.post('/usuarios', {nombre, email, password })
            
             setAlerta({
                 msg: 'Creado Correctamente, revisa tu email',

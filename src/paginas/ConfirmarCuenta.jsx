@@ -14,8 +14,8 @@ const ConfirnarCuenta = () => {
     useEffect(() => {
         const ConfirmarCuenta = async () => {
             try {
-
-                const url = `/veterinarios/confirmar/${id}`
+                // Cambiar endpoint de veterinarios a usuarios
+                const url = `/usuarios/confirmar/${id}`
                 const { data } = await clienteAxios(url)
                 setCuentaConfirmada(true)
                 setAlerta({

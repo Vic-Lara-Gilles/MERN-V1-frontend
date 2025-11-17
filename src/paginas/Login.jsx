@@ -31,7 +31,8 @@ const Login = () => {
         }
 
         try {
-            const { data } = await clienteAxios.post('/veterinarios/login', {email, password})
+            // Cambiar endpoint de veterinarios a usuarios
+            const { data } = await clienteAxios.post('/usuarios/login', {email, password})
             localStorage.setItem('token', data.token)
             setAuth(data)
             navigate('/admin')
