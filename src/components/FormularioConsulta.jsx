@@ -196,7 +196,7 @@ const FormularioConsulta = () => {
         {/* Sección 1: Información del Paciente */}
         <div className="bg-white shadow-md rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <PawPrint className="w-5 h-5 text-blue-600" />
+            <PawPrint className="w-5 h-5 text-gray-900" />
             <h2 className="text-xl font-semibold text-gray-800">Información del Paciente</h2>
           </div>
 
@@ -460,13 +460,13 @@ const FormularioConsulta = () => {
         <div className="bg-white shadow-md rounded-lg p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <Pill className="w-5 h-5 text-blue-600" />
+              <Pill className="w-5 h-5 text-gray-900" />
               <h2 className="text-xl font-semibold text-gray-800">Medicamentos</h2>
             </div>
             <button
               type="button"
               onClick={agregarMedicamento}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800"
             >
               <Plus className="w-4 h-4" />
               Agregar Medicamento
@@ -660,7 +660,7 @@ const FormularioConsulta = () => {
           </button>
           <button
             type="submit"
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            className="px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800"
           >
             {id ? 'Actualizar Consulta' : 'Registrar Consulta'}
           </button>

@@ -111,8 +111,10 @@ export const PacientesProvider = ({children}) => {
             return data
         } catch (error) {
             console.log(error)
+            setPaciente({})
+        } finally {
+            setCargando(false)
         }
-        setCargando(false)
     }
 
     const setEdicion = (paciente) => {

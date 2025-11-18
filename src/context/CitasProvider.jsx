@@ -16,7 +16,7 @@ export const CitasProvider = ({ children }) => {
   const obtenerCitas = async () => {
     setCargando(true);
     try {
-      const token = localStorage.getItem('apv_token');
+      const token = localStorage.getItem('token');
       if (!token) {
         setCargando(false);
         return;
@@ -42,7 +42,7 @@ export const CitasProvider = ({ children }) => {
   const obtenerCita = async (id) => {
     setCargando(true);
     try {
-      const token = localStorage.getItem('apv_token');
+      const token = localStorage.getItem('token');
       if (!token) {
         setCargando(false);
         return;
@@ -69,9 +69,16 @@ export const CitasProvider = ({ children }) => {
   };
 
   const guardarCita = async (citaData, id = null) => {
+    console.log('=== DEBUG guardarCita ===');
+    console.log('citaData recibida:', citaData);
+    console.log('id:', id);
+    
     try {
-      const token = localStorage.getItem('apv_token');
-      if (!token) return false;
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.log('ERROR: No hay token');
+        return false;
+      }
 
       const config = {
         headers: {
@@ -83,19 +90,26 @@ export const CitasProvider = ({ children }) => {
       let response;
       if (id) {
         // Editar cita existente
+        console.log('Editando cita:', id);
         response = await clienteAxios.put(`/citas/${id}`, citaData, config);
+        console.log('Respuesta PUT:', response.data);
         setAlerta({
           msg: 'Cita actualizada correctamente',
           error: false
         });
       } else {
         // Crear nueva cita
+        console.log('Creando nueva cita');
+        console.log('URL:', clienteAxios.defaults.baseURL + '/citas');
         response = await clienteAxios.post('/citas', citaData, config);
+        console.log('Respuesta POST:', response.data);
         setAlerta({
           msg: 'Cita agendada correctamente',
           error: false
         });
       }
+
+      console.log('=== FIN DEBUG guardarCita ===');
 
       // Actualizar lista de citas
       await obtenerCitas();
@@ -107,9 +121,13 @@ export const CitasProvider = ({ children }) => {
 
       return true;
     } catch (error) {
-      console.log(error);
+      console.log('ERROR en guardarCita:', error);
+      console.log('Error response:', error.response);
+      console.log('Error data:', error.response?.data);
+      console.log('=== FIN DEBUG guardarCita ===');
+      
       setAlerta({
-        msg: error.response?.data?.msg || 'Error al guardar la cita',
+        msg: error.response?.data?.msg || error.response?.data?.error || 'Error al guardar la cita',
         error: true
       });
 

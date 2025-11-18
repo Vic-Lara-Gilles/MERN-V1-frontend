@@ -147,8 +147,10 @@ export const ClientesProvider = ({ children }) => {
             return data;
         } catch (error) {
             console.log(error);
+            setCliente({});
+        } finally {
+            setCargando(false);
         }
-        setCargando(false);
     };
 
     return (
