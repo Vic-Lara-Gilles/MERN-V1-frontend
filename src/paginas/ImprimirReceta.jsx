@@ -66,7 +66,7 @@ const ImprimirReceta = () => {
           <div className="flex gap-3">
             <button
               onClick={handleImprimir}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800"
             >
               <Printer className="w-5 h-5" />
               Imprimir
@@ -91,7 +91,7 @@ const ImprimirReceta = () => {
             </div>
             <div className="text-right">
               <div className="bg-blue-100 px-4 py-2 rounded-lg inline-block">
-                <p className="text-sm text-blue-800 font-semibold">RECETA MÉDICA VETERINARIA</p>
+                <p className="text-sm text-gray-900 font-semibold">RECETA MÉDICA VETERINARIA</p>
               </div>
               <p className="text-sm text-gray-600 mt-2">Fecha: {formatearFecha(consulta.fecha)}</p>
             </div>

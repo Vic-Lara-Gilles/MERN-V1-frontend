@@ -114,7 +114,7 @@ const DetallePaciente = () => {
         </div>
         <Link
           to={`/admin/pacientes/editar/${id}`}
-          className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+          className="flex items-center space-x-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
         >
           <Edit className="h-5 w-5" />
           <span>Editar</span>
@@ -127,7 +127,7 @@ const DetallePaciente = () => {
           {/* Información Básica */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-              <Heart className="h-5 w-5 text-indigo-600 mr-2" />
+              <Heart className="h-5 w-5 text-gray-900 mr-2" />
               Información Básica
             </h2>
             <div className="grid grid-cols-2 gap-4">
@@ -181,7 +181,7 @@ const DetallePaciente = () => {
           {/* Información Médica */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-              <Activity className="h-5 w-5 text-indigo-600 mr-2" />
+              <Activity className="h-5 w-5 text-gray-900 mr-2" />
               Información Médica
             </h2>
             <div className="space-y-4">
@@ -234,7 +234,7 @@ const DetallePaciente = () => {
           {/* Timeline de Consultas */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-              <FileText className="h-5 w-5 text-indigo-600 mr-2" />
+              <FileText className="h-5 w-5 text-gray-900 mr-2" />
               Historial de Consultas
             </h2>
             <TimelineConsultas consultas={consultas} pacienteId={id} />
@@ -249,10 +249,10 @@ const DetallePaciente = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-between p-3 bg-indigo-50 rounded-lg">
                 <div className="flex items-center">
-                  <Calendar className="h-5 w-5 text-indigo-600 mr-2" />
+                  <Calendar className="h-5 w-5 text-gray-900 mr-2" />
                   <span className="text-sm text-gray-700">Citas Totales</span>
                 </div>
-                <span className="font-bold text-indigo-600">0</span>
+                <span className="font-bold text-gray-900">0</span>
               </div>
               <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
                 <div className="flex items-center">
@@ -277,7 +277,7 @@ const DetallePaciente = () => {
           {cliente && (
             <div className="bg-white rounded-lg shadow-md p-6">
               <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
-                <User className="h-5 w-5 text-indigo-600 mr-2" />
+                <User className="h-5 w-5 text-gray-900 mr-2" />
                 Propietario
               </h3>
               <div className="space-y-3">
@@ -321,7 +321,7 @@ const DetallePaciente = () => {
             <div className="space-y-3">
               <Link
                 to="/admin/citas/nueva"
-                className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
               >
                 <Calendar className="h-5 w-5" />
                 <span>Agendar Cita</span>

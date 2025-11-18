@@ -102,9 +102,9 @@ const SolicitarCita = () => {
             <h1 className="text-xl font-bold text-gray-900">Portal Cliente</h1>
           </div>
           <div className="flex items-center gap-4">
-            <Link to="/portal/dashboard" className="text-sm text-gray-700 hover:text-blue-600">Dashboard</Link>
-            <Link to="/portal/mis-mascotas" className="text-sm text-gray-700 hover:text-blue-600">Mis Mascotas</Link>
-            <Link to="/portal/mi-historial" className="text-sm text-gray-700 hover:text-blue-600">Mi Historial</Link>
+            <Link to="/portal/dashboard" className="text-sm text-gray-700 hover:text-gray-900">Dashboard</Link>
+            <Link to="/portal/mis-mascotas" className="text-sm text-gray-700 hover:text-gray-900">Mis Mascotas</Link>
+            <Link to="/portal/mi-historial" className="text-sm text-gray-700 hover:text-gray-900">Mi Historial</Link>
             <button onClick={cerrarSesionCliente} className="flex items-center gap-2 text-sm text-red-600 hover:text-red-700">
               <LogOut className="w-4 h-4" />Salir
             </button>
@@ -118,7 +118,7 @@ const SolicitarCita = () => {
             <h2 className="text-3xl font-bold text-gray-900 mb-2">Solicitar Cita</h2>
             <p className="text-gray-600">Completa el formulario para solicitar una cita</p>
           </div>
-          <Link to="/portal/dashboard" className="flex items-center gap-2 text-blue-600 hover:text-blue-700">
+          <Link to="/portal/dashboard" className="flex items-center gap-2 text-gray-900 hover:text-gray-900">
             <ArrowLeft className="w-5 h-5" />Volver
           </Link>
         </div>
@@ -127,7 +127,7 @@ const SolicitarCita = () => {
 
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="mb-6 p-4 bg-blue-50 border-l-4 border-blue-600 rounded">
-            <p className="text-sm text-blue-800">
+            <p className="text-sm text-gray-900">
               <strong>Importante:</strong> Tu solicitud será revisada por recepción. 
               Recibirás confirmación por correo electrónico o teléfono.
             </p>

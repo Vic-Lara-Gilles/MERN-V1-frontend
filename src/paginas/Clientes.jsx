@@ -79,41 +79,6 @@ const Clientes = () => {
                 </div>
             </div>
 
-            {/* Estadísticas */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <p className="text-sm text-muted-foreground">Total Clientes</p>
-                            <p className="text-3xl font-bold text-slate-900">{clientes.length}</p>
-                        </div>
-                        <UserCheck className="h-12 w-12 text-green-500" />
-                    </div>
-                </div>
-
-                <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <p className="text-sm text-muted-foreground">Clientes Activos</p>
-                            <p className="text-3xl font-bold text-slate-900">
-                                {clientes.filter(c => c.activo !== false).length}
-                            </p>
-                        </div>
-                        <UserCheck className="h-12 w-12 text-blue-500" />
-                    </div>
-                </div>
-
-                <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500">
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <p className="text-sm text-muted-foreground">Resultados</p>
-                            <p className="text-3xl font-bold text-slate-900">{clientesFiltrados.length}</p>
-                        </div>
-                        <Search className="h-12 w-12 text-purple-500" />
-                    </div>
-                </div>
-            </div>
-
             {/* Lista de clientes */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
                 {clientesFiltrados.length === 0 ? (
@@ -170,9 +135,12 @@ const Clientes = () => {
                                                     <UserCheck className="h-5 w-5 text-green-600" />
                                                 </div>
                                                 <div className="ml-4">
-                                                    <div className="text-sm font-medium text-slate-900">
+                                                    <Link 
+                                                        to={`/admin/clientes/${cliente._id}`}
+                                                        className="text-sm font-medium text-slate-900 hover:text-primary transition-colors cursor-pointer"
+                                                    >
                                                         {cliente.nombre} {cliente.apellido}
-                                                    </div>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </td>

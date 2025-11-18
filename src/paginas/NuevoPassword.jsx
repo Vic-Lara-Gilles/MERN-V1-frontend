@@ -63,7 +63,7 @@ const NuevoPassword = () => {
     return (
         <>
             <div>
-                <h1 className="text-indigo-600 font-black text-6xl">
+                <h1 className="text-gray-900 font-black text-6xl">
                     Reestablece tu password y no pierdas Acceso {""}
                     <span className="text-black"> tus Paciente</span>
                 </h1>

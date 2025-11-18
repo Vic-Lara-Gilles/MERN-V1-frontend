@@ -131,7 +131,7 @@ const DetalleConsulta = () => {
           {puedeEditar && (
             <Link
               to={`/admin/consultas/editar/${id}`}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800"
             >
               <Edit className="w-5 h-5" />
               Editar
@@ -154,7 +154,7 @@ const DetalleConsulta = () => {
             
             <div className="grid md:grid-cols-2 gap-4">
               <div className="flex items-start gap-3">
-                <PawPrint className="w-5 h-5 text-blue-600 mt-1" />
+                <PawPrint className="w-5 h-5 text-gray-900 mt-1" />
                 <div>
                   <p className="text-sm text-gray-500">Paciente</p>
                   <p className="font-semibold text-gray-900">{consulta.paciente?.nombre}</p>
@@ -231,7 +231,7 @@ const DetalleConsulta = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {consulta.peso && (
                   <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <Weight className="w-6 h-6 text-blue-600 mx-auto mb-2" />
+                    <Weight className="w-6 h-6 text-gray-900 mx-auto mb-2" />
                     <p className="text-sm text-gray-600">Peso</p>
                     <p className="text-2xl font-bold text-gray-900">{consulta.peso}</p>
                     <p className="text-xs text-gray-500">kg</p>
@@ -294,7 +294,7 @@ const DetalleConsulta = () => {
           {consulta.medicamentos && consulta.medicamentos.length > 0 && (
             <div className="bg-white rounded-lg shadow-md p-6">
               <div className="flex items-center gap-2 mb-4">
-                <Pill className="w-5 h-5 text-blue-600" />
+                <Pill className="w-5 h-5 text-gray-900" />
                 <h2 className="text-xl font-bold text-gray-900">Medicamentos Prescritos</h2>
               </div>
               
@@ -387,7 +387,7 @@ const DetalleConsulta = () => {
             <div className="space-y-3">
               <Link
                 to={`/admin/pacientes/${consulta.paciente?._id}`}
-                className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800"
               >
                 <PawPrint className="w-5 h-5" />
                 Ver Paciente

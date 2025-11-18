@@ -180,7 +180,7 @@ const TimelineConsultas = ({ consultas, pacienteId }) => {
                 {consulta.medicamentos && consulta.medicamentos.length > 0 && (
                   <div className="mb-3">
                     <h4 className="text-sm font-semibold text-gray-900 mb-2 flex items-center">
-                      <Pill className="h-4 w-4 mr-1 text-indigo-600" />
+                      <Pill className="h-4 w-4 mr-1 text-gray-900" />
                       Medicamentos
                     </h4>
                     <div className="space-y-2">
@@ -251,7 +251,7 @@ const TimelineConsultas = ({ consultas, pacienteId }) => {
                   <div className="flex space-x-2">
                     <Link
                       to={`/admin/consultas/${consulta._id}`}
-                      className="text-xs text-indigo-600 hover:text-indigo-700 font-medium"
+                      className="text-xs text-gray-900 hover:text-gray-900 font-medium"
                     >
                       Ver detalles
                     </Link>

@@ -131,7 +131,7 @@ const Reportes = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Reportes y Estadísticas</h1>
@@ -141,7 +141,7 @@ const Reportes = () => {
       {/* Filtros */}
       <div className="bg-white rounded-lg shadow-md p-6 mb-6">
         <div className="flex items-center gap-2 mb-4">
-          <Filter className="w-5 h-5 text-blue-600" />
+          <Filter className="w-5 h-5 text-gray-900" />
           <h2 className="text-lg font-semibold text-gray-900">Filtros</h2>
         </div>
         
@@ -197,7 +197,7 @@ const Reportes = () => {
             </button>
             <button
               onClick={handleExportar}
-              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+              className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800"
             >
               <Download className="w-4 h-4" />
               Exportar CSV
@@ -206,56 +206,11 @@ const Reportes = () => {
         </div>
       </div>
 
-      {/* Estadísticas Generales */}
-      <div className="grid md:grid-cols-4 gap-6 mb-8">
-        <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-lg p-6 text-white">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-blue-100 text-sm font-medium mb-1">Total Consultas</p>
-              <p className="text-3xl font-bold">{totalConsultas}</p>
-            </div>
-            <FileText className="w-12 h-12 text-blue-200" />
-          </div>
-        </div>
-
-        <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-lg shadow-lg p-6 text-white">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-green-100 text-sm font-medium mb-1">Completadas</p>
-              <p className="text-3xl font-bold">{consultasCompletadas}</p>
-            </div>
-            <TrendingUp className="w-12 h-12 text-green-200" />
-          </div>
-        </div>
-
-        <div className="bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg shadow-lg p-6 text-white">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-yellow-100 text-sm font-medium mb-1">En Tratamiento</p>
-              <p className="text-3xl font-bold">{consultasEnTratamiento}</p>
-            </div>
-            <Calendar className="w-12 h-12 text-yellow-200" />
-          </div>
-        </div>
-
-        <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg shadow-lg p-6 text-white">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-purple-100 text-sm font-medium mb-1">Tasa Completado</p>
-              <p className="text-3xl font-bold">
-                {totalConsultas > 0 ? Math.round((consultasCompletadas / totalConsultas) * 100) : 0}%
-              </p>
-            </div>
-            <Users className="w-12 h-12 text-purple-200" />
-          </div>
-        </div>
-      </div>
-
       <div className="grid lg:grid-cols-2 gap-6 mb-8">
         {/* Top Diagnósticos */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-lg font-bold text-gray-900 mb-4">
-            🏥 Top 10 Diagnósticos Más Frecuentes
+            Top 10 Diagnósticos Más Frecuentes
           </h3>
           {topDiagnosticos.length > 0 ? (
             <div className="space-y-3">
@@ -289,7 +244,7 @@ const Reportes = () => {
         {/* Top Medicamentos */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-lg font-bold text-gray-900 mb-4">
-            💊 Top 10 Medicamentos Más Prescritos
+            Top 10 Medicamentos Más Prescritos
           </h3>
           {topMedicamentos.length > 0 ? (
             <div className="space-y-3">
@@ -324,7 +279,7 @@ const Reportes = () => {
         {/* Consultas por Veterinario */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-lg font-bold text-gray-900 mb-4">
-            👨‍⚕️ Consultas por Veterinario
+            Consultas por Veterinario
           </h3>
           {consultasPorVet.length > 0 ? (
             <div className="space-y-3">
@@ -356,7 +311,7 @@ const Reportes = () => {
         {/* Consultas por Especie */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-            <PawPrint className="w-5 h-5 text-blue-600" />
+            <PawPrint className="w-5 h-5 text-gray-900" />
             Consultas por Especie
           </h3>
           {consultasPorEspecie.length > 0 ? (
@@ -390,7 +345,7 @@ const Reportes = () => {
 
       {/* Resumen del período */}
       <div className="mt-6 bg-gray-50 rounded-lg p-6 border border-gray-200">
-        <h3 className="font-semibold text-gray-900 mb-2">📊 Resumen del Período</h3>
+        <h3 className="font-semibold text-gray-900 mb-2">Resumen del Período</h3>
         <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
           <div>
             <p className="text-gray-500">Período analizado:</p>

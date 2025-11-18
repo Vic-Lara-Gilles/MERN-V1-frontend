@@ -102,53 +102,6 @@ const Pacientes = () => {
                 </div>
             </div>
 
-            {/* Estadísticas */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-orange-500">
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <p className="text-sm text-muted-foreground">Total Pacientes</p>
-                            <p className="text-3xl font-bold text-slate-900">{pacientes.length}</p>
-                        </div>
-                        <PawPrint className="h-12 w-12 text-orange-500" />
-                    </div>
-                </div>
-
-                <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <p className="text-sm text-muted-foreground">Caninos</p>
-                            <p className="text-3xl font-bold text-slate-900">
-                                {pacientes.filter(p => p.especie === 'Canino').length}
-                            </p>
-                        </div>
-                        <PawPrint className="h-12 w-12 text-blue-500" />
-                    </div>
-                </div>
-
-                <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500">
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <p className="text-sm text-muted-foreground">Felinos</p>
-                            <p className="text-3xl font-bold text-slate-900">
-                                {pacientes.filter(p => p.especie === 'Felino').length}
-                            </p>
-                        </div>
-                        <PawPrint className="h-12 w-12 text-purple-500" />
-                    </div>
-                </div>
-
-                <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <p className="text-sm text-muted-foreground">Resultados</p>
-                            <p className="text-3xl font-bold text-slate-900">{pacientesFiltrados.length}</p>
-                        </div>
-                        <Search className="h-12 w-12 text-green-500" />
-                    </div>
-                </div>
-            </div>
-
             {/* Lista de pacientes */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
                 {pacientesFiltrados.length === 0 ? (

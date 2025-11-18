@@ -43,7 +43,7 @@ const MiHistorial = () => {
   const getEstadoBadge = (estado) => {
     const badges = {
       pendiente: 'bg-yellow-100 text-yellow-800',
-      confirmada: 'bg-blue-100 text-blue-800',
+      confirmada: 'bg-blue-100 text-gray-900',
       'en-curso': 'bg-purple-100 text-purple-800',
       completada: 'bg-green-100 text-green-800',
       cancelada: 'bg-red-100 text-red-800',
@@ -52,7 +52,7 @@ const MiHistorial = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-purple-50">
       <header className="bg-white shadow-md border-b">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -62,9 +62,9 @@ const MiHistorial = () => {
             <h1 className="text-xl font-bold text-gray-900">Portal Cliente</h1>
           </div>
           <div className="flex items-center gap-4">
-            <Link to="/portal/dashboard" className="text-sm text-gray-700 hover:text-blue-600">Dashboard</Link>
-            <Link to="/portal/mis-mascotas" className="text-sm text-gray-700 hover:text-blue-600">Mis Mascotas</Link>
-            <Link to="/portal/solicitar-cita" className="text-sm text-gray-700 hover:text-blue-600">Solicitar Cita</Link>
+            <Link to="/portal/dashboard" className="text-sm text-gray-700 hover:text-gray-900">Dashboard</Link>
+            <Link to="/portal/mis-mascotas" className="text-sm text-gray-700 hover:text-gray-900">Mis Mascotas</Link>
+            <Link to="/portal/solicitar-cita" className="text-sm text-gray-700 hover:text-gray-900">Solicitar Cita</Link>
             <button onClick={cerrarSesionCliente} className="flex items-center gap-2 text-sm text-red-600 hover:text-red-700">
               <LogOut className="w-4 h-4" />Salir
             </button>
@@ -78,7 +78,7 @@ const MiHistorial = () => {
             <h2 className="text-3xl font-bold text-gray-900 mb-2">Mi Historial</h2>
             <p className="text-gray-600">Citas y consultas médicas de tus mascotas</p>
           </div>
-          <Link to="/portal/dashboard" className="flex items-center gap-2 text-blue-600 hover:text-blue-700">
+          <Link to="/portal/dashboard" className="flex items-center gap-2 text-gray-900 hover:text-gray-900">
             <ArrowLeft className="w-5 h-5" />Volver
           </Link>
         </div>
@@ -89,7 +89,7 @@ const MiHistorial = () => {
             onClick={() => setVistaActiva('citas')}
             className={`pb-3 px-4 font-semibold transition-colors ${
               vistaActiva === 'citas'
-                ? 'text-blue-600 border-b-2 border-blue-600'
+                ? 'text-gray-900 border-b-2 border-blue-600'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -100,7 +100,7 @@ const MiHistorial = () => {
             onClick={() => setVistaActiva('consultas')}
             className={`pb-3 px-4 font-semibold transition-colors ${
               vistaActiva === 'consultas'
-                ? 'text-blue-600 border-b-2 border-blue-600'
+                ? 'text-gray-900 border-b-2 border-blue-600'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -122,7 +122,7 @@ const MiHistorial = () => {
                     <Calendar className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">No tienes citas registradas</h3>
                     <p className="text-gray-600 mb-4">Solicita una cita para tu mascota</p>
-                    <Link to="/portal/solicitar-cita" className="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    <Link to="/portal/solicitar-cita" className="inline-block px-6 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800">
                       Solicitar Cita
                     </Link>
                   </div>

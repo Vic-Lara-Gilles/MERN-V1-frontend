@@ -34,7 +34,7 @@ const AgendaVeterinario = () => {
   const getEstadoBadge = (estado) => {
     const badges = {
       'pendiente': { bg: 'bg-yellow-100', text: 'text-yellow-800', icon: AlertCircle },
-      'confirmada': { bg: 'bg-blue-100', text: 'text-blue-800', icon: CheckCircle },
+      'confirmada': { bg: 'bg-blue-100', text: 'text-gray-900', icon: CheckCircle },
       'en-curso': { bg: 'bg-purple-100', text: 'text-purple-800', icon: Clock },
       'completada': { bg: 'bg-green-100', text: 'text-green-800', icon: CheckCircle },
       'cancelada': { bg: 'bg-red-100', text: 'text-red-800', icon: XCircle }
@@ -53,7 +53,7 @@ const AgendaVeterinario = () => {
 
   const getTipoBadgeColor = (tipo) => {
     const colores = {
-      'consulta': 'bg-blue-50 border-blue-200 text-blue-700',
+      'consulta': 'bg-blue-50 border-blue-200 text-gray-900',
       'vacunacion': 'bg-green-50 border-green-200 text-green-700',
       'cirugia': 'bg-red-50 border-red-200 text-red-700',
       'revision': 'bg-purple-50 border-purple-200 text-purple-700',
@@ -101,53 +101,13 @@ const AgendaVeterinario = () => {
           />
           <button
             onClick={() => setFechaSeleccionada(new Date().toISOString().split('T')[0])}
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+            className="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
           >
             Hoy
           </button>
         </div>
         <div className="mt-2 text-sm text-gray-600">
           {formatearFecha(fechaSeleccionada)}
-        </div>
-      </div>
-
-      {/* Estadísticas del Día */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white rounded-lg shadow-md p-4 border-l-4 border-indigo-600">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Total Citas</p>
-              <p className="text-2xl font-bold text-gray-900">{totalDia}</p>
-            </div>
-            <Calendar className="h-8 w-8 text-indigo-600" />
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-4 border-l-4 border-purple-600">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">En Curso</p>
-              <p className="text-2xl font-bold text-purple-600">{enCursoDia}</p>
-            </div>
-            <Clock className="h-8 w-8 text-purple-600" />
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-4 border-l-4 border-yellow-600">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Pendientes</p>
-              <p className="text-2xl font-bold text-yellow-600">{pendientesDia}</p>
-            </div>
-            <AlertCircle className="h-8 w-8 text-yellow-600" />
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-4 border-l-4 border-green-600">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Completadas</p>
-              <p className="text-2xl font-bold text-green-600">{completadasDia}</p>
-            </div>
-            <CheckCircle className="h-8 w-8 text-green-600" />
-          </div>
         </div>
       </div>
 
@@ -177,7 +137,7 @@ const AgendaVeterinario = () => {
                   {/* Hora y Duración */}
                   <div className="flex items-center space-x-3">
                     <div className="bg-indigo-100 rounded-lg p-3">
-                      <Clock className="h-6 w-6 text-indigo-600" />
+                      <Clock className="h-6 w-6 text-gray-900" />
                     </div>
                     <div>
                       <div className="text-2xl font-bold text-gray-900">{cita.horaInicio}</div>
@@ -215,7 +175,7 @@ const AgendaVeterinario = () => {
                   {/* Propietario */}
                   <div className="flex items-start space-x-3">
                     <div className="bg-blue-100 rounded-lg p-2">
-                      <User className="h-5 w-5 text-blue-600" />
+                      <User className="h-5 w-5 text-gray-900" />
                     </div>
                     <div>
                       <div className="text-sm text-gray-600">Propietario</div>
@@ -266,7 +226,7 @@ const AgendaVeterinario = () => {
                     {cita.estado === 'pendiente' && (
                       <button
                         onClick={() => handleCambiarEstado(cita._id, 'confirmada')}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                        className="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
                       >
                         Confirmar Cita
                       </button>

@@ -74,7 +74,7 @@ const ClienteDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-purple-50">
       {/* Header */}
       <header className="bg-white shadow-md border-b">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -91,19 +91,19 @@ const ClienteDashboard = () => {
           <div className="flex items-center gap-4">
             <Link
               to="/portal/mis-mascotas"
-              className="text-sm text-gray-700 hover:text-blue-600 font-medium"
+              className="text-sm text-gray-700 hover:text-gray-900 font-medium"
             >
               Mis Mascotas
             </Link>
             <Link
               to="/portal/mi-historial"
-              className="text-sm text-gray-700 hover:text-blue-600 font-medium"
+              className="text-sm text-gray-700 hover:text-gray-900 font-medium"
             >
               Historial
             </Link>
             <Link
               to="/portal/solicitar-cita"
-              className="text-sm text-gray-700 hover:text-blue-600 font-medium"
+              className="text-sm text-gray-700 hover:text-gray-900 font-medium"
             >
               Solicitar Cita
             </Link>
@@ -132,7 +132,7 @@ const ClienteDashboard = () => {
 
         {/* Estadísticas */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-lg p-6 text-white">
+          <div className="bg-linear-to-br from-blue-500 to-blue-600 rounded-lg shadow-lg p-6 text-white">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-blue-100 text-sm font-medium mb-1">Mis Mascotas</p>
@@ -148,7 +148,7 @@ const ClienteDashboard = () => {
             </Link>
           </div>
 
-          <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg shadow-lg p-6 text-white">
+          <div className="bg-linear-to-br from-purple-500 to-purple-600 rounded-lg shadow-lg p-6 text-white">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-purple-100 text-sm font-medium mb-1">Próximas Citas</p>
@@ -164,7 +164,7 @@ const ClienteDashboard = () => {
             </Link>
           </div>
 
-          <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-lg shadow-lg p-6 text-white">
+          <div className="bg-linear-to-br from-green-500 to-green-600 rounded-lg shadow-lg p-6 text-white">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-green-100 text-sm font-medium mb-1">Última Consulta</p>
@@ -188,7 +188,7 @@ const ClienteDashboard = () => {
           {/* Datos del Cliente */}
           <div className="lg:col-span-2 bg-white rounded-lg shadow-md p-6">
             <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-              <User className="w-5 h-5 text-blue-600" />
+              <User className="w-5 h-5 text-gray-900" />
               Mis Datos
             </h3>
             <div className="grid md:grid-cols-2 gap-4">
@@ -238,7 +238,7 @@ const ClienteDashboard = () => {
             <div className="space-y-3">
               <Link
                 to="/portal/mis-mascotas"
-                className="w-full flex items-center gap-3 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="w-full flex items-center gap-3 px-4 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
               >
                 <PawPrint className="w-5 h-5" />
                 Ver Mis Mascotas
@@ -264,7 +264,7 @@ const ClienteDashboard = () => {
         {/* Información importante */}
         <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
           <h3 className="font-semibold text-blue-900 mb-2">📌 Información Importante</h3>
-          <ul className="space-y-2 text-sm text-blue-800">
+          <ul className="space-y-2 text-sm text-gray-900">
             <li>• Las citas solicitadas deben ser confirmadas por nuestra recepción</li>
             <li>• Puedes ver el historial médico completo de tus mascotas</li>
             <li>• Para cambios en tus datos personales, contacta con recepción</li>

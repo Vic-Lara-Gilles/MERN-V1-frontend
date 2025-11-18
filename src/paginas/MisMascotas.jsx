@@ -37,7 +37,7 @@ const MisMascotas = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-purple-50">
       <header className="bg-white shadow-md border-b">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -47,9 +47,9 @@ const MisMascotas = () => {
             <h1 className="text-xl font-bold text-gray-900">Portal Cliente</h1>
           </div>
           <div className="flex items-center gap-4">
-            <Link to="/portal/dashboard" className="text-sm text-gray-700 hover:text-blue-600">Dashboard</Link>
-            <Link to="/portal/mi-historial" className="text-sm text-gray-700 hover:text-blue-600">Historial</Link>
-            <Link to="/portal/solicitar-cita" className="text-sm text-gray-700 hover:text-blue-600">Solicitar Cita</Link>
+            <Link to="/portal/dashboard" className="text-sm text-gray-700 hover:text-gray-900">Dashboard</Link>
+            <Link to="/portal/mi-historial" className="text-sm text-gray-700 hover:text-gray-900">Historial</Link>
+            <Link to="/portal/solicitar-cita" className="text-sm text-gray-700 hover:text-gray-900">Solicitar Cita</Link>
             <button onClick={cerrarSesionCliente} className="flex items-center gap-2 text-sm text-red-600 hover:text-red-700">
               <LogOut className="w-4 h-4" />Salir
             </button>
@@ -63,7 +63,7 @@ const MisMascotas = () => {
             <h2 className="text-3xl font-bold text-gray-900 mb-2">Mis Mascotas</h2>
             <p className="text-gray-600">Información de tus mascotas registradas</p>
           </div>
-          <Link to="/portal/dashboard" className="flex items-center gap-2 text-blue-600 hover:text-blue-700">
+          <Link to="/portal/dashboard" className="flex items-center gap-2 text-gray-900 hover:text-gray-900">
             <ArrowLeft className="w-5 h-5" />Volver
           </Link>
         </div>
@@ -120,7 +120,7 @@ const MisMascotas = () => {
                   <Link
                     to="/portal/solicitar-cita"
                     state={{ pacienteId: paciente._id }}
-                    className="mt-4 w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                    className="mt-4 w-full flex items-center justify-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800"
                   >
                     <Calendar className="w-4 h-4" />
                     Solicitar Cita

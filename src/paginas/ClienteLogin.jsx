@@ -41,7 +41,7 @@ const ClienteLogin = () => {
   const { msg } = alerta;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 via-white to-purple-50 px-4">
       <div className="max-w-md w-full">
         {/* Logo y Título */}
         <div className="text-center mb-8">
@@ -102,7 +102,7 @@ const ClienteLogin = () => {
           {/* Información adicional */}
           <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
             <div className="flex items-start gap-2">
-              <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+              <AlertCircle className="w-5 h-5 text-gray-900 mt-0.5 flex-shrink-0" />
               <div className="text-sm text-blue-900">
                 <p className="font-semibold mb-1">¿Primera vez aquí?</p>
                 <p>Contacta con nuestra recepción para obtener tus credenciales de acceso.</p>

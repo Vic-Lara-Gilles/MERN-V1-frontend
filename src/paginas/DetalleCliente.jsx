@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams, useNavigate, Link } from "react-router-dom"
 import useClientes from "../hooks/useClientes"
+import usePacientes from "../hooks/usePacientes"
 import { Button } from "@/components/ui/button"
 import { 
     ArrowLeft, 
@@ -18,12 +19,21 @@ const DetalleCliente = () => {
     const { id } = useParams()
     const navigate = useNavigate()
     const { cliente, obtenerClientePorId, cargando } = useClientes()
-    const [pacientes, setPacientes] = useState([])
+    const { pacientes: todosPacientes } = usePacientes()
+    const [pacientesCliente, setPacientesCliente] = useState([])
 
     useEffect(() => {
         obtenerClientePorId(id)
-        // TODO: obtener pacientes del cliente cuando esté implementado
     }, [id])
+
+    useEffect(() => {
+        if (id && todosPacientes.length > 0) {
+            const pacientesFiltrados = todosPacientes.filter(
+                p => p.propietario?._id === id || p.propietario === id
+            )
+            setPacientesCliente(pacientesFiltrados)
+        }
+    }, [id, todosPacientes])
 
     if (cargando) {
         return (
@@ -147,7 +157,7 @@ const DetalleCliente = () => {
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm text-muted-foreground">Mascotas</p>
-                                <p className="text-3xl font-bold text-slate-900">{pacientes.length}</p>
+                                <p className="text-3xl font-bold text-slate-900">{pacientesCliente.length}</p>
                             </div>
                             <PawPrint className="h-12 w-12 text-orange-500" />
                         </div>
@@ -201,7 +211,7 @@ const DetalleCliente = () => {
                     </Button>
                 </div>
 
-                {pacientes.length === 0 ? (
+                {pacientesCliente.length === 0 ? (
                     <div className="text-center py-12">
                         <PawPrint className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
                         <h3 className="text-lg font-semibold text-slate-900 mb-2">
@@ -219,7 +229,7 @@ const DetalleCliente = () => {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {pacientes.map((paciente) => (
+                        {pacientesCliente.map((paciente) => (
                             <div 
                                 key={paciente._id} 
                                 className="border rounded-lg p-4 hover:shadow-md transition-shadow"
@@ -232,11 +242,19 @@ const DetalleCliente = () => {
                                         <div>
                                             <h3 className="font-semibold text-slate-900">{paciente.nombre}</h3>
                                             <p className="text-sm text-muted-foreground">{paciente.especie}</p>
+                                            {paciente.raza && (
+                                                <p className="text-xs text-muted-foreground">{paciente.raza}</p>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
-                                <div className="mt-4 flex gap-2">
-                                    <Button size="sm" variant="outline" asChild className="flex-1">
+                                <div className="mt-4 space-y-2">
+                                    {paciente.numeroHistoriaClinica && (
+                                        <p className="text-xs text-muted-foreground">
+                                            HC: {paciente.numeroHistoriaClinica}
+                                        </p>
+                                    )}
+                                    <Button size="sm" variant="outline" asChild className="w-full">
                                         <Link to={`/admin/pacientes/${paciente._id}`}>
                                             Ver Detalle
                                         </Link>

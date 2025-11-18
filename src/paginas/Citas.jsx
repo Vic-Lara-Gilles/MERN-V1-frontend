@@ -55,7 +55,7 @@ const Citas = () => {
   const getEstadoColor = (estado) => {
     const colores = {
       'pendiente': 'bg-yellow-100 text-yellow-800',
-      'confirmada': 'bg-blue-100 text-blue-800',
+      'confirmada': 'bg-blue-100 text-gray-900',
       'en-curso': 'bg-purple-100 text-purple-800',
       'completada': 'bg-green-100 text-green-800',
       'cancelada': 'bg-red-100 text-red-800'
@@ -65,7 +65,7 @@ const Citas = () => {
 
   const getTipoColor = (tipo) => {
     const colores = {
-      'consulta': 'text-blue-600',
+      'consulta': 'text-gray-900',
       'vacunacion': 'text-green-600',
       'cirugia': 'text-red-600',
       'revision': 'text-purple-600',
@@ -92,7 +92,7 @@ const Citas = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
       {alerta.msg && <Alerta alerta={alerta} />}
 
       {/* Header */}
@@ -105,51 +105,11 @@ const Citas = () => {
         </div>
         <Link
           to="/admin/citas/nueva"
-          className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+          className="flex items-center space-x-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
         >
           <Plus className="h-5 w-5" />
           <span>Nueva Cita</span>
         </Link>
-      </div>
-
-      {/* Estadísticas */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white rounded-lg shadow-md p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Total Citas</p>
-              <p className="text-2xl font-bold text-gray-900">{totalCitas}</p>
-            </div>
-            <Calendar className="h-8 w-8 text-indigo-600" />
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Pendientes</p>
-              <p className="text-2xl font-bold text-yellow-600">{pendientes}</p>
-            </div>
-            <Clock className="h-8 w-8 text-yellow-600" />
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Confirmadas</p>
-              <p className="text-2xl font-bold text-blue-600">{confirmadas}</p>
-            </div>
-            <Calendar className="h-8 w-8 text-blue-600" />
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Citas Hoy</p>
-              <p className="text-2xl font-bold text-green-600">{citasHoy.length}</p>
-            </div>
-            <Calendar className="h-8 w-8 text-green-600" />
-          </div>
-        </div>
       </div>
 
       {/* Filtros */}
@@ -217,7 +177,7 @@ const Citas = () => {
             {!busqueda && !filtroEstado && !filtroFecha && (
               <Link
                 to="/admin/citas/nueva"
-                className="inline-flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                className="inline-flex items-center space-x-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
               >
                 <Plus className="h-5 w-5" />
                 <span>Agendar Primera Cita</span>
@@ -229,25 +189,22 @@ const Citas = () => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
                     Fecha y Hora
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
                     Paciente
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
                     Cliente
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
                     Veterinario
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Tipo / Motivo
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
                     Estado
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
                     Acciones
                   </th>
                 </tr>
@@ -255,7 +212,7 @@ const Citas = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {citasFiltradas.map((cita) => (
                   <tr key={cita._id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-4 whitespace-nowrap w-1/6">
                       <div className="text-sm font-medium text-gray-900">
                         {formatearFecha(cita.fecha)}
                       </div>
@@ -263,9 +220,9 @@ const Citas = () => {
                         {cita.horaInicio} ({cita.duracion} min)
                       </div>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 w-1/6">
                       <div className="flex items-center">
-                        <PawPrint className="h-5 w-5 text-orange-500 mr-2" />
+                        <PawPrint className="h-5 w-5 text-orange-500 mr-2 shrink-0" />
                         <div>
                           <div className="text-sm font-medium text-gray-900">
                             {cita.paciente?.nombre}
@@ -276,7 +233,7 @@ const Citas = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 w-1/6">
                       <div className="text-sm text-gray-900">
                         {cita.cliente?.nombre} {cita.cliente?.apellido}
                       </div>
@@ -284,27 +241,19 @@ const Citas = () => {
                         {cita.cliente?.telefono}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-4 whitespace-nowrap w-1/6">
                       <div className="flex items-center">
-                        <User className="h-4 w-4 text-gray-500 mr-2" />
+                        <User className="h-4 w-4 text-gray-500 mr-2 shrink-0" />
                         <span className="text-sm text-gray-900">
                           Dr(a). {cita.veterinario?.nombre}
                         </span>
                       </div>
                     </td>
-                    <td className="px-6 py-4">
-                      <div className={`text-sm font-medium capitalize ${getTipoColor(cita.tipo)}`}>
-                        {cita.tipo}
-                      </div>
-                      <div className="text-sm text-gray-500 truncate max-w-xs">
-                        {cita.motivo}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-4 whitespace-nowrap w-1/6">
                       <select
                         value={cita.estado}
                         onChange={(e) => handleCambiarEstado(cita._id, e.target.value)}
-                        className={`text-xs px-2 py-1 rounded-full font-semibold capitalize ${getEstadoColor(cita.estado)}`}
+                        className={`text-xs px-2 py-1 rounded-full font-semibold capitalize ${getEstadoColor(cita.estado)} w-full`}
                       >
                         <option value="pendiente">Pendiente</option>
                         <option value="confirmada">Confirmada</option>
@@ -313,11 +262,11 @@ const Citas = () => {
                         <option value="cancelada">Cancelada</option>
                       </select>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium w-1/6">
                       <div className="flex items-center justify-end gap-2">
                         <Link
                           to={`/admin/citas/${cita._id}`}
-                          className="text-indigo-600 hover:text-indigo-900"
+                          className="text-gray-900 hover:text-indigo-900"
                         >
                           <Eye className="h-4 w-4" />
                         </Link>

@@ -83,7 +83,7 @@ const Consultas = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-6 flex justify-between items-center">
         <div>
@@ -93,67 +93,12 @@ const Consultas = () => {
         {(auth.rol === 'admin' || auth.rol === 'veterinario') && (
           <Link
             to="/admin/consultas/nueva"
-            className="flex items-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            className="flex items-center gap-2 px-4 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800"
           >
             <Plus className="w-5 h-5" />
             Nueva Consulta
           </Link>
         )}
-      </div>
-
-      {/* Estadísticas */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-500 text-sm font-medium">Total Consultas</p>
-              <p className="text-3xl font-bold text-gray-800 mt-2">{estadisticas.total}</p>
-            </div>
-            <div className="p-3 bg-blue-100 rounded-full">
-              <FileText className="w-6 h-6 text-blue-600" />
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-500 text-sm font-medium">En Tratamiento</p>
-              <p className="text-3xl font-bold text-yellow-600 mt-2">
-                {estadisticas.enTratamiento}
-              </p>
-            </div>
-            <div className="p-3 bg-yellow-100 rounded-full">
-              <Activity className="w-6 h-6 text-yellow-600" />
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-500 text-sm font-medium">Completadas</p>
-              <p className="text-3xl font-bold text-green-600 mt-2">
-                {estadisticas.completadas}
-              </p>
-            </div>
-            <div className="p-3 bg-green-100 rounded-full">
-              <Stethoscope className="w-6 h-6 text-green-600" />
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-500 text-sm font-medium">Hoy</p>
-              <p className="text-3xl font-bold text-purple-600 mt-2">{estadisticas.hoy}</p>
-            </div>
-            <div className="p-3 bg-purple-100 rounded-full">
-              <Calendar className="w-6 h-6 text-purple-600" />
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Filtros */}
@@ -206,7 +151,7 @@ const Consultas = () => {
           <div className="mt-4">
             <button
               onClick={limpiarFiltros}
-              className="text-blue-600 hover:text-blue-800 font-medium"
+              className="text-gray-900 hover:text-gray-900 font-medium"
             >
               Limpiar filtros
             </button>
@@ -233,7 +178,7 @@ const Consultas = () => {
               !filtroFecha && (
                 <Link
                   to="/admin/consultas/nueva"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800"
                 >
                   <Plus className="w-5 h-5" />
                   Registrar Primera Consulta
@@ -286,7 +231,7 @@ const Consultas = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-2">
-                          <PawPrint className="w-4 h-4 text-blue-600" />
+                          <PawPrint className="w-4 h-4 text-gray-900" />
                           <div>
                             <div className="text-sm font-medium text-gray-900">
                               {consulta.paciente?.nombre}
@@ -341,7 +286,7 @@ const Consultas = () => {
                         <div className="flex items-center gap-2">
                           <Link
                             to={`/admin/consultas/${consulta._id}`}
-                            className="text-blue-600 hover:text-blue-900"
+                            className="text-gray-900 hover:text-blue-900"
                             title="Ver detalles"
                           >
                             <Eye className="w-5 h-5" />
