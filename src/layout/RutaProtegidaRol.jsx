@@ -36,7 +36,7 @@ const RutaProtegidaRol = ({ children, rolesPermitidos }) => {
                             No tienes permisos para acceder a esta sección.
                         </p>
                         <p className="mt-1 text-sm text-slate-500">
-                            Tu rol: <span className="font-semibold text-slate-700">{auth.rol}</span>
+                            Tu rol: <span className="font-semibold text-slate-700">{auth.rol || 'Sin rol'}</span>
                         </p>
                         <button 
                             onClick={() => window.history.back()}

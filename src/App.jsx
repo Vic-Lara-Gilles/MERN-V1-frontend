@@ -19,8 +19,7 @@ import ConfirmarCuenta from './paginas/ConfirmarCuenta'
 import NuevoPassword from './paginas/NuevoPassword'
 import Dashboard from './paginas/Dashboard'
 import AdministrarPacientes from './paginas/AdministrarPacientes'
-import EditarPerfil from './paginas/EditarPerfil'
-import CambiarPassword from './paginas/CambiarPassword'
+import Configuracion from './paginas/Configuracion'
 import Clientes from './paginas/Clientes'
 import FormularioCliente from './components/FormularioCliente'
 import DetalleCliente from './paginas/DetalleCliente'
@@ -35,6 +34,8 @@ import FormularioConsulta from './components/FormularioConsulta'
 import DetalleConsulta from './paginas/DetalleConsulta'
 import ImprimirReceta from './paginas/ImprimirReceta'
 import Reportes from './paginas/Reportes'
+import Usuarios from './paginas/Usuarios'
+import FormularioUsuario from './paginas/FormularioUsuario'
 
 import { AuthProvider } from './context/AuthProvider'
 import { PacientesProvider} from './context/PacientesProvider'
@@ -77,6 +78,18 @@ function App() {
 
                             <Route path= "/admin" element={<RutaProtegida />}>
                                 <Route index element={<Dashboard />} />
+                                
+                                {/* Rutas de Usuarios - Solo Admin */}
+                                <Route path="usuarios" element={
+                                    <RutaProtegidaRol rolesPermitidos={['admin']}>
+                                        <Usuarios />
+                                    </RutaProtegidaRol>
+                                } />
+                                <Route path="usuarios/nuevo" element={
+                                    <RutaProtegidaRol rolesPermitidos={['admin']}>
+                                        <FormularioUsuario />
+                                    </RutaProtegidaRol>
+                                } />
                                 
                                 {/* Rutas de Clientes - Admin y Recepción */}
                                 <Route path="clientes" element={
@@ -162,9 +175,8 @@ function App() {
                                     </RutaProtegidaRol>
                                 } />
 
-                                {/* Rutas existentes */}
-                                <Route path="perfil" element={<EditarPerfil />} />
-                                <Route path="cambiar-password" element={<CambiarPassword />} />
+                                {/* Configuración de Usuario */}
+                                <Route path="configuracion" element={<Configuracion />} />
                             </Route>
 
                                 </Routes>

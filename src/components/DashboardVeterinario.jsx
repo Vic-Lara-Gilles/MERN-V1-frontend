@@ -16,7 +16,7 @@ const DashboardVeterinario = () => {
                     <h1 className="text-3xl font-bold text-slate-900">Panel Veterinario</h1>
                     <p className="text-muted-foreground mt-2">Gestión médica y pacientes</p>
                 </div>
-                <div className="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-semibold">
+                <div className="px-4 py-2 bg-blue-100 text-gray-900 rounded-full font-semibold">
                     Veterinario
                 </div>
             </div>
@@ -63,7 +63,7 @@ const DashboardVeterinario = () => {
                     </div>
                     <Link 
                         to="/admin/citas" 
-                        className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                        className="text-gray-900 hover:text-gray-900 text-sm font-medium"
                     >
                         Ver todas →
                     </Link>
@@ -72,7 +72,7 @@ const DashboardVeterinario = () => {
                     <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
                         <div className="flex items-center space-x-4">
                             <div className="flex flex-col items-center">
-                                <span className="text-2xl font-bold text-blue-600">09:00</span>
+                                <span className="text-2xl font-bold text-gray-900">09:00</span>
                                 <span className="text-xs text-muted-foreground">AM</span>
                             </div>
                             <div>
@@ -82,7 +82,7 @@ const DashboardVeterinario = () => {
                         </div>
                         <Link 
                             to="/admin/citas/1" 
-                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                            className="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800"
                         >
                             Ver Detalles
                         </Link>
@@ -151,7 +151,7 @@ const DashboardVeterinario = () => {
                 >
                     <div className="flex items-center space-x-4">
                         <div className="p-3 bg-blue-100 rounded-lg">
-                            <Stethoscope className="h-6 w-6 text-blue-600" />
+                            <Stethoscope className="h-6 w-6 text-gray-900" />
                         </div>
                         <div>
                             <h3 className="font-semibold text-slate-900">Nueva Consulta</h3>
@@ -166,7 +166,7 @@ const DashboardVeterinario = () => {
                 >
                     <div className="flex items-center space-x-4">
                         <div className="p-3 bg-indigo-100 rounded-lg">
-                            <FileText className="h-6 w-6 text-indigo-600" />
+                            <FileText className="h-6 w-6 text-gray-900" />
                         </div>
                         <div>
                             <h3 className="font-semibold text-slate-900">Historial de Consultas</h3>

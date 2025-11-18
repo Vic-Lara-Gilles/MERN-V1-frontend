@@ -73,7 +73,7 @@ const DashboardAdmin = () => {
                 >
                     <div className="flex items-center space-x-4">
                         <div className="p-3 bg-blue-100 rounded-lg">
-                            <Users className="h-6 w-6 text-blue-600" />
+                            <Users className="h-6 w-6 text-gray-900" />
                         </div>
                         <div>
                             <h3 className="font-semibold text-slate-900">Gestionar Usuarios</h3>
@@ -133,7 +133,7 @@ const DashboardAdmin = () => {
                 >
                     <div className="flex items-center space-x-4">
                         <div className="p-3 bg-indigo-100 rounded-lg">
-                            <FileText className="h-6 w-6 text-indigo-600" />
+                            <FileText className="h-6 w-6 text-gray-900" />
                         </div>
                         <div>
                             <h3 className="font-semibold text-slate-900">Historial de Consultas</h3>
@@ -177,7 +177,7 @@ const DashboardAdmin = () => {
                             <p className="font-medium text-slate-900">Cita completada</p>
                             <p className="text-sm text-muted-foreground">Dr. Martínez - hace 15 min</p>
                         </div>
-                        <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">Completado</span>
+                        <span className="px-3 py-1 bg-blue-100 text-gray-900 rounded-full text-sm">Completado</span>
                     </div>
                     <div className="flex items-center justify-between py-3">
                         <div>
