@@ -1,5 +1,5 @@
 import { useState } from "react"
-import Formulario from "../components/Formulario"
+import FormularioPacienteLegacy from "../components/FormularioPacienteLegacy"
 import ListadoPacientes from "../components/ListadoPacientes"
 import DashboardAdmin from "../components/DashboardAdmin"
 import DashboardVeterinario from "../components/DashboardVeterinario"
@@ -60,7 +60,7 @@ const AdministrarPacientes = () => {
             </Button>
 
             <div className={`${mostrarFormulario ? 'block':'hidden' } md:block md:w-1/2 lg:w-2/5`}>
-                <Formulario />
+                <FormularioPacienteLegacy />
             </div>
 
             <div className="md:w-1/2 lg:w-3/5">
