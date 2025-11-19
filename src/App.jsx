@@ -48,9 +48,7 @@ import { CitasProvider } from './context/CitasProvider'
 import { ConsultasProvider } from './context/ConsultasProvider'
 import { ClienteAuthProvider } from './context/ClienteAuthProvider'
 
-
 function App() {
-
     return (
         <ClienteAuthProvider>
             <BrowserRouter>
