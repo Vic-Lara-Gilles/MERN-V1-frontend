@@ -242,11 +242,34 @@ const Citas = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap w-1/6">
-                      <div className="flex items-center">
-                        <User className="h-4 w-4 text-gray-500 mr-2 shrink-0" />
-                        <span className="text-sm text-gray-900">
-                          Dr(a). {cita.veterinario?.nombre}
-                        </span>
+                      <div className="flex items-start gap-2">
+                        <User className="h-4 w-4 text-gray-500 mt-1 shrink-0" />
+                        <div className="text-xs text-gray-900">
+                          <div className="font-semibold text-sm">
+                            Dr(a). {cita.veterinario?.usuario?.nombre}
+                          </div>
+                          {cita.veterinario?.usuario?.email && (
+                            <div className="text-gray-500">{cita.veterinario.usuario.email}</div>
+                          )}
+                          {cita.veterinario?.especialidad && (
+                            <div className="text-indigo-700">Especialidad: {cita.veterinario.especialidad}</div>
+                          )}
+                          {cita.veterinario?.licenciaProfesional && (
+                            <div className="text-gray-700">Licencia: {cita.veterinario.licenciaProfesional}</div>
+                          )}
+                          {cita.veterinario?.usuario?.createdAt && (
+                            <div className="text-gray-500">Ingreso: {new Date(cita.veterinario.usuario.createdAt).toLocaleDateString('es-CL')}</div>
+                          )}
+                          {typeof cita.veterinario?.usuario?.activo === 'boolean' && (
+                            <div className={
+                              cita.veterinario.usuario.activo
+                                ? 'text-green-700 font-semibold'
+                                : 'text-red-700 font-semibold'
+                            }>
+                              {cita.veterinario.usuario.activo ? 'Activo' : 'Inactivo'}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap w-1/6">

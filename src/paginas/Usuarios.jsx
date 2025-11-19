@@ -175,8 +175,16 @@ const Usuarios = () => {
                 usuariosFiltrados.map((usuario) => {
                   const { bg, text, icon: Icon, label } = getRolBadge(usuario.rol);
                   return (
-                    <tr key={usuario._id} className="hover:bg-slate-50 transition-colors">
-                      <td className="px-6 py-4">
+                    <tr
+                      key={usuario._id}
+                      className="hover:bg-slate-50 transition-colors cursor-pointer group"
+                      onClick={e => {
+                        // Evitar que el click en el botón de activar/desactivar dispare el row click
+                        if (e.target.closest('button')) return;
+                        window.location.href = `/admin/usuarios/${usuario._id}`;
+                      }}
+                    >
+                      <td className="px-6 py-4 group-hover:underline">
                         <div className="font-medium text-slate-900">{usuario.nombre}</div>
                         {usuario.especialidad && (
                           <div className="text-sm text-muted-foreground">{usuario.especialidad}</div>
@@ -223,7 +231,10 @@ const Usuarios = () => {
                       </td>
                       <td className="px-6 py-4">
                         <button
-                          onClick={() => toggleActivo(usuario._id, usuario.activo)}
+                          onClick={e => {
+                            e.stopPropagation();
+                            toggleActivo(usuario._id, usuario.activo);
+                          }}
                           className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
                             usuario.activo
                               ? 'bg-red-100 text-red-700 hover:bg-red-200'

@@ -40,6 +40,7 @@ import ImprimirReceta from './paginas/ImprimirReceta'
 import Reportes from './paginas/Reportes'
 import Usuarios from './paginas/Usuarios'
 import FormularioUsuario from './paginas/FormularioUsuario'
+import UsuarioDetalle from './paginas/UsuarioDetalle'
 
 import { AuthProvider } from './context/AuthProvider'
 import { PacientesProvider} from './context/PacientesProvider'
@@ -85,6 +86,11 @@ function App() {
                                 <Route path="usuarios" element={
                                     <RutaProtegidaRol rolesPermitidos={['admin']}>
                                         <Usuarios />
+                                    </RutaProtegidaRol>
+                                } />
+                                <Route path="usuarios/:id" element={
+                                    <RutaProtegidaRol rolesPermitidos={['admin']}>
+                                        <UsuarioDetalle />
                                     </RutaProtegidaRol>
                                 } />
                                 <Route path="usuarios/nuevo" element={

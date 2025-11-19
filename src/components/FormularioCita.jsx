@@ -102,12 +102,13 @@ const FormularioCita = () => {
     }
   }, [formData.paciente, pacientes]);
 
+  // Nueva función: obtener veterinarios desde el endpoint actualizado
   const obtenerVeterinarios = async () => {
     try {
       const token = localStorage.getItem('token');
       if (!token) return;
 
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios/veterinarios`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/veterinarios`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
@@ -324,8 +325,8 @@ const FormularioCita = () => {
               <option value="">Seleccionar veterinario</option>
               {veterinarios.map(vet => (
                 <option key={vet._id} value={vet._id}>
-                  Dr(a). {vet.nombre}
-                  {vet.especialidad && ` - ${vet.especialidad}`}
+                  Dr(a). {vet.usuario?.nombre || 'Sin nombre'}
+                  {vet.especialidad ? ` - ${vet.especialidad}` : ''}
                 </option>
               ))}
             </select>
