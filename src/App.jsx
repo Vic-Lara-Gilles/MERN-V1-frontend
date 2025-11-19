@@ -21,16 +21,20 @@ import Dashboard from './paginas/Dashboard'
 import AdministrarPacientes from './paginas/AdministrarPacientes'
 import Configuracion from './paginas/Configuracion'
 import Clientes from './paginas/Clientes'
-import FormularioCliente from './components/FormularioCliente'
+import NuevoCliente from './paginas/NuevoCliente'
+import EditarCliente from './paginas/EditarCliente'
 import DetalleCliente from './paginas/DetalleCliente'
 import Pacientes from './paginas/Pacientes'
-import FormularioPaciente from './components/FormularioPaciente'
+import NuevoPaciente from './paginas/NuevoPaciente'
+import EditarPaciente from './paginas/EditarPaciente'
 import DetallePaciente from './paginas/DetallePaciente'
 import Citas from './paginas/Citas'
-import FormularioCita from './components/FormularioCita'
+import NuevaCita from './paginas/NuevaCita'
+import EditarCita from './paginas/EditarCita'
 import AgendaVeterinario from './paginas/AgendaVeterinario'
 import Consultas from './paginas/Consultas'
-import FormularioConsulta from './components/FormularioConsulta'
+import NuevaConsulta from './paginas/NuevaConsulta'
+import EditarConsulta from './paginas/EditarConsulta'
 import DetalleConsulta from './paginas/DetalleConsulta'
 import ImprimirReceta from './paginas/ImprimirReceta'
 import Reportes from './paginas/Reportes'
@@ -99,12 +103,12 @@ function App() {
                                 } />
                                 <Route path="clientes/nuevo" element={
                                     <RutaProtegidaRol rolesPermitidos={['admin', 'recepcion']}>
-                                        <FormularioCliente />
+                                        <NuevoCliente />
                                     </RutaProtegidaRol>
                                 } />
                                 <Route path="clientes/editar/:id" element={
                                     <RutaProtegidaRol rolesPermitidos={['admin', 'recepcion']}>
-                                        <FormularioCliente />
+                                        <EditarCliente />
                                     </RutaProtegidaRol>
                                 } />
                                 <Route path="clientes/:id" element={
@@ -115,8 +119,8 @@ function App() {
 
                                 {/* Rutas de Pacientes - Todos */}
                                 <Route path="pacientes" element={<Pacientes />} />
-                                <Route path="pacientes/nuevo" element={<FormularioPaciente />} />
-                                <Route path="pacientes/editar/:id" element={<FormularioPaciente />} />
+                                <Route path="pacientes/nuevo" element={<NuevoPaciente />} />
+                                <Route path="pacientes/editar/:id" element={<EditarPaciente />} />
                                 <Route path="pacientes/:id" element={<DetallePaciente />} />
 
                                 {/* Rutas de Citas - Admin y Recepción */}
@@ -127,12 +131,12 @@ function App() {
                                 } />
                                 <Route path="citas/nueva" element={
                                     <RutaProtegidaRol rolesPermitidos={['admin', 'recepcion']}>
-                                        <FormularioCita />
+                                        <NuevaCita />
                                     </RutaProtegidaRol>
                                 } />
                                 <Route path="citas/editar/:id" element={
                                     <RutaProtegidaRol rolesPermitidos={['admin', 'recepcion']}>
-                                        <FormularioCita />
+                                        <EditarCita />
                                     </RutaProtegidaRol>
                                 } />
                                 <Route path="mi-agenda" element={
@@ -149,12 +153,12 @@ function App() {
                                 } />
                                 <Route path="consultas/nueva" element={
                                     <RutaProtegidaRol rolesPermitidos={['admin', 'veterinario']}>
-                                        <FormularioConsulta />
+                                        <NuevaConsulta />
                                     </RutaProtegidaRol>
                                 } />
                                 <Route path="consultas/editar/:id" element={
                                     <RutaProtegidaRol rolesPermitidos={['admin', 'veterinario']}>
-                                        <FormularioConsulta />
+                                        <EditarConsulta />
                                     </RutaProtegidaRol>
                                 } />
                                 <Route path="consultas/:id" element={
