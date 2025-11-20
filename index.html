@@ -9,11 +9,22 @@
         <script>
             (function() {
                 const theme = localStorage.getItem('theme');
-                if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                const isDark = theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                
+                if (isDark) {
                     document.documentElement.classList.add('dark');
                 } else {
                     document.documentElement.classList.remove('dark');
                 }
+                
+                // Aplicar patrón de puntos según el tema
+                const body = document.body;
+                if (isDark) {
+                    body.style.backgroundImage = 'radial-gradient(circle, rgba(148, 163, 184, 0.1) 1px, transparent 1px)';
+                } else {
+                    body.style.backgroundImage = 'radial-gradient(circle, rgba(71, 85, 105, 0.15) 1px, transparent 1px)';
+                }
+                body.style.backgroundSize = '20px 20px';
             })();
         </script>
     </head>
