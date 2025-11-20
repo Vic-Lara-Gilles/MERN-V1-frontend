@@ -219,7 +219,7 @@ const SeleccionAcceso = () => {
 
               <Button 
                 type="submit"
-                className={`w-full h-12 text-base font-semibold shadow-lg transition-all hover:shadow-xl mt-6 ${
+                className={`w-full h-12 text-base font-semibold shadow-lg transition-all hover:shadow-xl mt-6 text-white ${
                   tipoAcceso === 'cliente' 
                     ? 'bg-blue-600 hover:bg-blue-700' 
                     : 'bg-slate-900 hover:bg-slate-800'
