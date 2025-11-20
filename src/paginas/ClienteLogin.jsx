@@ -16,7 +16,12 @@ const ClienteLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log('🔐 ClienteLogin - Iniciando login');
+    console.log('📧 Email:', email);
+    console.log('🔑 Password length:', password.length);
+
     if ([email, password].includes('')) {
+      console.log('❌ Campos vacíos detectados');
       setAlerta({
         msg: 'Todos los campos son obligatorios',
         error: true,
@@ -25,12 +30,25 @@ const ClienteLogin = () => {
     }
 
     try {
-      const { data } = await clienteAxios.post('/clientes/login', { email, password });
+      console.log('📡 Enviando request a:', '/clientes/portal/login');
+      const { data } = await clienteAxios.post('/clientes/portal/login', { email, password });
+      console.log('✅ Login exitoso, data recibida:', data);
+      
       setAlerta({});
       localStorage.setItem('token_cliente', data.token);
+      console.log('💾 Token guardado en localStorage');
+      
       setCliente(data);
+      console.log('👤 Cliente seteado en context');
+      
       navigate('/portal/dashboard');
+      console.log('🚀 Navegando a /portal/dashboard');
     } catch (error) {
+      console.error('❌ Error en login:', error);
+      console.error('❌ Error response:', error.response);
+      console.error('❌ Error data:', error.response?.data);
+      console.error('❌ Error status:', error.response?.status);
+      
       setAlerta({
         msg: error.response?.data?.msg || 'Error al iniciar sesión',
         error: true,
