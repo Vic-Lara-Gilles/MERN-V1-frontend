@@ -5,16 +5,7 @@ const AnimatedBackground = ({ tipoAcceso = 'personal' }) => {
   return (
     <>
       {/* Light mode background */}
-      <div className="fixed inset-0 -z-10 overflow-hidden bg-white dark:hidden">
-        {/* Patrón de puntos simple con mejor opacidad */}
-        <div 
-          className="absolute inset-0 opacity-20 transition-all duration-500"
-          style={{
-            backgroundImage: `radial-gradient(circle, ${dotColor} 1px, transparent 1px)`,
-            backgroundSize: '20px 20px'
-          }}
-        />
-        
+      <div className="fixed inset-0 -z-10 overflow-hidden dark:hidden">
         {/* Efecto de gradiente sutil en las esquinas */}
         <div className={`absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl opacity-10 transition-colors duration-500 ${
           tipoAcceso === 'cliente' ? 'bg-blue-400' : 'bg-slate-400'
@@ -25,16 +16,7 @@ const AnimatedBackground = ({ tipoAcceso = 'personal' }) => {
       </div>
 
       {/* Dark mode background */}
-      <div className="fixed inset-0 -z-10 overflow-hidden bg-gray-900 hidden dark:block">
-        {/* Patrón de puntos para dark mode */}
-        <div 
-          className="absolute inset-0 opacity-15 transition-all duration-500"
-          style={{
-            backgroundImage: `radial-gradient(circle, ${dotColorDark} 1px, transparent 1px)`,
-            backgroundSize: '20px 20px'
-          }}
-        />
-        
+      <div className="fixed inset-0 -z-10 overflow-hidden hidden dark:block">
         {/* Efecto de gradiente sutil en las esquinas para dark */}
         <div className={`absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl opacity-5 transition-colors duration-500 ${
           tipoAcceso === 'cliente' ? 'bg-blue-600' : 'bg-slate-600'
