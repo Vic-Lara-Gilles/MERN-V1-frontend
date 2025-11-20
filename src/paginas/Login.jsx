@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Stethoscope, ArrowRight } from "lucide-react"
 
 const Login = () => {
 
@@ -47,72 +48,105 @@ const Login = () => {
     const { msg } = alerta
     return (
         <>
-            <div className="space-y-2">
-                <h1 className="text-5xl md:text-6xl font-bold bg-linear-to-r from-slate-900 via-slate-700 to-slate-900 bg-clip-text text-transparent">
+            {/* Left: Branding */}
+            <div className="hidden md:flex flex-col justify-center space-y-6">
+                {/* Logo/Icon */}
+                <div className="inline-flex items-center gap-3 mb-4">
+                    <div className="w-14 h-14 rounded-2xl bg-linear-to-br from-slate-900 to-slate-700 dark:from-lime-600 dark:to-lime-500 flex items-center justify-center shadow-lg">
+                        <Stethoscope className="w-7 h-7 text-white" />
+                    </div>
+                    <div>
+                        <h3 className="text-2xl font-bold text-slate-900 dark:text-white">VetManager</h3>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">Sistema de Gestión Veterinaria</p>
+                    </div>
+                </div>
+
+                <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white leading-tight">
                     Bienvenido de nuevo
-                </h1>
-                <p className="text-xl text-muted-foreground">
-                    Inicia sesión para administrar tus <span className="font-semibold text-slate-900">pacientes</span>
+                </h2>
+                
+                <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-md leading-relaxed">
+                    Inicia sesión para administrar tus pacientes y consultas
                 </p>
+                
+                {/* Features list */}
+                <div className="mt-8 space-y-3">
+                    <div className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                        <div className="w-2 h-2 rounded-full bg-slate-700 dark:bg-lime-500"></div>
+                        <span className="text-sm">Gestiona pacientes y consultas</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                        <div className="w-2 h-2 rounded-full bg-slate-700 dark:bg-lime-500"></div>
+                        <span className="text-sm">Agenda y seguimiento de citas</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                        <div className="w-2 h-2 rounded-full bg-slate-700 dark:bg-lime-500"></div>
+                        <span className="text-sm">Historial médico completo</span>
+                    </div>
+                </div>
             </div>
 
-            <Card className="w-full shadow-2xl border-0 bg-linear-to-br from-white to-slate-50">
-                <CardHeader className="space-y-1">
-                    <CardTitle className="text-2xl font-bold">Iniciar Sesión</CardTitle>
-                    <CardDescription>
-                        Ingresa tus credenciales para acceder a tu cuenta
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    { msg && <Alerta alerta={alerta} />}
+            {/* Right: Login Form */}
+            <div className="flex items-center justify-center md:justify-end">
+                <Card className="w-full max-w-md shadow-2xl border-0 bg-white dark:bg-gray-800">
+                    <CardHeader className="space-y-1 pb-6">
+                        <CardTitle className="text-2xl font-bold text-slate-900 dark:text-white">Iniciar Sesión</CardTitle>
+                        <CardDescription className="dark:text-slate-400">
+                            Ingresa tus credenciales para acceder a tu cuenta
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        { msg && <Alerta alerta={alerta} />}
 
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="email">Email</Label>
-                            <Input 
-                                id="email"
-                                type="email"
-                                placeholder="tu@email.com"
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
-                                className="h-11"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="password">Contraseña</Label>
-                            <Input 
-                                id="password"
-                                type="password"
-                                placeholder="••••••••"
-                                value={password}
-                                onChange={e => setPassword(e.target.value)}
-                                className="h-11"
-                            />
-                        </div>
-                        <Button 
-                            type="submit"
-                            className="w-full h-11 text-base font-semibold"
-                            size="lg"
-                        >
-                            Iniciar Sesión
-                        </Button>
-                        
-                        <div className="flex flex-col gap-3 mt-6 pt-6 border-t">
-                            <Link
-                                className="text-sm text-center text-muted-foreground hover:text-primary transition-colors"
-                                to="/auth/registrar">
-                                ¿No tienes cuenta? <span className="font-semibold text-primary">Regístrate</span>
-                            </Link>
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-200">Email</Label>
+                                <Input 
+                                    id="email"
+                                    type="email"
+                                    placeholder="tu@email.com"
+                                    value={email}
+                                    onChange={e => setEmail(e.target.value)}
+                                    className="h-12 px-4 text-base border-slate-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white dark:placeholder-gray-400 focus:border-slate-900 dark:focus:border-lime-500 focus:ring-slate-900 dark:focus:ring-lime-500"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="password" className="text-sm font-medium text-slate-700 dark:text-slate-200">Contraseña</Label>
+                                <Input 
+                                    id="password"
+                                    type="password"
+                                    placeholder="••••••••"
+                                    value={password}
+                                    onChange={e => setPassword(e.target.value)}
+                                    className="h-12 px-4 text-base border-slate-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white dark:placeholder-gray-400 focus:border-slate-900 dark:focus:border-lime-500 focus:ring-slate-900 dark:focus:ring-lime-500"
+                                />
+                            </div>
+                            <Button 
+                                type="submit"
+                                className="w-full h-12 text-base font-semibold shadow-lg transition-all hover:shadow-xl mt-6 text-white bg-slate-900 hover:bg-slate-800 dark:bg-lime-600 dark:hover:bg-lime-700"
+                                size="lg"
+                            >
+                                Iniciar Sesión
+                                <ArrowRight className="ml-2 h-5 w-5" />
+                            </Button>
                             
-                            <Link
-                                className="text-sm text-center text-muted-foreground hover:text-primary transition-colors"
-                                to="/auth/olvide-password">
-                                ¿Olvidaste tu contraseña?
-                            </Link>
-                        </div>
-                    </form>
-                </CardContent>
-            </Card>
+                            <div className="text-center pt-6 border-t border-slate-200 dark:border-gray-700 mt-6 space-y-3">
+                                <Link
+                                    className="text-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors block w-full font-medium"
+                                    to="/auth/registrar">
+                                    ¿No tienes cuenta? <span className="font-semibold text-slate-900 dark:text-lime-500">Regístrate</span>
+                                </Link>
+                                
+                                <Link
+                                    className="text-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors block w-full"
+                                    to="/auth/olvide-password">
+                                    ¿Olvidaste tu contraseña?
+                                </Link>
+                            </div>
+                        </form>
+                    </CardContent>
+                </Card>
+            </div>
         </>
     );
 };
