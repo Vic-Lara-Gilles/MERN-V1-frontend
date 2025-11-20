@@ -131,53 +131,60 @@ const Reportes = () => {
   };
 
   return (
-    <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
+    <div className="p-6 space-y-6">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Reportes y Estadísticas</h1>
-        <p className="text-gray-600">Análisis de consultas médicas y actividad clínica</p>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+            <TrendingUp className="h-8 w-8 text-slate-900 dark:text-lime-500" />
+            Reportes y Estadísticas
+          </h1>
+          <p className="text-muted-foreground dark:text-slate-300 mt-1">
+            Análisis de consultas médicas y actividad clínica
+          </p>
+        </div>
       </div>
 
       {/* Filtros */}
-      <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-        <div className="flex items-center gap-2 mb-4">
-          <Filter className="w-5 h-5 text-gray-900" />
-          <h2 className="text-lg font-semibold text-gray-900">Filtros</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-transparent dark:border-gray-700 p-4 space-y-4">
+        <div className="flex items-center gap-2">
+          <Filter className="h-5 w-5 text-slate-900 dark:text-lime-500" />
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Filtros</h2>
         </div>
         
         <div className="grid md:grid-cols-4 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
               Fecha Inicio
             </label>
             <input
               type="date"
               value={fechaInicio}
               onChange={(e) => setFechaInicio(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
               Fecha Fin
             </label>
             <input
               type="date"
               value={fechaFin}
               onChange={(e) => setFechaFin(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
               Veterinario
             </label>
             <select
               value={filtroVeterinario}
               onChange={(e) => setFiltroVeterinario(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
             >
               <option value="">Todos</option>
               {veterinariosUnicos.map((vet) => (
@@ -191,13 +198,13 @@ const Reportes = () => {
           <div className="flex items-end gap-2">
             <button
               onClick={limpiarFiltros}
-              className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-sm"
+              className="px-4 py-2 border border-slate-200 dark:border-gray-600 rounded-lg hover:bg-slate-50 dark:hover:bg-gray-700 text-sm text-slate-900 dark:text-white transition-colors"
             >
               Limpiar
             </button>
             <button
               onClick={handleExportar}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800"
+              className="flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-lime-600 text-white rounded-lg hover:bg-slate-800 dark:hover:bg-lime-700 transition-colors"
             >
               <Download className="w-4 h-4" />
               Exportar CSV
@@ -206,10 +213,10 @@ const Reportes = () => {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6 mb-8">
+      <div className="grid lg:grid-cols-2 gap-6">
         {/* Top Diagnósticos */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-transparent dark:border-gray-700 p-6">
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">
             Top 10 Diagnósticos Más Frecuentes
           </h3>
           {topDiagnosticos.length > 0 ? (
@@ -219,16 +226,16 @@ const Reportes = () => {
                 return (
                   <div key={index}>
                     <div className="flex justify-between text-sm mb-1">
-                      <span className="font-medium text-gray-900 capitalize truncate">
+                      <span className="font-medium text-slate-900 dark:text-white capitalize truncate">
                         {index + 1}. {diagnostico.substring(0, 40)}...
                       </span>
-                      <span className="text-gray-600">
+                      <span className="text-gray-600 dark:text-slate-300">
                         {cantidad} ({porcentaje}%)
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                       <div
-                        className="bg-blue-600 h-2 rounded-full"
+                        className="bg-blue-600 dark:bg-blue-500 h-2 rounded-full"
                         style={{ width: `${porcentaje}%` }}
                       ></div>
                     </div>
@@ -237,13 +244,13 @@ const Reportes = () => {
               })}
             </div>
           ) : (
-            <p className="text-gray-500 text-center py-4">No hay datos disponibles</p>
+            <p className="text-gray-500 dark:text-gray-400 text-center py-4">No hay datos disponibles</p>
           )}
         </div>
 
         {/* Top Medicamentos */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-transparent dark:border-gray-700 p-6">
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">
             Top 10 Medicamentos Más Prescritos
           </h3>
           {topMedicamentos.length > 0 ? (
@@ -254,14 +261,14 @@ const Reportes = () => {
                 return (
                   <div key={index}>
                     <div className="flex justify-between text-sm mb-1">
-                      <span className="font-medium text-gray-900 capitalize">
+                      <span className="font-medium text-slate-900 dark:text-white capitalize">
                         {index + 1}. {medicamento}
                       </span>
-                      <span className="text-gray-600">{cantidad} veces</span>
+                      <span className="text-gray-600 dark:text-slate-300">{cantidad} veces</span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                       <div
-                        className="bg-green-600 h-2 rounded-full"
+                        className="bg-green-600 dark:bg-green-500 h-2 rounded-full"
                         style={{ width: `${porcentaje}%` }}
                       ></div>
                     </div>
@@ -270,15 +277,15 @@ const Reportes = () => {
               })}
             </div>
           ) : (
-            <p className="text-gray-500 text-center py-4">No hay datos disponibles</p>
+            <p className="text-gray-500 dark:text-gray-400 text-center py-4">No hay datos disponibles</p>
           )}
         </div>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Consultas por Veterinario */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-transparent dark:border-gray-700 p-6">
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">
             Consultas por Veterinario
           </h3>
           {consultasPorVet.length > 0 ? (
@@ -288,14 +295,14 @@ const Reportes = () => {
                 return (
                   <div key={index}>
                     <div className="flex justify-between text-sm mb-1">
-                      <span className="font-medium text-gray-900">Dr(a). {nombre}</span>
-                      <span className="text-gray-600">
+                      <span className="font-medium text-slate-900 dark:text-white">Dr(a). {nombre}</span>
+                      <span className="text-gray-600 dark:text-slate-300">
                         {cantidad} ({porcentaje}%)
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                       <div
-                        className="bg-purple-600 h-2 rounded-full"
+                        className="bg-purple-600 dark:bg-purple-500 h-2 rounded-full"
                         style={{ width: `${porcentaje}%` }}
                       ></div>
                     </div>
@@ -304,30 +311,30 @@ const Reportes = () => {
               })}
             </div>
           ) : (
-            <p className="text-gray-500 text-center py-4">No hay datos disponibles</p>
+            <p className="text-gray-500 dark:text-gray-400 text-center py-4">No hay datos disponibles</p>
           )}
         </div>
 
         {/* Consultas por Especie */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-            <PawPrint className="w-5 h-5 text-gray-900" />
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-transparent dark:border-gray-700 p-6">
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+            <PawPrint className="w-5 h-5 text-slate-900 dark:text-lime-500" />
             Consultas por Especie
           </h3>
           {consultasPorEspecie.length > 0 ? (
             <div className="space-y-3">
               {consultasPorEspecie.map(([especie, cantidad], index) => {
                 const porcentaje = Math.round((cantidad / totalConsultas) * 100);
-                const colors = ['bg-blue-600', 'bg-green-600', 'bg-yellow-600', 'bg-red-600', 'bg-purple-600'];
+                const colors = ['bg-blue-600 dark:bg-blue-500', 'bg-green-600 dark:bg-green-500', 'bg-yellow-600 dark:bg-yellow-500', 'bg-red-600 dark:bg-red-500', 'bg-purple-600 dark:bg-purple-500'];
                 return (
                   <div key={index}>
                     <div className="flex justify-between text-sm mb-1">
-                      <span className="font-medium text-gray-900">{especie}</span>
-                      <span className="text-gray-600">
+                      <span className="font-medium text-slate-900 dark:text-white">{especie}</span>
+                      <span className="text-gray-600 dark:text-slate-300">
                         {cantidad} ({porcentaje}%)
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                       <div
                         className={`${colors[index % colors.length]} h-2 rounded-full`}
                         style={{ width: `${porcentaje}%` }}
@@ -338,29 +345,79 @@ const Reportes = () => {
               })}
             </div>
           ) : (
-            <p className="text-gray-500 text-center py-4">No hay datos disponibles</p>
+            <p className="text-gray-500 dark:text-gray-400 text-center py-4">No hay datos disponibles</p>
           )}
         </div>
       </div>
 
+      {/* Distribución de Pacientes por Especie */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-transparent dark:border-gray-700 p-6">
+        <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+          <PawPrint className="w-5 h-5 text-slate-900 dark:text-lime-500" />
+          Distribución de Pacientes por Especie
+        </h3>
+        {pacientes.length > 0 ? (
+          <div className="space-y-3">
+            {(() => {
+              const especiesCount = pacientes.reduce((acc, paciente) => {
+                acc[paciente.especie] = (acc[paciente.especie] || 0) + 1;
+                return acc;
+              }, {});
+              const totalPacientes = pacientes.length;
+              return Object.entries(especiesCount)
+                .sort((a, b) => b[1] - a[1])
+                .map(([especie, count], index) => {
+                  const porcentaje = Math.round((count / totalPacientes) * 100);
+                  const colors = [
+                    'bg-amber-600 dark:bg-amber-500',
+                    'bg-purple-600 dark:bg-purple-500',
+                    'bg-sky-600 dark:bg-sky-500',
+                    'bg-pink-600 dark:bg-pink-500',
+                    'bg-emerald-600 dark:bg-emerald-500',
+                    'bg-slate-600 dark:bg-slate-500'
+                  ];
+                  return (
+                    <div key={especie}>
+                      <div className="flex justify-between text-sm mb-1">
+                        <span className="font-medium text-slate-900 dark:text-white">{especie}</span>
+                        <span className="text-gray-600 dark:text-slate-300">
+                          {count} pacientes ({porcentaje}%)
+                        </span>
+                      </div>
+                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div
+                          className={`${colors[index % colors.length]} h-2 rounded-full transition-all`}
+                          style={{ width: `${porcentaje}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  );
+                });
+            })()}
+          </div>
+        ) : (
+          <p className="text-gray-500 dark:text-gray-400 text-center py-4">No hay pacientes registrados</p>
+        )}
+      </div>
+
       {/* Resumen del período */}
-      <div className="mt-6 bg-gray-50 rounded-lg p-6 border border-gray-200">
-        <h3 className="font-semibold text-gray-900 mb-2">Resumen del Período</h3>
-        <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
+      <div className="bg-slate-50 dark:bg-gray-800 rounded-lg p-6 border border-slate-200 dark:border-gray-700">
+        <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Resumen del Período</h3>
+        <div className="grid md:grid-cols-3 gap-4 text-sm">
           <div>
-            <p className="text-gray-500">Período analizado:</p>
-            <p className="font-semibold">
+            <p className="text-gray-500 dark:text-gray-400">Período analizado:</p>
+            <p className="font-semibold text-slate-900 dark:text-white">
               {new Date(fechaInicio).toLocaleDateString('es-CL')} -{' '}
               {new Date(fechaFin).toLocaleDateString('es-CL')}
             </p>
           </div>
           <div>
-            <p className="text-gray-500">Total de pacientes:</p>
-            <p className="font-semibold">{pacientes.length}</p>
+            <p className="text-gray-500 dark:text-gray-400">Total de pacientes:</p>
+            <p className="font-semibold text-slate-900 dark:text-white">{pacientes.length}</p>
           </div>
           <div>
-            <p className="text-gray-500">Total de clientes:</p>
-            <p className="font-semibold">{clientes.length}</p>
+            <p className="text-gray-500 dark:text-gray-400">Total de clientes:</p>
+            <p className="font-semibold text-slate-900 dark:text-white">{clientes.length}</p>
           </div>
         </div>
       </div>
