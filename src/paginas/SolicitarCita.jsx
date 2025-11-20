@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { PawPrint, LogOut, ArrowLeft, Calendar, Clock, FileText } from 'lucide-react';
+import { PawPrint, LogOut, ArrowLeft, Calendar, Clock, FileText, Home, CalendarPlus } from 'lucide-react';
 import useClienteAuth from '../hooks/useClienteAuth';
 import clienteAxios from '../config/axios';
 import Alerta from '../components/Alerta';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const SolicitarCita = () => {
   const { cliente, cerrarSesionCliente } = useClienteAuth();
@@ -27,7 +29,7 @@ const SolicitarCita = () => {
       try {
         const token = localStorage.getItem('token_cliente');
         const config = { headers: { Authorization: `Bearer ${token}` } };
-        const { data } = await clienteAxios(`/pacientes/cliente/${cliente._id}`, config);
+        const { data } = await clienteAxios(`/pacientes/portal/mis-pacientes`, config);
         setPacientes(data);
       } catch (error) {
         console.log(error);
@@ -92,46 +94,73 @@ const SolicitarCita = () => {
   const { msg } = alerta;
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-purple-50">
-      <header className="bg-white shadow-md border-b">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-slate-50">
+      <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-backdrop-filter:bg-white/60">
+        <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-              <PawPrint className="w-6 h-6 text-white" />
+            <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center">
+              <PawPrint className="h-5 w-5 text-primary-foreground" />
             </div>
-            <h1 className="text-xl font-bold text-gray-900">Portal Cliente</h1>
+            <div>
+              <h1 className="text-lg font-bold text-slate-900">Portal Cliente</h1>
+              <p className="text-xs text-muted-foreground">Clínica Veterinaria</p>
+            </div>
           </div>
-          <div className="flex items-center gap-4">
-            <Link to="/portal/dashboard" className="text-sm text-gray-700 hover:text-gray-900">Dashboard</Link>
-            <Link to="/portal/mis-mascotas" className="text-sm text-gray-700 hover:text-gray-900">Mis Mascotas</Link>
-            <Link to="/portal/mi-historial" className="text-sm text-gray-700 hover:text-gray-900">Mi Historial</Link>
-            <button onClick={cerrarSesionCliente} className="flex items-center gap-2 text-sm text-red-600 hover:text-red-700">
-              <LogOut className="w-4 h-4" />Salir
-            </button>
-          </div>
+
+          <nav className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/portal/dashboard">
+                <Home className="h-4 w-4 mr-2" />
+                Inicio
+              </Link>
+            </Button>
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/portal/mis-mascotas">
+                <PawPrint className="h-4 w-4 mr-2" />
+                Mascotas
+              </Link>
+            </Button>
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/portal/mi-historial">
+                <FileText className="h-4 w-4 mr-2" />
+                Historial
+              </Link>
+            </Button>
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/portal/solicitar-cita">
+                <CalendarPlus className="h-4 w-4 mr-2" />
+                Solicitar
+              </Link>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={cerrarSesionCliente}
+              className="text-destructive hover:text-destructive"
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Salir
+            </Button>
+          </nav>
         </div>
       </header>
 
-      <main className="max-w-3xl mx-auto px-4 py-8">
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Solicitar Cita</h2>
-            <p className="text-gray-600">Completa el formulario para solicitar una cita</p>
-          </div>
-          <Link to="/portal/dashboard" className="flex items-center gap-2 text-gray-900 hover:text-gray-900">
-            <ArrowLeft className="w-5 h-5" />Volver
-          </Link>
+      <main className="container max-w-3xl mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h2 className="text-4xl font-bold text-slate-900 mb-2">Solicitar Cita</h2>
+          <p className="text-muted-foreground text-lg">Completa el formulario para solicitar una cita</p>
         </div>
 
         {msg && <Alerta alerta={alerta} />}
 
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="mb-6 p-4 bg-blue-50 border-l-4 border-blue-600 rounded">
-            <p className="text-sm text-gray-900">
-              <strong>Importante:</strong> Tu solicitud será revisada por recepción. 
-              Recibirás confirmación por correo electrónico o teléfono.
-            </p>
-          </div>
+        <Card>
+          <CardContent className="p-6">
+            <div className="mb-6 p-4 bg-blue-50 border-l-4 border-blue-600 rounded">
+              <p className="text-sm text-slate-900">
+                <strong>Importante:</strong> Tu solicitud será revisada por recepción. 
+                Recibirás confirmación por correo electrónico o teléfono.
+              </p>
+            </div>
 
           {cargando ? (
             <div className="flex justify-center py-12">
@@ -237,23 +266,26 @@ const SolicitarCita = () => {
               </div>
 
               <div className="flex gap-4">
-                <button
-                  type="submit"
-                  className="flex-1 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200"
-                >
+                <Button type="submit" className="flex-1">
                   Solicitar Cita
-                </button>
-                <Link
-                  to="/portal/dashboard"
-                  className="px-6 py-3 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 transition duration-200 text-center"
-                >
-                  Cancelar
-                </Link>
+                </Button>
+                <Button variant="outline" asChild>
+                  <Link to="/portal/dashboard">
+                    Cancelar
+                  </Link>
+                </Button>
               </div>
             </form>
           )}
-        </div>
+          </CardContent>
+        </Card>
       </main>
+
+      <footer className="mt-16 border-t bg-white">
+        <div className="container mx-auto px-4 py-6 text-center text-sm text-muted-foreground">
+          <p>© 2025 Clínica Veterinaria. Todos los derechos reservados.</p>
+        </div>
+      </footer>
     </div>
   );
 };

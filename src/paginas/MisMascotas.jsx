@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PawPrint, LogOut, ArrowLeft, Calendar } from 'lucide-react';
+import { PawPrint, LogOut, ArrowLeft, Calendar, Home, FileText, CalendarPlus } from 'lucide-react';
 import useClienteAuth from '../hooks/useClienteAuth';
 import clienteAxios from '../config/axios';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const MisMascotas = () => {
   const { cliente, cerrarSesionCliente } = useClienteAuth();
@@ -16,7 +18,7 @@ const MisMascotas = () => {
         const config = {
           headers: { Authorization: `Bearer ${token}` },
         };
-        const { data } = await clienteAxios(`/pacientes/cliente/${cliente._id}`, config);
+        const { data } = await clienteAxios(`/pacientes/portal/mis-pacientes`, config);
         setPacientes(data);
       } catch (error) {
         console.log(error);
@@ -37,35 +39,61 @@ const MisMascotas = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-purple-50">
-      <header className="bg-white shadow-md border-b">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-slate-50">
+      <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-backdrop-filter:bg-white/60">
+        <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-              <PawPrint className="w-6 h-6 text-white" />
+            <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center">
+              <PawPrint className="h-5 w-5 text-primary-foreground" />
             </div>
-            <h1 className="text-xl font-bold text-gray-900">Portal Cliente</h1>
+            <div>
+              <h1 className="text-lg font-bold text-slate-900">Portal Cliente</h1>
+              <p className="text-xs text-muted-foreground">Clínica Veterinaria</p>
+            </div>
           </div>
-          <div className="flex items-center gap-4">
-            <Link to="/portal/dashboard" className="text-sm text-gray-700 hover:text-gray-900">Dashboard</Link>
-            <Link to="/portal/mi-historial" className="text-sm text-gray-700 hover:text-gray-900">Historial</Link>
-            <Link to="/portal/solicitar-cita" className="text-sm text-gray-700 hover:text-gray-900">Solicitar Cita</Link>
-            <button onClick={cerrarSesionCliente} className="flex items-center gap-2 text-sm text-red-600 hover:text-red-700">
-              <LogOut className="w-4 h-4" />Salir
-            </button>
-          </div>
+
+          <nav className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/portal/dashboard">
+                <Home className="h-4 w-4 mr-2" />
+                Inicio
+              </Link>
+            </Button>
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/portal/mis-mascotas">
+                <PawPrint className="h-4 w-4 mr-2" />
+                Mascotas
+              </Link>
+            </Button>
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/portal/mi-historial">
+                <FileText className="h-4 w-4 mr-2" />
+                Historial
+              </Link>
+            </Button>
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/portal/solicitar-cita">
+                <CalendarPlus className="h-4 w-4 mr-2" />
+                Solicitar
+              </Link>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={cerrarSesionCliente}
+              className="text-destructive hover:text-destructive"
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Salir
+            </Button>
+          </nav>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Mis Mascotas</h2>
-            <p className="text-gray-600">Información de tus mascotas registradas</p>
-          </div>
-          <Link to="/portal/dashboard" className="flex items-center gap-2 text-gray-900 hover:text-gray-900">
-            <ArrowLeft className="w-5 h-5" />Volver
-          </Link>
+      <main className="container mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h2 className="text-4xl font-bold text-slate-900 mb-2">Mis Mascotas</h2>
+          <p className="text-muted-foreground text-lg">Información de tus mascotas registradas</p>
         </div>
 
         {cargando ? (
@@ -73,20 +101,22 @@ const MisMascotas = () => {
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
           </div>
         ) : pacientes.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-md p-12 text-center">
-            <PawPrint className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No tienes mascotas registradas</h3>
-            <p className="text-gray-600">Contacta con recepción para registrar a tu mascota</p>
-          </div>
+          <Card>
+            <CardContent className="p-12 text-center">
+              <PawPrint className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-slate-900 mb-2">No tienes mascotas registradas</h3>
+              <p className="text-muted-foreground">Contacta con recepción para registrar a tu mascota</p>
+            </CardContent>
+          </Card>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {pacientes.map((paciente) => (
-              <div key={paciente._id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden">
-                <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-4 text-white">
-                  <h3 className="text-xl font-bold">{paciente.nombre}</h3>
-                  <p className="text-sm text-blue-100">{paciente.numeroHistoriaClinica}</p>
-                </div>
-                <div className="p-6 space-y-3">
+              <Card key={paciente._id} className="hover:shadow-lg transition-shadow">
+                <CardHeader className="bg-linear-to-r from-blue-500 to-purple-500 text-white">
+                  <CardTitle className="text-white">{paciente.nombre}</CardTitle>
+                  <CardDescription className="text-blue-100">{paciente.numeroHistoriaClinica}</CardDescription>
+                </CardHeader>
+                <CardContent className="p-6 space-y-3">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">Especie:</span>
                     <span className="font-semibold">{paciente.especie}</span>
@@ -117,20 +147,24 @@ const MisMascotas = () => {
                       </span>
                     </div>
                   )}
-                  <Link
-                    to="/portal/solicitar-cita"
-                    state={{ pacienteId: paciente._id }}
-                    className="mt-4 w-full flex items-center justify-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800"
-                  >
-                    <Calendar className="w-4 h-4" />
-                    Solicitar Cita
-                  </Link>
-                </div>
-              </div>
+                  <Button className="mt-4 w-full" asChild>
+                    <Link to="/portal/solicitar-cita" state={{ pacienteId: paciente._id }}>
+                      <Calendar className="w-4 h-4 mr-2" />
+                      Solicitar Cita
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
             ))}
           </div>
         )}
       </main>
+
+      <footer className="mt-16 border-t bg-white">
+        <div className="container mx-auto px-4 py-6 text-center text-sm text-muted-foreground">
+          <p>© 2025 Clínica Veterinaria. Todos los derechos reservados.</p>
+        </div>
+      </footer>
     </div>
   );
 };
