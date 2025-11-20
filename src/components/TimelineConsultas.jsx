@@ -24,14 +24,14 @@ const TimelineConsultas = ({ consultas, pacienteId }) => {
     return (
       <div className="text-center py-12">
         <div className="flex justify-center mb-4">
-          <div className="p-4 bg-gray-100 rounded-full">
-            <FileText className="h-12 w-12 text-gray-400" />
+          <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-full">
+            <FileText className="h-12 w-12 text-gray-400 dark:text-gray-500" />
           </div>
         </div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
           No hay consultas registradas
         </h3>
-        <p className="text-gray-600 mb-6">
+        <p className="text-gray-600 dark:text-gray-400 mb-6">
           Este paciente aún no tiene consultas médicas en el sistema
         </p>
         <Link
@@ -61,25 +61,25 @@ const TimelineConsultas = ({ consultas, pacienteId }) => {
       {/* Timeline */}
       <div className="relative">
         {/* Línea vertical del timeline */}
-        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-gray-700"></div>
 
         {/* Lista de consultas */}
         <div className="space-y-6">
           {consultas.map((consulta, index) => (
             <div key={consulta._id || index} className="relative pl-16">
               {/* Punto del timeline */}
-              <div className="absolute left-6 top-2 w-4 h-4 bg-indigo-600 rounded-full border-4 border-white shadow"></div>
+              <div className="absolute left-6 top-2 w-4 h-4 bg-indigo-600 dark:bg-indigo-500 rounded-full border-4 border-white dark:border-gray-900 shadow"></div>
 
               {/* Tarjeta de consulta */}
-              <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+              <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow">
                 {/* Header de la consulta */}
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center space-x-2">
-                    <Calendar className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm font-semibold text-gray-900">
+                    <Calendar className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                    <span className="text-sm font-semibold text-gray-900 dark:text-white">
                       {formatearFechaCorta(consulta.fecha)}
                     </span>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
                       {new Date(consulta.fecha).toLocaleTimeString('es-CL', {
                         hour: '2-digit',
                         minute: '2-digit'
@@ -97,12 +97,12 @@ const TimelineConsultas = ({ consultas, pacienteId }) => {
 
                 {/* Veterinario */}
                 {consulta.veterinario && (
-                  <div className="flex items-center space-x-2 mb-3 text-sm text-gray-700">
-                    <User className="h-4 w-4 text-gray-500" />
+                  <div className="flex items-center space-x-2 mb-3 text-sm text-gray-700 dark:text-gray-300">
+                    <User className="h-4 w-4 text-gray-500 dark:text-gray-400" />
                     <span>
                       Dr(a). {consulta.veterinario.nombre}
                       {consulta.veterinario.especialidad && (
-                        <span className="text-gray-500 ml-1">
+                        <span className="text-gray-500 dark:text-gray-400 ml-1">
                           - {consulta.veterinario.especialidad}
                         </span>
                       )}
@@ -112,47 +112,47 @@ const TimelineConsultas = ({ consultas, pacienteId }) => {
 
                 {/* Motivo de consulta */}
                 <div className="mb-3">
-                  <h4 className="text-sm font-semibold text-gray-900 mb-1">
+                  <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">
                     Motivo de Consulta
                   </h4>
-                  <p className="text-sm text-gray-700">{consulta.motivoConsulta}</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300">{consulta.motivoConsulta}</p>
                 </div>
 
                 {/* Síntomas (si existen) */}
                 {consulta.sintomas && (
                   <div className="mb-3">
-                    <h4 className="text-sm font-semibold text-gray-900 mb-1">
+                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">
                       Síntomas
                     </h4>
-                    <p className="text-sm text-gray-700">{consulta.sintomas}</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300">{consulta.sintomas}</p>
                   </div>
                 )}
 
                 {/* Signos vitales (si existen) */}
                 {(consulta.peso || consulta.temperatura || consulta.frecuenciaCardiaca || consulta.frecuenciaRespiratoria) && (
-                  <div className="mb-3 grid grid-cols-2 gap-2 bg-gray-50 p-3 rounded">
+                  <div className="mb-3 grid grid-cols-2 gap-2 bg-gray-50 dark:bg-gray-900 p-3 rounded">
                     {consulta.peso && (
                       <div className="text-xs">
-                        <span className="text-gray-600">Peso:</span>
-                        <span className="font-semibold text-gray-900 ml-1">{consulta.peso} kg</span>
+                        <span className="text-gray-600 dark:text-gray-400">Peso:</span>
+                        <span className="font-semibold text-gray-900 dark:text-white ml-1">{consulta.peso} kg</span>
                       </div>
                     )}
                     {consulta.temperatura && (
                       <div className="text-xs">
-                        <span className="text-gray-600">Temp:</span>
-                        <span className="font-semibold text-gray-900 ml-1">{consulta.temperatura}°C</span>
+                        <span className="text-gray-600 dark:text-gray-400">Temp:</span>
+                        <span className="font-semibold text-gray-900 dark:text-white ml-1">{consulta.temperatura}°C</span>
                       </div>
                     )}
                     {consulta.frecuenciaCardiaca && (
                       <div className="text-xs">
-                        <span className="text-gray-600">FC:</span>
-                        <span className="font-semibold text-gray-900 ml-1">{consulta.frecuenciaCardiaca} lpm</span>
+                        <span className="text-gray-600 dark:text-gray-400">FC:</span>
+                        <span className="font-semibold text-gray-900 dark:text-white ml-1">{consulta.frecuenciaCardiaca} lpm</span>
                       </div>
                     )}
                     {consulta.frecuenciaRespiratoria && (
                       <div className="text-xs">
-                        <span className="text-gray-600">FR:</span>
-                        <span className="font-semibold text-gray-900 ml-1">{consulta.frecuenciaRespiratoria} rpm</span>
+                        <span className="text-gray-600 dark:text-gray-400">FR:</span>
+                        <span className="font-semibold text-gray-900 dark:text-white ml-1">{consulta.frecuenciaRespiratoria} rpm</span>
                       </div>
                     )}
                   </div>
@@ -160,34 +160,34 @@ const TimelineConsultas = ({ consultas, pacienteId }) => {
 
                 {/* Diagnóstico */}
                 <div className="mb-3">
-                  <h4 className="text-sm font-semibold text-gray-900 mb-1">
+                  <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">
                     Diagnóstico
                   </h4>
-                  <p className="text-sm text-gray-700">{consulta.diagnostico}</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300">{consulta.diagnostico}</p>
                 </div>
 
                 {/* Tratamiento */}
                 {consulta.tratamiento && (
                   <div className="mb-3">
-                    <h4 className="text-sm font-semibold text-gray-900 mb-1">
+                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">
                       Tratamiento
                     </h4>
-                    <p className="text-sm text-gray-700">{consulta.tratamiento}</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300">{consulta.tratamiento}</p>
                   </div>
                 )}
 
                 {/* Medicamentos */}
                 {consulta.medicamentos && consulta.medicamentos.length > 0 && (
                   <div className="mb-3">
-                    <h4 className="text-sm font-semibold text-gray-900 mb-2 flex items-center">
-                      <Pill className="h-4 w-4 mr-1 text-gray-900" />
+                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2 flex items-center">
+                      <Pill className="h-4 w-4 mr-1 text-gray-900 dark:text-white" />
                       Medicamentos
                     </h4>
                     <div className="space-y-2">
                       {consulta.medicamentos.map((med, idx) => (
-                        <div key={idx} className="bg-indigo-50 p-2 rounded text-sm">
-                          <p className="font-semibold text-gray-900">{med.nombre}</p>
-                          <div className="grid grid-cols-3 gap-2 mt-1 text-xs text-gray-700">
+                        <div key={idx} className="bg-indigo-50 dark:bg-indigo-900/30 p-2 rounded text-sm">
+                          <p className="font-semibold text-gray-900 dark:text-white">{med.nombre}</p>
+                          <div className="grid grid-cols-3 gap-2 mt-1 text-xs text-gray-700 dark:text-gray-300">
                             {med.dosis && <span>Dosis: {med.dosis}</span>}
                             {med.frecuencia && <span>Frecuencia: {med.frecuencia}</span>}
                             {med.duracion && <span>Duración: {med.duracion}</span>}
@@ -201,19 +201,19 @@ const TimelineConsultas = ({ consultas, pacienteId }) => {
                 {/* Exámenes */}
                 {consulta.examenes && consulta.examenes.length > 0 && (
                   <div className="mb-3">
-                    <h4 className="text-sm font-semibold text-gray-900 mb-2 flex items-center">
-                      <TestTube className="h-4 w-4 mr-1 text-purple-600" />
+                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2 flex items-center">
+                      <TestTube className="h-4 w-4 mr-1 text-purple-600 dark:text-purple-400" />
                       Exámenes
                     </h4>
                     <div className="space-y-2">
                       {consulta.examenes.map((exam, idx) => (
-                        <div key={idx} className="bg-purple-50 p-2 rounded text-sm">
-                          <p className="font-semibold text-gray-900">{exam.tipo}</p>
+                        <div key={idx} className="bg-purple-50 dark:bg-purple-900/30 p-2 rounded text-sm">
+                          <p className="font-semibold text-gray-900 dark:text-white">{exam.tipo}</p>
                           {exam.descripcion && (
-                            <p className="text-xs text-gray-700 mt-1">{exam.descripcion}</p>
+                            <p className="text-xs text-gray-700 dark:text-gray-300 mt-1">{exam.descripcion}</p>
                           )}
                           {exam.resultado && (
-                            <p className="text-xs text-gray-900 mt-1">
+                            <p className="text-xs text-gray-900 dark:text-white mt-1">
                               <span className="font-semibold">Resultado:</span> {exam.resultado}
                             </p>
                           )}
@@ -225,9 +225,9 @@ const TimelineConsultas = ({ consultas, pacienteId }) => {
 
                 {/* Próxima revisión */}
                 {consulta.proximaRevision && (
-                  <div className="flex items-center space-x-2 text-sm bg-yellow-50 p-2 rounded mb-3">
-                    <AlertCircle className="h-4 w-4 text-yellow-600" />
-                    <span className="text-gray-700">
+                  <div className="flex items-center space-x-2 text-sm bg-yellow-50 dark:bg-yellow-900/30 p-2 rounded mb-3">
+                    <AlertCircle className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
+                    <span className="text-gray-700 dark:text-gray-300">
                       Próxima revisión: {formatearFechaCorta(consulta.proximaRevision)}
                     </span>
                   </div>
@@ -236,22 +236,22 @@ const TimelineConsultas = ({ consultas, pacienteId }) => {
                 {/* Observaciones */}
                 {consulta.observaciones && (
                   <div className="mb-3">
-                    <h4 className="text-sm font-semibold text-gray-900 mb-1">
+                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">
                       Observaciones
                     </h4>
-                    <p className="text-sm text-gray-700 italic">{consulta.observaciones}</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 italic">{consulta.observaciones}</p>
                   </div>
                 )}
 
                 {/* Footer con acciones */}
-                <div className="flex items-center justify-between pt-3 border-t border-gray-200 mt-3">
-                  <div className="text-xs text-gray-500">
+                <div className="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700 mt-3">
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
                     Consulta #{consulta._id ? consulta._id.slice(-6) : index + 1}
                   </div>
                   <div className="flex space-x-2">
                     <Link
                       to={`/admin/consultas/${consulta._id}`}
-                      className="text-xs text-gray-900 hover:text-gray-900 font-medium"
+                      className="text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium"
                     >
                       Ver detalles
                     </Link>
