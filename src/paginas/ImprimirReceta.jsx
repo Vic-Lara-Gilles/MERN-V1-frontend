@@ -15,7 +15,10 @@ const ImprimirReceta = () => {
       const data = await obtenerConsulta(id);
       setConsulta(data);
     };
-    cargarConsulta();
+    if (id) {
+      cargarConsulta();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const formatearFecha = (fecha) => {
