@@ -100,13 +100,13 @@ const Login = () => {
                         <div className="flex flex-col gap-3 mt-6 pt-6 border-t">
                             <Link
                                 className="text-sm text-center text-muted-foreground hover:text-primary transition-colors"
-                                to="/registrar">
+                                to="/auth/registrar">
                                 ¿No tienes cuenta? <span className="font-semibold text-primary">Regístrate</span>
                             </Link>
                             
                             <Link
                                 className="text-sm text-center text-muted-foreground hover:text-primary transition-colors"
-                                to="/olvide-password">
+                                to="/auth/olvide-password">
                                 ¿Olvidaste tu contraseña?
                             </Link>
                         </div>
