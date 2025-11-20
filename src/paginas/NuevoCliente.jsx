@@ -14,7 +14,13 @@ const NuevoCliente = () => {
             return
         }
 
-        const resultado = await guardarCliente(datos)
+        // Marcar email como verificado cuando se crea desde el panel admin
+        const datosConVerificacion = {
+            ...datos,
+            emailVerificado: true
+        }
+
+        const resultado = await guardarCliente(datosConVerificacion)
         
         if (resultado) {
             navigate('/admin/clientes')

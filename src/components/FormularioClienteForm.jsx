@@ -20,6 +20,7 @@ const FormularioClienteForm = ({
         apellido: initialData.apellido || '',
         rut: initialData.rut || '',
         email: initialData.email || '',
+        password: '', // Contraseña para acceso al portal
         telefono: initialData.telefono || '',
         direccion: initialData.direccion || '',
         ciudad: initialData.ciudad || '',
@@ -186,6 +187,28 @@ const FormularioClienteForm = ({
                                 required
                             />
                         </div>
+
+                        {!isEditing && (
+                            <div className="md:col-span-2">
+                                <label className="block text-sm font-medium text-slate-700 mb-2">
+                                    Contraseña para Portal Cliente {!formData.password && <span className="text-slate-500 text-xs">(opcional)</span>}
+                                </label>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                                    placeholder="Deja en blanco para generar automáticamente desde el RUT"
+                                    minLength={6}
+                                />
+                                <p className="text-xs text-slate-500 mt-1">
+                                    {formData.password 
+                                        ? "El cliente podrá iniciar sesión con esta contraseña" 
+                                        : "Si no ingresas una contraseña, se generará automáticamente usando el RUT (sin puntos ni guión)"}
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -445,17 +468,19 @@ const FormularioClienteForm = ({
                 </div>
 
                 {/* Información de Acceso al Portal */}
-                {!isEditing && (
+                {!isEditing && !formData.password && (
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                         <h3 className="font-semibold text-blue-900 mb-2">
-                            ℹ️ Acceso al Portal del Cliente
+                            ℹ️ Contraseña Automática
                         </h3>
                         <p className="text-sm text-gray-900">
-                            Se generará automáticamente una contraseña temporal usando el RUT (sin puntos ni guión).
-                            El cliente podrá cambiar su contraseña desde el portal web.
+                            Al no ingresar una contraseña, se generará automáticamente usando el RUT (sin puntos ni guión).
                         </p>
                         <p className="text-sm text-gray-900 mt-2">
-                            <strong>Ejemplo:</strong> Si el RUT es 12.345.678-9, la contraseña temporal será: <code className="bg-blue-100 px-2 py-1 rounded">123456789</code>
+                            <strong>Ejemplo:</strong> Si el RUT es 12.345.678-9, la contraseña será: <code className="bg-blue-100 px-2 py-1 rounded">123456789</code>
+                        </p>
+                        <p className="text-sm text-gray-900 mt-2">
+                            El cliente podrá cambiar su contraseña desde el portal web después de iniciar sesión.
                         </p>
                     </div>
                 )}
