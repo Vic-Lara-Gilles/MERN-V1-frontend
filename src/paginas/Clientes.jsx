@@ -8,7 +8,7 @@ import {
     Edit, 
     Trash2, 
     Eye,
-    UserCheck,
+    Users,
     Mail,
     Phone,
     MapPin
@@ -20,6 +20,7 @@ const Clientes = () => {
 
     useEffect(() => {
         obtenerClientes()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleEliminar = async (id, nombre) => {
@@ -42,7 +43,7 @@ const Clientes = () => {
     if (cargando) {
         return (
             <div className="flex items-center justify-center min-h-screen">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900 dark:border-lime-500"></div>
             </div>
         )
     }
@@ -52,12 +53,15 @@ const Clientes = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-900">Clientes</h1>
-                    <p className="text-muted-foreground mt-1">
+                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+                        <Users className="h-8 w-8 text-slate-900 dark:text-lime-500" />
+                        Clientes
+                    </h1>
+                    <p className="text-muted-foreground dark:text-slate-300 mt-1">
                         Gestión de dueños de mascotas
                     </p>
                 </div>
-                <Button asChild className="gap-2">
+                <Button asChild className="gap-2 bg-slate-900 dark:bg-lime-600 hover:bg-slate-800 dark:hover:bg-lime-700">
                     <Link to="/admin/clientes/nuevo">
                         <Plus className="h-4 w-4" />
                         Nuevo Cliente
@@ -66,13 +70,13 @@ const Clientes = () => {
             </div>
 
             {/* Buscador */}
-            <div className="bg-white p-4 rounded-lg shadow-md">
+            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md border border-transparent dark:border-gray-700">
                 <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground dark:text-gray-400" />
                     <input
                         type="text"
                         placeholder="Buscar por nombre, RUT, email o teléfono..."
-                        className="w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder:text-gray-400"
                         value={busqueda}
                         onChange={(e) => setBusqueda(e.target.value)}
                     />
@@ -80,20 +84,20 @@ const Clientes = () => {
             </div>
 
             {/* Lista de clientes */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-transparent dark:border-gray-700">
                 {clientesFiltrados.length === 0 ? (
                     <div className="p-12 text-center">
-                        <UserCheck className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                        <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                        <Users className="h-16 w-16 text-muted-foreground dark:text-gray-500 mx-auto mb-4" />
+                        <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
                             {busqueda ? "No se encontraron clientes" : "No hay clientes registrados"}
                         </h3>
-                        <p className="text-muted-foreground mb-6">
+                        <p className="text-muted-foreground dark:text-slate-300 mb-6">
                             {busqueda 
                                 ? "Intenta con otros términos de búsqueda" 
                                 : "Comienza agregando tu primer cliente"}
                         </p>
                         {!busqueda && (
-                            <Button asChild>
+                            <Button asChild className="bg-slate-900 dark:bg-lime-600 hover:bg-slate-800 dark:hover:bg-lime-700">
                                 <Link to="/admin/clientes/nuevo">
                                     <Plus className="h-4 w-4 mr-2" />
                                     Crear Primer Cliente
@@ -104,40 +108,40 @@ const Clientes = () => {
                 ) : (
                     <div className="overflow-x-auto">
                         <table className="w-full">
-                            <thead className="bg-slate-50 border-b">
+                            <thead className="bg-slate-50 dark:bg-gray-900 border-b border-slate-200 dark:border-gray-700">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
                                         Cliente
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
                                         RUT
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
                                         Contacto
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
                                         Ubicación
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
                                         Estado
                                     </th>
-                                    <th className="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-right text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
                                         Acciones
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-slate-200">
+                            <tbody className="bg-white dark:bg-gray-800 divide-y divide-slate-200 dark:divide-gray-700">
                                 {clientesFiltrados.map((cliente) => (
-                                    <tr key={cliente._id} className="hover:bg-slate-50 transition-colors">
+                                    <tr key={cliente._id} className="hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors">
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
-                                                <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
-                                                    <UserCheck className="h-5 w-5 text-green-600" />
+                                                <div className="h-10 w-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                                                    <Users className="h-5 w-5 text-green-600 dark:text-green-400" />
                                                 </div>
                                                 <div className="ml-4">
                                                     <Link 
                                                         to={`/admin/clientes/${cliente._id}`}
-                                                        className="text-sm font-medium text-slate-900 hover:text-primary transition-colors cursor-pointer"
+                                                        className="text-sm font-medium text-slate-900 dark:text-white hover:text-slate-900 dark:hover:text-lime-400 transition-colors cursor-pointer"
                                                     >
                                                         {cliente.nombre} {cliente.apellido}
                                                     </Link>
@@ -145,24 +149,24 @@ const Clientes = () => {
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-slate-900">{cliente.rut}</div>
+                                            <div className="text-sm text-slate-900 dark:text-slate-200">{cliente.rut}</div>
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex flex-col gap-1">
-                                                <div className="flex items-center text-sm text-slate-900">
-                                                    <Mail className="h-3 w-3 mr-2 text-muted-foreground" />
+                                                <div className="flex items-center text-sm text-slate-900 dark:text-slate-200">
+                                                    <Mail className="h-3 w-3 mr-2 text-muted-foreground dark:text-gray-400" />
                                                     {cliente.email}
                                                 </div>
-                                                <div className="flex items-center text-sm text-slate-900">
-                                                    <Phone className="h-3 w-3 mr-2 text-muted-foreground" />
+                                                <div className="flex items-center text-sm text-slate-900 dark:text-slate-200">
+                                                    <Phone className="h-3 w-3 mr-2 text-muted-foreground dark:text-gray-400" />
                                                     {cliente.telefono}
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
                                             {cliente.ciudad && (
-                                                <div className="flex items-center text-sm text-slate-900">
-                                                    <MapPin className="h-3 w-3 mr-2 text-muted-foreground" />
+                                                <div className="flex items-center text-sm text-slate-900 dark:text-slate-200">
+                                                    <MapPin className="h-3 w-3 mr-2 text-muted-foreground dark:text-gray-400" />
                                                     {cliente.ciudad}{cliente.comuna ? `, ${cliente.comuna}` : ''}
                                                 </div>
                                             )}
