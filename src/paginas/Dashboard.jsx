@@ -14,6 +14,7 @@ const Dashboard = () => {
     const { pacientes } = usePacientes()
     const { clientes } = useClientes()
     const { citas } = useCitas()
+    const [vistaActiva, setVistaActiva] = useState('hoy') // 'hoy', 'semana', 'mes'
 
     // Estadísticas básicas
     const totalPacientes = pacientes.length
@@ -40,6 +41,51 @@ const Dashboard = () => {
             return fechaA.getTime() - fechaB.getTime()
         })
     
+    // Calcular citas de la semana
+    const inicioDeSemana = new Date(hoy)
+    inicioDeSemana.setDate(hoy.getDate() - hoy.getDay()) // Domingo
+    const finDeSemana = new Date(inicioDeSemana)
+    finDeSemana.setDate(inicioDeSemana.getDate() + 6) // Sábado
+    
+    const citasSemana = citas
+        .filter(cita => {
+            const fechaCita = new Date(cita.fecha)
+            fechaCita.setHours(0, 0, 0, 0)
+            return fechaCita >= inicioDeSemana && fechaCita <= finDeSemana
+        })
+        .sort((a, b) => {
+            const fechaA = new Date(a.fecha)
+            const fechaB = new Date(b.fecha)
+            const [horaA, minA] = (a.hora || '00:00').split(':').map(Number)
+            const [horaB, minB] = (b.hora || '00:00').split(':').map(Number)
+            fechaA.setHours(horaA, minA, 0, 0)
+            fechaB.setHours(horaB, minB, 0, 0)
+            return fechaA.getTime() - fechaB.getTime()
+        })
+    
+    // Calcular citas del mes
+    const inicioDelMes = new Date(hoy.getFullYear(), hoy.getMonth(), 1)
+    const finDelMes = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 0)
+    
+    const citasMes = citas
+        .filter(cita => {
+            const fechaCita = new Date(cita.fecha)
+            fechaCita.setHours(0, 0, 0, 0)
+            return fechaCita >= inicioDelMes && fechaCita <= finDelMes
+        })
+        .sort((a, b) => {
+            const fechaA = new Date(a.fecha)
+            const fechaB = new Date(b.fecha)
+            const [horaA, minA] = (a.hora || '00:00').split(':').map(Number)
+            const [horaB, minB] = (b.hora || '00:00').split(':').map(Number)
+            fechaA.setHours(horaA, minA, 0, 0)
+            fechaB.setHours(horaB, minB, 0, 0)
+            return fechaA.getTime() - fechaB.getTime()
+        })
+    
+    // Seleccionar las citas según la vista activa
+    const citasMostradas = vistaActiva === 'hoy' ? citasHoy : vistaActiva === 'semana' ? citasSemana : citasMes
+    
     // Todas las citas ordenadas por fecha y hora completa (año, mes, día, hora)
     const todasCitasOrdenadas = citas
         .sort((a, b) => {
@@ -51,12 +97,6 @@ const Dashboard = () => {
             fechaB.setHours(horaB, minB, 0, 0)
             return fechaA.getTime() - fechaB.getTime()
         })
-    
-    // Calcular pacientes por especie
-    const especiesCount = pacientes.reduce((acc, paciente) => {
-        acc[paciente.especie] = (acc[paciente.especie] || 0) + 1
-        return acc
-    }, {})
 
     const estadisticas = [
         {
@@ -121,13 +161,13 @@ const Dashboard = () => {
     ]
 
     return (
-        <div className="space-y-8">
+        <div className="p-6 space-y-6">
             {/* Header de bienvenida */}
             <div className="space-y-2">
-                <h1 className="text-3xl md:text-4xl font-bold text-slate-900">
+                <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
                     ¡Bienvenido, {auth?.nombre}!
                 </h1>
-                <p className="text-muted-foreground text-lg">
+                <p className="text-muted-foreground dark:text-slate-300 text-lg">
                     Panel de control de tu clínica veterinaria
                 </p>
             </div>
@@ -137,18 +177,18 @@ const Dashboard = () => {
                 {estadisticas.map((stat, index) => {
                     const Icon = stat.icon
                     return (
-                        <Card key={index} className="hover:shadow-lg transition-shadow">
+                        <Card key={index} className="hover:shadow-lg transition-shadow border-slate-200 dark:border-gray-700 dark:bg-gray-800">
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="text-sm font-medium text-muted-foreground">
+                                <CardTitle className="text-sm font-medium text-muted-foreground dark:text-slate-300">
                                     {stat.title}
                                 </CardTitle>
-                                <div className={`h-10 w-10 rounded-lg ${stat.bgColor} flex items-center justify-center`}>
-                                    <Icon className={`h-5 w-5 ${stat.color}`} />
+                                <div className={`h-10 w-10 rounded-lg ${stat.bgColor} dark:bg-opacity-30 flex items-center justify-center`}>
+                                    <Icon className={`h-5 w-5 ${stat.color} dark:opacity-90`} />
                                 </div>
                             </CardHeader>
                             <CardContent>
-                                <div className="text-3xl font-bold">{stat.value}</div>
-                                <p className="text-xs text-muted-foreground mt-1">
+                                <div className="text-3xl font-bold dark:text-white">{stat.value}</div>
+                                <p className="text-xs text-muted-foreground dark:text-slate-300 mt-1">
                                     {stat.description}
                                 </p>
                             </CardContent>
@@ -158,53 +198,91 @@ const Dashboard = () => {
             </div>
 
             {/* Citas de Hoy */}
-            <Card className="shadow-xl border-2">
-                <CardHeader className="bg-linear-to-r from-blue-50 to-indigo-50 border-b">
-                    <div className="flex items-center justify-between">
+            <Card className="shadow-md border-slate-200 dark:border-gray-700 dark:bg-gray-800">
+                <CardHeader className="bg-slate-50 dark:bg-gray-900 border-b border-slate-200 dark:border-gray-700">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <div>
-                            <CardTitle className="text-2xl flex items-center gap-3">
-                                <div className="h-10 w-10 rounded-lg bg-blue-600 flex items-center justify-center">
+                            <CardTitle className="text-2xl flex items-center gap-3 text-slate-900 dark:text-white">
+                                <div className="h-10 w-10 rounded-lg bg-blue-600 dark:bg-blue-500 flex items-center justify-center">
                                     <Calendar className="h-6 w-6 text-white" />
                                 </div>
-                                Citas de Hoy
+                                Agenda de Citas
                             </CardTitle>
-                            <CardDescription className="text-base mt-2">
-                                {citasHoy.length > 0 
+                            <CardDescription className="text-base mt-2 dark:text-slate-300">
+                                {vistaActiva === 'hoy' && (citasHoy.length > 0 
                                     ? `${citasHoy.length} ${citasHoy.length === 1 ? 'cita programada' : 'citas programadas'} para hoy` 
-                                    : 'No hay citas programadas para hoy'}
+                                    : 'No hay citas programadas para hoy')}
+                                {vistaActiva === 'semana' && (citasSemana.length > 0 
+                                    ? `${citasSemana.length} ${citasSemana.length === 1 ? 'cita' : 'citas'} esta semana` 
+                                    : 'No hay citas esta semana')}
+                                {vistaActiva === 'mes' && (citasMes.length > 0 
+                                    ? `${citasMes.length} ${citasMes.length === 1 ? 'cita' : 'citas'} este mes` 
+                                    : 'No hay citas este mes')}
                             </CardDescription>
                         </div>
-                        <Button asChild size="lg" className="gap-2">
+                        <Button asChild size="lg" className="gap-2 bg-slate-900 dark:bg-lime-600 hover:bg-slate-800 dark:hover:bg-lime-700">
                             <Link to="/admin/citas">
                                 Ver todas las citas
                                 <ArrowRight className="h-4 w-4" />
                             </Link>
                         </Button>
                     </div>
+                    
+                    {/* Pestañas de navegación */}
+                    <div className="flex gap-2 mt-4">
+                        <button
+                            onClick={() => setVistaActiva('hoy')}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                vistaActiva === 'hoy'
+                                    ? 'bg-blue-600 dark:bg-lime-600 text-white'
+                                    : 'bg-white dark:bg-gray-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-gray-700 border border-slate-200 dark:border-gray-600'
+                            }`}
+                        >
+                            Hoy
+                        </button>
+                        <button
+                            onClick={() => setVistaActiva('semana')}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                vistaActiva === 'semana'
+                                    ? 'bg-blue-600 dark:bg-lime-600 text-white'
+                                    : 'bg-white dark:bg-gray-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-gray-700 border border-slate-200 dark:border-gray-600'
+                            }`}
+                        >
+                            Esta Semana
+                        </button>
+                        <button
+                            onClick={() => setVistaActiva('mes')}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                vistaActiva === 'mes'
+                                    ? 'bg-blue-600 dark:bg-lime-600 text-white'
+                                    : 'bg-white dark:bg-gray-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-gray-700 border border-slate-200 dark:border-gray-600'
+                            }`}
+                        >
+                            Este Mes
+                        </button>
+                    </div>
                 </CardHeader>
-                <CardContent className="p-6">
-                    {citasHoy.length > 0 ? (
-                        <div className="space-y-4">
-                            {citasHoy.map((cita) => {
+                <CardContent className="p-6 bg-white dark:bg-gray-800">{citasMostradas.length > 0 ? (
+                        <div className="space-y-3">{citasMostradas.map((cita) => {
                                 const paciente = pacientes.find(p => p._id === cita.paciente?._id || p._id === cita.paciente)
                                 const cliente = clientes.find(c => c._id === cita.cliente?._id || c._id === cita.cliente)
                                 
                                 const estadoColors = {
-                                    'Pendiente': 'bg-yellow-100 text-yellow-800 border-yellow-200',
-                                    'Confirmada': 'bg-blue-100 text-gray-900 border-blue-200',
-                                    'En curso': 'bg-purple-100 text-purple-800 border-purple-200',
-                                    'Completada': 'bg-green-100 text-green-800 border-green-200',
-                                    'Cancelada': 'bg-red-100 text-red-800 border-red-200',
-                                    'No asistió': 'bg-gray-100 text-gray-800 border-gray-200'
+                                    'Pendiente': 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 border-yellow-200 dark:border-yellow-700',
+                                    'Confirmada': 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 border-blue-200 dark:border-blue-700',
+                                    'En curso': 'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 border-purple-200 dark:border-purple-700',
+                                    'Completada': 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 border-green-200 dark:border-green-700',
+                                    'Cancelada': 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 border-red-200 dark:border-red-700',
+                                    'No asistió': 'bg-gray-100 dark:bg-gray-900/30 text-gray-800 dark:text-gray-400 border-gray-200 dark:border-gray-700'
                                 }
 
                                 const tipoColors = {
-                                    'Consulta': 'bg-blue-50 text-gray-900 border-blue-200',
-                                    'Vacunación': 'bg-green-50 text-green-700 border-green-200',
-                                    'Cirugía': 'bg-red-50 text-red-700 border-red-200',
-                                    'Emergencia': 'bg-orange-50 text-orange-700 border-orange-200',
-                                    'Control': 'bg-purple-50 text-purple-700 border-purple-200',
-                                    'Otro': 'bg-gray-50 text-gray-700 border-gray-200'
+                                    'Consulta': 'bg-blue-50 dark:bg-blue-900/20 text-blue-900 dark:text-blue-300 border-blue-200 dark:border-blue-700',
+                                    'Vacunación': 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border-green-200 dark:border-green-700',
+                                    'Cirugía': 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 border-red-200 dark:border-red-700',
+                                    'Emergencia': 'bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 border-orange-200 dark:border-orange-700',
+                                    'Control': 'bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-700',
+                                    'Otro': 'bg-gray-50 dark:bg-gray-900/20 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700'
                                 }
 
                                 // Colores por especie para la tarjeta del paciente
@@ -264,145 +342,87 @@ const Dashboard = () => {
                                 return (
                                     <div 
                                         key={cita._id}
-                                        className="group relative overflow-hidden rounded-xl border-2 border-gray-200 bg-white hover:border-gray-200 hover:shadow-2xl transition-all duration-300"
+                                        className="group relative overflow-hidden rounded-lg border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:border-slate-300 dark:hover:border-gray-600 hover:shadow-lg transition-all"
                                     >
-                                        <div className="flex flex-col lg:flex-row gap-6 p-6">
+                                        <div className="flex flex-col lg:flex-row gap-4 p-4">
                                             {/* Columna Izquierda - Hora y Estado */}
-                                            <div className="lg:w-48 shrink-0 border-r-2 border-gray-200 pr-6">
-                                                <div className="flex flex-col items-center text-center space-y-4">
-                                                    {/* Hora Grande */}
-                                                    <div className="w-full">
-                                                        <div className="flex items-center justify-center gap-2 mb-2">
-                                                            <Clock className="h-5 w-5 text-gray-900" />
-                                                            <span className="text-xs font-semibold text-muted-foreground uppercase">Hora</span>
-                                                        </div>
-                                                        <p className="font-bold text-5xl text-gray-900 tracking-tight">{cita.hora}</p>
+                                            <div className="lg:w-32 shrink-0 lg:border-r border-slate-200 dark:border-gray-700 lg:pr-4">
+                                                <div className="flex lg:flex-col items-center lg:items-center gap-3 lg:gap-2">
+                                                    {/* Hora */}
+                                                    <div className="flex items-center gap-2 lg:flex-col lg:gap-1">
+                                                        <Clock className="h-4 w-4 text-slate-600 dark:text-slate-400 lg:hidden" />
+                                                        <p className="font-bold text-2xl lg:text-3xl text-slate-900 dark:text-white">{cita.hora}</p>
                                                     </div>
                                                     
-                                                    {/* Separador */}
-                                                    <div className="w-full h-px bg-gray-200"></div>
-                                                    
-                                                    {/* Tipo y Estado */}
-                                                    <div className="w-full space-y-2">
-                                                        <Badge className={`${tipoColors[cita.tipo] || 'bg-gray-100'} border w-full justify-center py-1.5`}>
-                                                            {cita.tipo}
-                                                        </Badge>
-                                                        <Badge className={`${estadoColors[cita.estado] || 'bg-gray-100'} border w-full justify-center py-1.5`}>
-                                                            {cita.estado}
-                                                        </Badge>
-                                                    </div>
+                                                    {/* Estado */}
+                                                    <Badge className={`${estadoColors[cita.estado] || 'bg-gray-100 dark:bg-gray-900/30'} text-xs px-2 py-1`}>
+                                                        {cita.estado}
+                                                    </Badge>
                                                 </div>
                                             </div>
 
-                                            {/* Columna Central - Cliente */}
-                                            <div className="lg:w-1/3 space-y-4">
-                                                <div className="flex items-start gap-4">
-                                                    <div className="relative">
-                                                        <div className="h-16 w-16 rounded-full bg-linear-to-br from-green-400 to-emerald-600 flex items-center justify-center shadow-lg ring-4 ring-green-100">
-                                                            <User className="h-8 w-8 text-white" />
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex-1 min-w-0">
-                                                        <p className="text-xs text-muted-foreground font-semibold mb-1 uppercase">Cliente</p>
-                                                        <Link 
-                                                            to={`/admin/clientes/${cliente?._id}`}
-                                                            className="block font-bold text-xl text-gray-900 hover:text-gray-900 transition-colors truncate"
-                                                        >
-                                                            {cliente?.nombre} {cliente?.apellido}
-                                                        </Link>
-                                                        <div className="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
-                                                            <Phone className="h-3.5 w-3.5" />
-                                                            <span className="font-medium">{cliente?.telefono}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                {/* Información adicional del cliente */}
-                                                <div className="space-y-2 bg-gray-50/80 backdrop-blur rounded-lg p-4 border border-gray-200">
+                                            {/* Columna Central - Cliente y Paciente */}
+                                            <div className="flex-1 grid lg:grid-cols-2 gap-4">
+                                                {/* Cliente */}
+                                                <div className="space-y-2">
                                                     <div className="flex items-center gap-3">
-                                                        <div className="h-9 w-9 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0">
-                                                            <Mail className="h-4 w-4 text-emerald-600" />
+                                                        <div className="h-10 w-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center shrink-0">
+                                                            <User className="h-5 w-5 text-green-600 dark:text-green-400" />
                                                         </div>
                                                         <div className="flex-1 min-w-0">
-                                                            <p className="text-xs text-muted-foreground font-medium">Email</p>
-                                                            <p className="font-semibold text-sm text-gray-900 truncate">{cliente?.email}</p>
+                                                            <p className="text-xs text-muted-foreground dark:text-slate-400 uppercase">Cliente</p>
+                                                            <Link 
+                                                                to={`/admin/clientes/${cliente?._id}`}
+                                                                className="block font-semibold text-sm text-slate-900 dark:text-white hover:text-slate-700 dark:hover:text-slate-200 transition-colors truncate"
+                                                            >
+                                                                {cliente?.nombre} {cliente?.apellido}
+                                                            </Link>
+                                                            <div className="flex items-center gap-1 text-xs text-muted-foreground dark:text-slate-400">
+                                                                <Phone className="h-3 w-3" />
+                                                                <span>{cliente?.telefono}</span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    {cliente?.direccion && (
-                                                        <div className="flex items-start gap-3 pt-2 border-t border-gray-200">
-                                                            <div className="h-9 w-9 rounded-lg bg-blue-100 flex items-center justify-center shrink-0">
-                                                                <svg className="h-4 w-4 text-gray-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                                </svg>
-                                                            </div>
-                                                            <div className="flex-1 min-w-0">
-                                                                <p className="text-xs text-muted-foreground font-medium">Dirección</p>
-                                                                <p className="font-semibold text-sm text-gray-900 line-clamp-2">{cliente.direccion}</p>
-                                                            </div>
-                                                        </div>
-                                                    )}
                                                 </div>
-                                            </div>
 
-                                            {/* Columna Derecha - Mascota y Motivo */}
-                                            <div className="lg:w-1/3 lg:border-l-2 lg:border-gray-200 lg:pl-6">
+                                                {/* Paciente */}
                                                 {paciente ? (
-                                                    <div className="space-y-4">
-                                                        <div className="flex items-center gap-2 mb-3">
-                                                            <div className={`h-8 w-8 rounded-lg ${colorEspecie.icon} flex items-center justify-center`}>
-                                                                <PawPrint className={`h-4 w-4 ${colorEspecie.text}`} />
-                                                            </div>
-                                                            <h3 className={`font-bold text-base ${colorEspecie.text} uppercase tracking-wide`}>Paciente</h3>
-                                                        </div>
-                                                        
+                                                    <div className="space-y-2">
                                                         <Link
                                                             to={`/admin/pacientes/${paciente._id}`}
-                                                            className={`block group/card relative overflow-hidden rounded-lg ${colorEspecie.bg} backdrop-blur-sm border-2 ${colorEspecie.border} ${colorEspecie.hover} hover:shadow-2xl transition-all duration-300 p-4`}
+                                                            className="flex items-center gap-3 hover:opacity-80 transition-opacity"
                                                         >
-                                                            <div className="relative z-10">
-                                                                <div className="flex items-center justify-between mb-3">
-                                                                    <div className="flex items-center gap-3">
-                                                                        <div className={`h-12 w-12 rounded-full ${colorEspecie.icon} backdrop-blur flex items-center justify-center shadow-md`}>
-                                                                            <PawPrint className={`h-6 w-6 ${colorEspecie.text}`} />
-                                                                        </div>
-                                                                        <div>
-                                                                            <p className={`font-bold text-xl ${colorEspecie.text}`}>{paciente.nombre}</p>
-                                                                            <p className="text-sm text-gray-600 font-medium">{paciente.especie}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <ArrowRight className={`h-5 w-5 ${colorEspecie.text} opacity-60 group-hover/card:translate-x-1 transition-transform`} />
-                                                                </div>
-                                                                
-                                                                <div className="flex items-center gap-2 flex-wrap">
+                                                            <div className={`h-10 w-10 rounded-full ${colorEspecie.icon} flex items-center justify-center shrink-0`}>
+                                                                <PawPrint className={`h-5 w-5 ${colorEspecie.text}`} />
+                                                            </div>
+                                                            <div className="flex-1 min-w-0">
+                                                                <p className="text-xs text-muted-foreground dark:text-slate-400 uppercase">Paciente</p>
+                                                                <p className={`font-semibold text-sm ${colorEspecie.text} truncate`}>{paciente.nombre}</p>
+                                                                <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
+                                                                    <span>{paciente.especie}</span>
                                                                     {paciente.raza && (
-                                                                        <Badge variant="secondary" className={`text-xs ${colorEspecie.badge} backdrop-blur border-0`}>
-                                                                            {paciente.raza}
-                                                                        </Badge>
-                                                                    )}
-                                                                    {paciente.sexo && (
-                                                                        <Badge variant="secondary" className={`text-xs ${colorEspecie.badge} backdrop-blur border-0`}>
-                                                                            {paciente.sexo}
-                                                                        </Badge>
+                                                                        <>
+                                                                            <span>•</span>
+                                                                            <span>{paciente.raza}</span>
+                                                                        </>
                                                                     )}
                                                                 </div>
                                                             </div>
                                                         </Link>
-
-                                                        {/* Motivo de la cita */}
-                                                        <div className="bg-gray-50/80 backdrop-blur rounded-lg p-4 border-2 border-gray-200">
-                                                            <p className="text-xs text-muted-foreground font-semibold mb-2 uppercase">Motivo</p>
-                                                            <p className="text-sm text-gray-700 font-medium leading-relaxed">{cita.motivo}</p>
-                                                        </div>
                                                     </div>
                                                 ) : (
-                                                    <div className="flex items-center justify-center h-full min-h-[200px] bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-                                                        <div className="text-center">
-                                                            <PawPrint className="h-12 w-12 mx-auto mb-3 text-gray-400" />
-                                                            <p className="text-sm text-muted-foreground font-medium">Sin mascota asignada</p>
-                                                        </div>
+                                                    <div className="flex items-center justify-center bg-slate-50 dark:bg-gray-800 rounded-lg border border-dashed border-slate-300 dark:border-gray-600 p-3">
+                                                        <p className="text-xs text-muted-foreground dark:text-slate-400">Sin paciente asignado</p>
                                                     </div>
                                                 )}
+                                            </div>
+
+                                            {/* Columna Derecha - Motivo */}
+                                            <div className="lg:w-64 lg:border-l border-slate-200 dark:border-gray-700 lg:pl-4">
+                                                <div className="bg-slate-50 dark:bg-gray-800 rounded-lg p-3 border border-slate-200 dark:border-gray-700">
+                                                    <p className="text-xs text-muted-foreground dark:text-slate-400 font-medium mb-1 uppercase">Motivo</p>
+                                                    <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-3">{cita.motivo}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -411,12 +431,20 @@ const Dashboard = () => {
                         </div>
                     ) : (
                         <div className="text-center py-16">
-                            <div className="inline-flex items-center justify-center h-20 w-20 rounded-full bg-gray-100 mb-4">
-                                <Calendar className="h-10 w-10 text-gray-400" />
+                            <div className="inline-flex items-center justify-center h-20 w-20 rounded-full bg-slate-100 dark:bg-gray-700 mb-4">
+                                <Calendar className="h-10 w-10 text-gray-400 dark:text-gray-500" />
                             </div>
-                            <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay citas para hoy</h3>
-                            <p className="text-muted-foreground mb-6">Comienza agendando la primera cita del día</p>
-                            <Button asChild size="lg">
+                            <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                                {vistaActiva === 'hoy' && 'No hay citas para hoy'}
+                                {vistaActiva === 'semana' && 'No hay citas esta semana'}
+                                {vistaActiva === 'mes' && 'No hay citas este mes'}
+                            </h3>
+                            <p className="text-muted-foreground dark:text-slate-300 mb-6">
+                                {vistaActiva === 'hoy' && 'Comienza agendando la primera cita del día'}
+                                {vistaActiva === 'semana' && 'No tienes citas programadas para esta semana'}
+                                {vistaActiva === 'mes' && 'No tienes citas programadas para este mes'}
+                            </p>
+                            <Button asChild size="lg" className="bg-slate-900 dark:bg-lime-600 hover:bg-slate-800 dark:hover:bg-lime-700">
                                 <Link to="/admin/citas/nueva" className="gap-2">
                                     <Calendar className="h-4 w-4" />
                                     Agendar Nueva Cita
@@ -426,37 +454,6 @@ const Dashboard = () => {
                     )}
                 </CardContent>
             </Card>
-
-            {/* Distribución por Especie */}
-            {totalPacientes > 0 && (
-                <Card>
-                    <CardHeader>
-                        <CardTitle className="text-xl">Distribución por Especie</CardTitle>
-                        <CardDescription>Resumen de pacientes por tipo</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="space-y-3">
-                            {Object.entries(especiesCount).map(([especie, count]) => {
-                                const percentage = ((count / totalPacientes) * 100).toFixed(1)
-                                return (
-                                    <div key={especie} className="space-y-2">
-                                        <div className="flex items-center justify-between text-sm">
-                                            <span className="font-medium">{especie}</span>
-                                            <span className="text-muted-foreground">{count} ({percentage}%)</span>
-                                        </div>
-                                        <div className="w-full bg-muted rounded-full h-2">
-                                            <div 
-                                                className="bg-primary h-2 rounded-full transition-all"
-                                                style={{ width: `${percentage}%` }}
-                                            />
-                                        </div>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    </CardContent>
-                </Card>
-            )}
         </div>
     )
 }
