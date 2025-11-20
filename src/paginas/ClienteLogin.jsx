@@ -16,9 +16,6 @@ const ClienteLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('🔐 ClienteLogin - Iniciando login');
-    console.log('📧 Email:', email);
-    console.log('🔑 Password length:', password.length);
 
     if ([email, password].includes('')) {
       console.log('❌ Campos vacíos detectados');
@@ -120,7 +117,7 @@ const ClienteLogin = () => {
           {/* Información adicional */}
           <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
             <div className="flex items-start gap-2">
-              <AlertCircle className="w-5 h-5 text-gray-900 mt-0.5 flex-shrink-0" />
+              <AlertCircle className="w-5 h-5 text-gray-900 mt-0.5 shrink-0" />
               <div className="text-sm text-blue-900">
                 <p className="font-semibold mb-1">¿Primera vez aquí?</p>
                 <p>Contacta con nuestra recepción para obtener tus credenciales de acceso.</p>
