@@ -77,7 +77,7 @@ const Consultas = () => {
   if (cargando) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900 dark:border-lime-500"></div>
       </div>
     );
   }
@@ -87,13 +87,13 @@ const Consultas = () => {
       {/* Header */}
       <div className="mb-6 flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800">Consultas Médicas</h1>
-          <p className="text-gray-600 mt-2">Historial de consultas y atenciones veterinarias</p>
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Consultas Médicas</h1>
+          <p className="text-gray-600 dark:text-slate-300 mt-2">Historial de consultas y atenciones veterinarias</p>
         </div>
         {(auth.rol === 'admin' || auth.rol === 'veterinario') && (
           <Link
             to="/admin/consultas/nueva"
-            className="flex items-center gap-2 px-4 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800"
+            className="flex items-center gap-2 px-4 py-3 bg-slate-900 dark:bg-lime-600 text-white rounded-lg hover:bg-slate-800 dark:hover:bg-lime-700"
           >
             <Plus className="w-5 h-5" />
             Nueva Consulta
@@ -102,15 +102,15 @@ const Consultas = () => {
       </div>
 
       {/* Filtros */}
-      <div className="bg-white shadow-md rounded-lg p-6 mb-6">
+      <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg border border-transparent dark:border-gray-700 p-6 mb-6">
         <div className="flex items-center gap-2 mb-4">
-          <Filter className="w-5 h-5 text-gray-600" />
-          <h2 className="text-lg font-semibold text-gray-800">Filtros</h2>
+          <Filter className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-white">Filtros</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="md:col-span-2">
-            <label className="block text-gray-700 font-medium mb-2">
+            <label className="block text-gray-700 dark:text-slate-200 font-medium mb-2">
               <Search className="w-4 h-4 inline mr-1" />
               Búsqueda
             </label>
@@ -119,16 +119,16 @@ const Consultas = () => {
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               placeholder="Buscar por paciente, cliente, veterinario, diagnóstico..."
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder:text-gray-400"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Estado</label>
+            <label className="block text-gray-700 dark:text-slate-200 font-medium mb-2">Estado</label>
             <select
               value={filtroEstado}
               onChange={(e) => setFiltroEstado(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
             >
               <option value="">Todos los estados</option>
               <option value="completada">Completada</option>
@@ -137,12 +137,12 @@ const Consultas = () => {
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Fecha</label>
+            <label className="block text-gray-700 dark:text-slate-200 font-medium mb-2">Fecha</label>
             <input
               type="date"
               value={filtroFecha}
               onChange={(e) => setFiltroFecha(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
             />
           </div>
         </div>
@@ -151,7 +151,7 @@ const Consultas = () => {
           <div className="mt-4">
             <button
               onClick={limpiarFiltros}
-              className="text-gray-900 hover:text-gray-900 font-medium"
+              className="text-slate-900 dark:text-lime-500 hover:text-slate-700 dark:hover:text-lime-400 font-medium"
             >
               Limpiar filtros
             </button>
@@ -160,14 +160,14 @@ const Consultas = () => {
       </div>
 
       {/* Tabla de consultas */}
-      <div className="bg-white shadow-md rounded-lg overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg border border-transparent dark:border-gray-700 overflow-hidden">
         {consultasFiltradas.length === 0 ? (
           <div className="text-center py-12">
-            <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">
+            <FileText className="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-700 dark:text-white mb-2">
               No hay consultas registradas
             </h3>
-            <p className="text-gray-500 mb-4">
+            <p className="text-gray-500 dark:text-slate-300 mb-4">
               {busqueda || filtroEstado || filtroFecha
                 ? 'No se encontraron consultas con los filtros aplicados.'
                 : 'Comienza registrando tu primera consulta médica.'}
@@ -178,7 +178,7 @@ const Consultas = () => {
               !filtroFecha && (
                 <Link
                   to="/admin/consultas/nueva"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 dark:bg-lime-600 text-white rounded-lg hover:bg-slate-800 dark:hover:bg-lime-700"
                 >
                   <Plus className="w-5 h-5" />
                   Registrar Primera Consulta
@@ -188,39 +188,39 @@ const Consultas = () => {
         ) : (
           <>
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead className="bg-gray-50 dark:bg-gray-900">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-300 uppercase tracking-wider">
                       Fecha
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-300 uppercase tracking-wider">
                       Paciente
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-300 uppercase tracking-wider">
                       Propietario
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-300 uppercase tracking-wider">
                       Veterinario
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-300 uppercase tracking-wider">
                       Motivo / Diagnóstico
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-300 uppercase tracking-wider">
                       Estado
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-300 uppercase tracking-wider">
                       Acciones
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                   {consultasFiltradas.map((consulta) => (
-                    <tr key={consulta._id} className="hover:bg-gray-50">
+                    <tr key={consulta._id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4 text-gray-400" />
-                          <span className="text-sm text-gray-900">
+                          <Calendar className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+                          <span className="text-sm text-gray-900 dark:text-white">
                             {new Date(consulta.fecha).toLocaleDateString('es-CL', {
                               year: 'numeric',
                               month: 'short',
@@ -231,12 +231,12 @@ const Consultas = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-2">
-                          <PawPrint className="w-4 h-4 text-gray-900" />
+                          <PawPrint className="w-4 h-4 text-orange-600 dark:text-orange-400" />
                           <div>
-                            <div className="text-sm font-medium text-gray-900">
+                            <div className="text-sm font-medium text-gray-900 dark:text-white">
                               {consulta.paciente?.nombre}
                             </div>
-                            <div className="text-xs text-gray-500">
+                            <div className="text-xs text-gray-500 dark:text-slate-300">
                               {consulta.paciente?.especie}
                             </div>
                           </div>
@@ -244,12 +244,12 @@ const Consultas = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-2">
-                          <User className="w-4 h-4 text-purple-600" />
+                          <User className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                           <div>
-                            <div className="text-sm text-gray-900">
+                            <div className="text-sm text-gray-900 dark:text-white">
                               {consulta.cliente?.nombre} {consulta.cliente?.apellido}
                             </div>
-                            <div className="text-xs text-gray-500">
+                            <div className="text-xs text-gray-500 dark:text-slate-300">
                               {consulta.cliente?.telefono}
                             </div>
                           </div>
@@ -257,18 +257,18 @@ const Consultas = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-2">
-                          <Stethoscope className="w-4 h-4 text-green-600" />
-                          <span className="text-sm text-gray-900">
+                          <Stethoscope className="w-4 h-4 text-green-600 dark:text-green-400" />
+                          <span className="text-sm text-gray-900 dark:text-white">
                             Dr(a). {consulta.veterinario?.nombre}
                           </span>
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-sm text-gray-900 font-medium">
+                        <div className="text-sm text-gray-900 dark:text-white font-medium">
                           {consulta.motivoConsulta?.substring(0, 50)}
                           {consulta.motivoConsulta?.length > 50 ? '...' : ''}
                         </div>
-                        <div className="text-xs text-gray-500 mt-1">
+                        <div className="text-xs text-gray-500 dark:text-slate-300 mt-1">
                           {consulta.diagnostico?.substring(0, 60)}
                           {consulta.diagnostico?.length > 60 ? '...' : ''}
                         </div>
@@ -322,8 +322,8 @@ const Consultas = () => {
             </div>
 
             {/* Paginación / Contador */}
-            <div className="bg-gray-50 px-6 py-4 border-t border-gray-200">
-              <p className="text-sm text-gray-700">
+            <div className="bg-gray-50 dark:bg-gray-900 px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+              <p className="text-sm text-gray-700 dark:text-slate-300">
                 Mostrando <span className="font-medium">{consultasFiltradas.length}</span> de{' '}
                 <span className="font-medium">{consultas.length}</span> consultas
               </p>

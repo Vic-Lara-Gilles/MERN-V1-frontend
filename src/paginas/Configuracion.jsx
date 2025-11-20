@@ -72,18 +72,18 @@ const Configuracion = () => {
     <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
-          <Settings className="h-8 w-8 text-gray-900" />
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+          <Settings className="h-8 w-8 text-slate-900 dark:text-lime-500" />
           Configuración de Cuenta
         </h1>
-        <p className="text-gray-600 mt-2">
+        <p className="text-slate-600 dark:text-slate-300 mt-2">
           Administra tu información personal y seguridad
         </p>
       </div>
 
       {/* Tabs */}
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <div className="border-b border-gray-200">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-slate-200 dark:border-gray-700 overflow-hidden">
+        <div className="border-b border-slate-200 dark:border-gray-700">
           <nav className="flex -mb-px">
             <button
               onClick={() => {
@@ -92,8 +92,8 @@ const Configuracion = () => {
               }}
               className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                 tabActivo === 'perfil'
-                  ? 'border-indigo-600 text-gray-900'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  ? 'border-slate-900 dark:border-lime-500 text-slate-900 dark:text-white'
+                  : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 hover:border-slate-300 dark:hover:border-gray-600'
               }`}
             >
               <User className="h-5 w-5" />
@@ -106,8 +106,8 @@ const Configuracion = () => {
               }}
               className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                 tabActivo === 'password'
-                  ? 'border-indigo-600 text-gray-900'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  ? 'border-slate-900 dark:border-lime-500 text-slate-900 dark:text-white'
+                  : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 hover:border-slate-300 dark:hover:border-gray-600'
               }`}
             >
               <Lock className="h-5 w-5" />
@@ -124,7 +124,7 @@ const Configuracion = () => {
             <form onSubmit={handlePerfilSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                     Nombre <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -136,12 +136,12 @@ const Configuracion = () => {
                       ...perfil,
                       [e.target.name]: e.target.value
                     })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                     Email <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -153,12 +153,12 @@ const Configuracion = () => {
                       ...perfil,
                       [e.target.name]: e.target.value
                     })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                     Teléfono
                   </label>
                   <input
@@ -170,12 +170,12 @@ const Configuracion = () => {
                       ...perfil,
                       [e.target.name]: e.target.value
                     })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                     Sitio Web
                   </label>
                   <input
@@ -187,15 +187,15 @@ const Configuracion = () => {
                       ...perfil,
                       [e.target.name]: e.target.value
                     })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent"
                   />
                 </div>
               </div>
 
-              <div className="flex justify-end pt-4 border-t">
+              <div className="flex justify-end pt-4 border-t border-slate-200 dark:border-gray-700">
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
+                  className="px-6 py-3 bg-slate-900 dark:bg-lime-600 text-white rounded-lg hover:bg-slate-800 dark:hover:bg-lime-700 transition-colors font-semibold"
                 >
                   Guardar Cambios
                 </button>
@@ -208,7 +208,7 @@ const Configuracion = () => {
             <form onSubmit={handlePasswordSubmit} className="space-y-6">
               <div className="max-w-md space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                     Contraseña Actual <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -220,12 +220,12 @@ const Configuracion = () => {
                       ...password,
                       [e.target.name]: e.target.value
                     })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                     Nueva Contraseña <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -237,18 +237,18 @@ const Configuracion = () => {
                       ...password,
                       [e.target.name]: e.target.value
                     })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent"
                   />
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                     La contraseña debe tener al menos 6 caracteres
                   </p>
                 </div>
               </div>
 
-              <div className="flex justify-end pt-4 border-t">
+              <div className="flex justify-end pt-4 border-t border-slate-200 dark:border-gray-700">
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
+                  className="px-6 py-3 bg-slate-900 dark:bg-lime-600 text-white rounded-lg hover:bg-slate-800 dark:hover:bg-lime-700 transition-colors font-semibold"
                 >
                   Cambiar Contraseña
                 </button>
