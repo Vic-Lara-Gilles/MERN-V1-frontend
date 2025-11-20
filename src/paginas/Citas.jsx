@@ -14,10 +14,11 @@ const Citas = () => {
 
   useEffect(() => {
     obtenerCitas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const citasFiltradas = citas.filter(cita => {
-    const cumpleBusqueda = !busqueda || 
+    const cumpleBusqueda = !busqueda ||
       cita.paciente?.nombre?.toLowerCase().includes(busqueda.toLowerCase()) ||
       cita.cliente?.nombre?.toLowerCase().includes(busqueda.toLowerCase()) ||
       cita.cliente?.apellido?.toLowerCase().includes(busqueda.toLowerCase()) ||
@@ -26,7 +27,7 @@ const Citas = () => {
 
     const cumpleEstado = !filtroEstado || cita.estado === filtroEstado;
 
-    const cumpleFecha = !filtroFecha || 
+    const cumpleFecha = !filtroFecha ||
       new Date(cita.fecha).toLocaleDateString('es-CL') === new Date(filtroFecha).toLocaleDateString('es-CL');
 
     return cumpleBusqueda && cumpleEstado && cumpleFecha;
@@ -54,13 +55,13 @@ const Citas = () => {
 
   const getEstadoColor = (estado) => {
     const colores = {
-      'pendiente': 'bg-yellow-100 text-yellow-800',
-      'confirmada': 'bg-blue-100 text-gray-900',
-      'en-curso': 'bg-purple-100 text-purple-800',
-      'completada': 'bg-green-100 text-green-800',
-      'cancelada': 'bg-red-100 text-red-800'
+      'pendiente': 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400',
+      'confirmada': 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400',
+      'en-curso': 'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400',
+      'completada': 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400',
+      'cancelada': 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400'
     };
-    return colores[estado] || 'bg-gray-100 text-gray-800';
+    return colores[estado] || 'bg-gray-100 dark:bg-gray-900/30 text-gray-800 dark:text-gray-400';
   };
 
   const getTipoColor = (tipo) => {
@@ -86,57 +87,54 @@ const Citas = () => {
   if (cargando) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900 dark:border-lime-500"></div>
       </div>
     );
   }
 
   return (
-    <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
+    <div className="p-6 space-y-6">
       {alerta.msg && <Alerta alerta={alerta} />}
 
       {/* Header */}
-      <div className="mb-8 flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Agenda de Citas</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+            <Calendar className="h-8 w-8 text-slate-900 dark:text-lime-500" />
+            Agenda de Citas
+          </h1>
+          <p className="text-muted-foreground dark:text-slate-300 mt-1">
             Gestiona las citas de la clínica veterinaria
           </p>
         </div>
         <Link
           to="/admin/citas/nueva"
-          className="flex items-center space-x-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-lime-600 text-white rounded-lg hover:bg-slate-800 dark:hover:bg-lime-700 transition-colors"
         >
-          <Plus className="h-5 w-5" />
+          <Plus className="h-4 w-4" />
           <span>Nueva Cita</span>
         </Link>
       </div>
 
-      {/* Filtros */}
-      <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+      {/* Buscador y Filtros */}
+      <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md border border-transparent dark:border-gray-700 space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <Search className="h-4 w-4 inline mr-1" />
-              Buscar
-            </label>
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground dark:text-gray-400" />
             <input
               type="text"
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               placeholder="Paciente, cliente, veterinario..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder:text-gray-400"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <Filter className="h-4 w-4 inline mr-1" />
-              Estado
-            </label>
+          <div className="relative">
+            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground dark:text-gray-400" />
             <select
               value={filtroEstado}
               onChange={(e) => setFiltroEstado(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent appearance-none bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
             >
               <option value="">Todos los estados</option>
               <option value="pendiente">Pendiente</option>
@@ -146,38 +144,35 @@ const Citas = () => {
               <option value="cancelada">Cancelada</option>
             </select>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <Calendar className="h-4 w-4 inline mr-1" />
-              Fecha
-            </label>
+          <div className="relative">
+            <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground dark:text-gray-400" />
             <input
               type="date"
               value={filtroFecha}
               onChange={(e) => setFiltroFecha(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
             />
           </div>
         </div>
       </div>
 
       {/* Lista de Citas */}
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-transparent dark:border-gray-700 overflow-hidden">
         {citasFiltradas.length === 0 ? (
           <div className="text-center py-12">
-            <Calendar className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <Calendar className="h-16 w-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
               {busqueda || filtroEstado || filtroFecha ? 'No se encontraron citas' : 'No hay citas agendadas'}
             </h3>
-            <p className="text-gray-600 mb-6">
-              {busqueda || filtroEstado || filtroFecha 
-                ? 'Intenta ajustar los filtros de búsqueda' 
+            <p className="text-gray-600 dark:text-slate-300 mb-6">
+              {busqueda || filtroEstado || filtroFecha
+                ? 'Intenta ajustar los filtros de búsqueda'
                 : 'Comienza agendando la primera cita'}
             </p>
             {!busqueda && !filtroEstado && !filtroFecha && (
               <Link
                 to="/admin/citas/nueva"
-                className="inline-flex items-center space-x-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
+                className="inline-flex items-center space-x-2 px-4 py-2 bg-slate-900 dark:bg-lime-600 text-white rounded-lg hover:bg-slate-800 dark:hover:bg-lime-700 transition-colors"
               >
                 <Plus className="h-5 w-5" />
                 <span>Agendar Primera Cita</span>
@@ -186,97 +181,80 @@ const Citas = () => {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-900">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-300 uppercase tracking-wider">
                     Fecha y Hora
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-300 uppercase tracking-wider">
                     Paciente
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-300 uppercase tracking-wider">
                     Cliente
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-300 uppercase tracking-wider">
                     Veterinario
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-300 uppercase tracking-wider">
                     Estado
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-slate-300 uppercase tracking-wider">
                     Acciones
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                 {citasFiltradas.map((cita) => (
-                  <tr key={cita._id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap w-1/6">
-                      <div className="text-sm font-medium text-gray-900">
+                  <tr key={cita._id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-gray-900 dark:text-white">
                         {formatearFecha(cita.fecha)}
                       </div>
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-gray-500 dark:text-slate-300">
                         {cita.horaInicio} ({cita.duracion} min)
                       </div>
                     </td>
-                    <td className="px-6 py-4 w-1/6">
-                      <div className="flex items-center">
-                        <PawPrint className="h-5 w-5 text-orange-500 mr-2 shrink-0" />
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="h-10 w-10 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center shrink-0">
+                          <PawPrint className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="text-sm font-medium text-gray-900 dark:text-white truncate">
                             {cita.paciente?.nombre}
                           </div>
-                          <div className="text-sm text-gray-500">
+                          <div className="text-sm text-gray-500 dark:text-slate-300">
                             {cita.paciente?.especie}
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 w-1/6">
-                      <div className="text-sm text-gray-900">
-                        {cita.cliente?.nombre} {cita.cliente?.apellido}
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        {cita.cliente?.telefono}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap w-1/6">
-                      <div className="flex items-start gap-2">
-                        <User className="h-4 w-4 text-gray-500 mt-1 shrink-0" />
-                        <div className="text-xs text-gray-900">
-                          <div className="font-semibold text-sm">
-                            Dr(a). {cita.veterinario?.usuario?.nombre}
-                          </div>
-                          {cita.veterinario?.usuario?.email && (
-                            <div className="text-gray-500">{cita.veterinario.usuario.email}</div>
-                          )}
-                          {cita.veterinario?.especialidad && (
-                            <div className="text-indigo-700">Especialidad: {cita.veterinario.especialidad}</div>
-                          )}
-                          {cita.veterinario?.licenciaProfesional && (
-                            <div className="text-gray-700">Licencia: {cita.veterinario.licenciaProfesional}</div>
-                          )}
-                          {cita.veterinario?.usuario?.createdAt && (
-                            <div className="text-gray-500">Ingreso: {new Date(cita.veterinario.usuario.createdAt).toLocaleDateString('es-CL')}</div>
-                          )}
-                          {typeof cita.veterinario?.usuario?.activo === 'boolean' && (
-                            <div className={
-                              cita.veterinario.usuario.activo
-                                ? 'text-green-700 font-semibold'
-                                : 'text-red-700 font-semibold'
-                            }>
-                              {cita.veterinario.usuario.activo ? 'Activo' : 'Inactivo'}
-                            </div>
-                          )}
+                    <td className="px-6 py-4">
+                      <div className="min-w-0">
+                        <div className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                          {cita.cliente?.nombre} {cita.cliente?.apellido}
+                        </div>
+                        <div className="text-sm text-gray-500 dark:text-slate-300">
+                          {cita.cliente?.telefono}
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap w-1/6">
+                    <td className="px-6 py-4">
+                      <div className="text-sm font-medium text-gray-900 dark:text-white">
+                        Dr(a). {cita.veterinario?.usuario?.nombre}
+                      </div>
+                      {cita.veterinario?.especialidad && (
+                        <div className="text-xs text-indigo-600 dark:text-indigo-400 mt-1">
+                          {cita.veterinario.especialidad}
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
                       <select
                         value={cita.estado}
                         onChange={(e) => handleCambiarEstado(cita._id, e.target.value)}
-                        className={`text-xs px-2 py-1 rounded-full font-semibold capitalize ${getEstadoColor(cita.estado)} w-full`}
+                        className={`text-xs px-3 py-2 rounded-lg font-medium capitalize ${getEstadoColor(cita.estado)} border-0 focus:ring-2 focus:ring-offset-2 focus:ring-slate-400 dark:focus:ring-lime-500 transition-all cursor-pointer hover:shadow-md w-full`}
                       >
                         <option value="pendiente">Pendiente</option>
                         <option value="confirmada">Confirmada</option>
@@ -285,23 +263,26 @@ const Citas = () => {
                         <option value="cancelada">Cancelada</option>
                       </select>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium w-1/6">
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex items-center justify-end gap-2">
                         <Link
                           to={`/admin/citas/${cita._id}`}
-                          className="text-gray-900 hover:text-indigo-900"
+                          className="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-gray-700 transition-all"
+                          title="Ver detalles"
                         >
                           <Eye className="h-4 w-4" />
                         </Link>
                         <Link
                           to={`/admin/citas/editar/${cita._id}`}
-                          className="text-green-600 hover:text-green-900"
+                          className="p-2 rounded-lg text-green-600 dark:text-green-500 hover:text-green-700 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 transition-all"
+                          title="Editar"
                         >
                           <Edit className="h-4 w-4" />
                         </Link>
                         <button
                           onClick={() => handleEliminar(cita._id, cita.paciente?.nombre)}
-                          className="text-red-600 hover:text-red-900"
+                          className="p-2 rounded-lg text-red-600 dark:text-red-500 hover:text-red-700 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all"
+                          title="Eliminar"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -316,7 +297,7 @@ const Citas = () => {
       </div>
 
       {/* Resumen inferior */}
-      <div className="mt-4 text-sm text-gray-600 text-center">
+      <div className="mt-4 text-sm text-gray-600 dark:text-slate-300 text-center">
         Mostrando {citasFiltradas.length} de {totalCitas} citas
       </div>
     </div>
