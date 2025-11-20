@@ -58,7 +58,7 @@ const SeleccionAcceso = () => {
   const { msg } = alerta;
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+    <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden">
       <AnimatedBackground tipoAcceso={tipoAcceso} />
       
       {/* Theme Toggle - Posición absoluta superior derecha */}
