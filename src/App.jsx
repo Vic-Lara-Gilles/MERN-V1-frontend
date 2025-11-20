@@ -12,6 +12,9 @@ import MisMascotas from './paginas/MisMascotas'
 import MiHistorial from './paginas/MiHistorial'
 import SolicitarCita from './paginas/SolicitarCita'
 
+// Página de selección
+import SeleccionAcceso from './paginas/SeleccionAcceso'
+
 import Login from './paginas/Login'
 import Registrar from './paginas/Registrar'
 import OlvidePassword from './paginas/OlvidePassword'
@@ -59,7 +62,10 @@ function App() {
                             <CitasProvider>
                                 <ConsultasProvider>
                                     <Routes>
-                                        {/* Rutas Portal Cliente */}
+                                        {/* Página de Selección Inicial */}
+                                        <Route index element={<SeleccionAcceso />} />
+
+                                        {/* Rutas Cliente */}
                                         <Route path="/portal" element={<PortalLayout />}>
                                             <Route path="login" element={<ClienteLogin />} />
                                             <Route element={<PortalRutaProtegida />}>
@@ -71,8 +77,8 @@ function App() {
                                         </Route>
 
                                         {/* Rutas Autenticación Interna */}
-                                        <Route path="/" element={<AuthLayout />}>
-                                            <Route index element={<Login />} />
+                                        <Route path="/auth" element={<AuthLayout />}>
+                                            <Route path="login" element={<Login />} />
                                             <Route path="registrar" element={<Registrar />} />
                                             <Route path="olvide-password" element={<OlvidePassword />} />
                                             <Route path="olvide-password/:token" element={<NuevoPassword />} />
