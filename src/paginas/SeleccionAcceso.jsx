@@ -57,27 +57,35 @@ const SeleccionAcceso = () => {
   const { msg } = alerta;
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative">
-      <AnimatedBackground />
-      
-      <div className="w-full max-w-md relative z-10">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <div className="h-16 w-16 rounded-full bg-primary flex items-center justify-center shadow-lg">
-              <Heart className="h-8 w-8 text-primary-foreground" />
+    <div className="min-h-screen w-full flex items-stretch relative overflow-hidden">
+      <AnimatedBackground tipoAcceso={tipoAcceso} />
+      <div className="flex flex-1 flex-col md:flex-row w-full z-10">
+        {/* Left: Branding */}
+        <div className="hidden md:flex flex-col justify-center items-start flex-1 px-12 py-8 relative">
+          <div className="mb-8">
+            <div className={`h-20 w-20 rounded-full flex items-center justify-center shadow-2xl mb-6 transition-colors duration-500 ${
+              tipoAcceso === 'cliente' ? 'bg-blue-600' : 'bg-primary'
+            }`}>
+              <Heart className="h-10 w-10 text-primary-foreground" />
             </div>
+            <h1 className="text-5xl font-extrabold text-slate-900 mb-4 drop-shadow-lg">
+              Clínica Veterinaria
+            </h1>
+            <h2 className={`text-2xl font-semibold mb-2 tracking-wide transition-colors duration-500 ${
+              tipoAcceso === 'cliente' ? 'text-blue-600' : 'text-primary'
+            }`}>
+              Bienvenido al Portal
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-md">
+              Gestiona tus pacientes, agenda y consultas en un solo lugar. Acceso para personal y clientes.
+            </p>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">
-            Clínica Veterinaria
-          </h1>
-          <p className="text-muted-foreground">
-            Accede a tu cuenta
-          </p>
         </div>
-
-        {/* Card con Tabs */}
-        <Card className="shadow-xl">
+        {/* Right: Login Form */}
+        <div className="flex flex-1 items-center justify-center px-4 py-12 md:py-0">
+          <div className="w-full max-w-md mx-auto">
+            {/* Card con Tabs */}
+            <Card className="shadow-2xl border bg-white/95 backdrop-blur-sm">
           {/* Tabs */}
           <div className="grid grid-cols-2 gap-0 border-b">
             <button
@@ -89,7 +97,7 @@ const SeleccionAcceso = () => {
               }}
               className={`relative py-4 px-4 font-semibold text-sm transition-all ${
                 tipoAcceso === 'personal'
-                  ? 'text-primary bg-blue-50'
+                  ? 'text-slate-900 bg-slate-100'
                   : 'text-muted-foreground hover:bg-slate-50'
               }`}
             >
@@ -98,7 +106,7 @@ const SeleccionAcceso = () => {
                 <span>Acceso Personal</span>
               </div>
               {tipoAcceso === 'personal' && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-900"></div>
               )}
             </button>
             
@@ -111,7 +119,7 @@ const SeleccionAcceso = () => {
               }}
               className={`relative py-4 px-4 font-semibold text-sm transition-all ${
                 tipoAcceso === 'cliente'
-                  ? 'text-purple-600 bg-purple-50'
+                  ? 'text-blue-600 bg-blue-50'
                   : 'text-muted-foreground hover:bg-slate-50'
               }`}
             >
@@ -120,7 +128,7 @@ const SeleccionAcceso = () => {
                 <span>Portal Clientes</span>
               </div>
               {tipoAcceso === 'cliente' && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-600"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"></div>
               )}
             </button>
           </div>
@@ -167,9 +175,9 @@ const SeleccionAcceso = () => {
 
               <Button 
                 type="submit"
-                className={`w-full h-11 text-base font-semibold ${
+                className={`w-full h-11 text-base font-semibold transition-colors ${
                   tipoAcceso === 'cliente' 
-                    ? 'bg-purple-600 hover:bg-purple-700' 
+                    ? 'bg-blue-600 hover:bg-blue-700' 
                     : ''
                 }`}
                 size="lg"
@@ -201,12 +209,12 @@ const SeleccionAcceso = () => {
                     <button
                       type="button"
                       onClick={() => navigate('/auth/olvide-password')}
-                      className="text-sm text-muted-foreground hover:text-purple-600 transition-colors block w-full"
+                      className="text-sm text-muted-foreground hover:text-blue-600 transition-colors block w-full"
                     >
                       ¿Olvidaste tu contraseña?
                     </button>
                     <p className="text-sm text-muted-foreground">
-                      ¿No tienes cuenta? <span className="font-semibold">Contacta con recepción</span>
+                      ¿No tienes cuenta? <span className="font-semibold text-blue-600">Contacta con recepción</span>
                     </p>
                   </>
                 )}
@@ -215,11 +223,13 @@ const SeleccionAcceso = () => {
           </CardContent>
         </Card>
 
-        {/* Footer */}
-        <div className="text-center mt-6">
-          <p className="text-sm text-muted-foreground">
-            ¿Necesitas ayuda? Contacta con recepción
-          </p>
+            {/* Footer */}
+            <div className="text-center mt-6">
+              <p className="text-sm text-muted-foreground">
+                ¿Necesitas ayuda? Contacta con recepción
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

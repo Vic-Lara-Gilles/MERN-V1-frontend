@@ -6,7 +6,6 @@ import RutaProtegidaRol from './layout/RutaProtegidaRol'
 // Portal Cliente
 import PortalLayout from './layout/PortalLayout'
 import PortalRutaProtegida from './layout/PortalRutaProtegida'
-import ClienteLogin from './paginas/ClienteLogin'
 import ClienteDashboard from './paginas/ClienteDashboard'
 import MisMascotas from './paginas/MisMascotas'
 import MiHistorial from './paginas/MiHistorial'
@@ -67,7 +66,6 @@ function App() {
 
                                         {/* Rutas Cliente */}
                                         <Route path="/portal" element={<PortalLayout />}>
-                                            <Route path="login" element={<ClienteLogin />} />
                                             <Route element={<PortalRutaProtegida />}>
                                                 <Route path="dashboard" element={<ClienteDashboard />} />
                                                 <Route path="mis-mascotas" element={<MisMascotas />} />
