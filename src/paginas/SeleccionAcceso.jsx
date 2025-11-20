@@ -146,7 +146,7 @@ const SeleccionAcceso = () => {
                 <span>Acceso Personal</span>
               </div>
               {tipoAcceso === 'personal' && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-900 dark:bg-white rounded-t"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-900 dark:bg-lime-500 rounded-t"></div>
               )}
             </button>
             
@@ -221,8 +221,8 @@ const SeleccionAcceso = () => {
                 type="submit"
                 className={`w-full h-12 text-base font-semibold shadow-lg transition-all hover:shadow-xl mt-6 text-white ${
                   tipoAcceso === 'cliente' 
-                    ? 'bg-blue-600 hover:bg-blue-700' 
-                    : 'bg-slate-900 hover:bg-slate-800'
+                    ? 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700' 
+                    : 'bg-slate-900 hover:bg-slate-800 dark:bg-lime-600 dark:hover:bg-lime-700'
                 }`}
                 size="lg"
               >
