@@ -57,37 +57,71 @@ const SeleccionAcceso = () => {
   const { msg } = alerta;
 
   return (
-    <div className="min-h-screen w-full flex items-stretch relative overflow-hidden">
+    <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-linear-to-br from-slate-50 via-white to-slate-100">
       <AnimatedBackground tipoAcceso={tipoAcceso} />
-      <div className="flex flex-1 flex-col md:flex-row w-full z-10">
+      
+      {/* Container principal */}
+      <div className="flex flex-col md:flex-row w-full max-w-6xl mx-auto z-10 gap-8 md:gap-12 px-4 py-8">
+        
         {/* Left: Branding */}
-        <div className="hidden md:flex flex-col justify-center items-start flex-1 px-12 py-8 relative">
-          <div className="mb-8">
-            <div className={`h-20 w-20 rounded-full flex items-center justify-center shadow-2xl mb-6 transition-colors duration-500 ${
-              tipoAcceso === 'cliente' ? 'bg-blue-600' : 'bg-primary'
-            }`}>
-              <Heart className="h-10 w-10 text-primary-foreground" />
+        <div className="flex flex-col justify-center items-start flex-1 md:pl-8">
+          <div className="mb-8 w-full">
+            {/* Logo */}
+            <div className="flex items-center gap-4 mb-8">
+              <div className={`h-16 w-16 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-500 ${
+                tipoAcceso === 'cliente' 
+                  ? 'bg-linear-to-br from-blue-500 to-blue-600' 
+                  : 'bg-linear-to-br from-slate-700 to-slate-900'
+              }`}>
+                <Heart className="h-8 w-8 text-white" />
+              </div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-bold text-slate-900">
+                  Clínica Veterinaria
+                </h1>
+              </div>
             </div>
-            <h1 className="text-5xl font-extrabold text-slate-900 mb-4 drop-shadow-lg">
-              Clínica Veterinaria
-            </h1>
-            <h2 className={`text-2xl font-semibold mb-2 tracking-wide transition-colors duration-500 ${
-              tipoAcceso === 'cliente' ? 'text-blue-600' : 'text-primary'
+            
+            {/* Título dinámico */}
+            <h2 className={`text-2xl md:text-3xl font-bold mb-4 transition-colors duration-500 ${
+              tipoAcceso === 'cliente' ? 'text-blue-600' : 'text-slate-900'
             }`}>
               Bienvenido al Portal
             </h2>
-            <p className="text-lg text-muted-foreground max-w-md">
-              Gestiona tus pacientes, agenda y consultas en un solo lugar. Acceso para personal y clientes.
+            
+            {/* Descripción */}
+            <p className="text-base md:text-lg text-slate-600 max-w-md leading-relaxed">
+              {tipoAcceso === 'personal' 
+                ? 'Para veterinarios y personal administrativo'
+                : 'Accede a la información de tus mascotas'
+              }
             </p>
+            
+            {/* Features list */}
+            <div className="mt-8 space-y-3 hidden md:block">
+              <div className="flex items-center gap-3 text-slate-700">
+                <div className={`w-2 h-2 rounded-full ${tipoAcceso === 'cliente' ? 'bg-blue-500' : 'bg-slate-700'}`}></div>
+                <span className="text-sm">Gestiona tus {tipoAcceso === 'personal' ? 'pacientes' : 'mascotas'}</span>
+              </div>
+              <div className="flex items-center gap-3 text-slate-700">
+                <div className={`w-2 h-2 rounded-full ${tipoAcceso === 'cliente' ? 'bg-blue-500' : 'bg-slate-700'}`}></div>
+                <span className="text-sm">{tipoAcceso === 'personal' ? 'Agenda consultas' : 'Solicita citas'}</span>
+              </div>
+              <div className="flex items-center gap-3 text-slate-700">
+                <div className={`w-2 h-2 rounded-full ${tipoAcceso === 'cliente' ? 'bg-blue-500' : 'bg-slate-700'}`}></div>
+                <span className="text-sm">{tipoAcceso === 'personal' ? 'Historial médico completo' : 'Revisa tu historial'}</span>
+              </div>
+            </div>
           </div>
         </div>
+        
         {/* Right: Login Form */}
-        <div className="flex flex-1 items-center justify-center px-4 py-12 md:py-0">
-          <div className="w-full max-w-md mx-auto">
+        <div className="flex flex-1 items-center justify-center md:justify-end md:pr-8">
+          <div className="w-full max-w-md">
             {/* Card con Tabs */}
-            <Card className="shadow-2xl border bg-white/95 backdrop-blur-sm">
+            <Card className="shadow-2xl border-0 bg-white overflow-hidden">
           {/* Tabs */}
-          <div className="grid grid-cols-2 gap-0 border-b">
+          <div className="grid grid-cols-2 gap-0 bg-slate-50">
             <button
               onClick={() => {
                 setTipoAcceso('personal');
@@ -95,10 +129,10 @@ const SeleccionAcceso = () => {
                 setEmail('');
                 setPassword('');
               }}
-              className={`relative py-4 px-4 font-semibold text-sm transition-all ${
+              className={`relative py-5 px-4 font-semibold text-sm transition-all ${
                 tipoAcceso === 'personal'
-                  ? 'text-slate-900 bg-slate-100'
-                  : 'text-muted-foreground hover:bg-slate-50'
+                  ? 'text-slate-900 bg-white shadow-sm'
+                  : 'text-slate-500 hover:text-slate-700'
               }`}
             >
               <div className="flex items-center justify-center gap-2">
@@ -106,7 +140,7 @@ const SeleccionAcceso = () => {
                 <span>Acceso Personal</span>
               </div>
               {tipoAcceso === 'personal' && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-900"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-900 rounded-t"></div>
               )}
             </button>
             
@@ -117,10 +151,10 @@ const SeleccionAcceso = () => {
                 setEmail('');
                 setPassword('');
               }}
-              className={`relative py-4 px-4 font-semibold text-sm transition-all ${
+              className={`relative py-5 px-4 font-semibold text-sm transition-all ${
                 tipoAcceso === 'cliente'
-                  ? 'text-blue-600 bg-blue-50'
-                  : 'text-muted-foreground hover:bg-slate-50'
+                  ? 'text-blue-600 bg-white shadow-sm'
+                  : 'text-slate-500 hover:text-slate-700'
               }`}
             >
               <div className="flex items-center justify-center gap-2">
@@ -128,57 +162,61 @@ const SeleccionAcceso = () => {
                 <span>Portal Clientes</span>
               </div>
               {tipoAcceso === 'cliente' && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-blue-600 rounded-t"></div>
               )}
             </button>
           </div>
 
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl">
-              {tipoAcceso === 'personal' ? 'Acceso Personal' : 'Acceso Clientes'}
+          <CardHeader className="text-center pt-8 pb-6">
+            <CardTitle className="text-2xl font-bold">
+              {tipoAcceso === 'personal' ? 'Acceso Personal' : 'Portal Clientes'}
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-base mt-2">
               {tipoAcceso === 'personal' 
-                ? 'Para veterinarios y personal administrativo'
-                : 'Portal para dueños de mascotas'
+                ? 'Ingresa tus credenciales de personal'
+                : 'Accede a la información de tus mascotas'
               }
             </CardDescription>
           </CardHeader>
 
-          <CardContent>
+          <CardContent className="px-6 pb-8">
             {msg && <Alerta alerta={alerta} />}
             
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="text-sm font-medium text-slate-700">
+                  Correo Electrónico
+                </Label>
                 <Input
                   id="email"
                   type="email"
                   placeholder="tu@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="h-11"
+                  className="h-12 px-4 text-base border-slate-300 focus:border-slate-900 focus:ring-slate-900"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password">Contraseña</Label>
+                <Label htmlFor="password" className="text-sm font-medium text-slate-700">
+                  Contraseña
+                </Label>
                 <Input
                   id="password"
                   type="password"
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="h-11"
+                  className="h-12 px-4 text-base border-slate-300 focus:border-slate-900 focus:ring-slate-900"
                 />
               </div>
 
               <Button 
                 type="submit"
-                className={`w-full h-11 text-base font-semibold transition-colors ${
+                className={`w-full h-12 text-base font-semibold shadow-lg transition-all hover:shadow-xl mt-6 ${
                   tipoAcceso === 'cliente' 
                     ? 'bg-blue-600 hover:bg-blue-700' 
-                    : ''
+                    : 'bg-slate-900 hover:bg-slate-800'
                 }`}
                 size="lg"
               >
@@ -186,22 +224,22 @@ const SeleccionAcceso = () => {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
 
-              <div className="text-center pt-4 border-t space-y-2">
+              <div className="text-center pt-6 border-t border-slate-200 mt-6 space-y-3">
                 {tipoAcceso === 'personal' ? (
                   <>
                     <button
                       type="button"
                       onClick={() => navigate('/auth/olvide-password')}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors block w-full"
+                      className="text-sm text-slate-600 hover:text-slate-900 transition-colors block w-full font-medium"
                     >
                       ¿Olvidaste tu contraseña?
                     </button>
                     <button
                       type="button"
                       onClick={() => navigate('/auth/registrar')}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors block w-full"
+                      className="text-sm text-slate-600 hover:text-slate-900 transition-colors block w-full"
                     >
-                      ¿No tienes cuenta? <span className="font-semibold text-primary">Regístrate</span>
+                      ¿No tienes cuenta? <span className="font-semibold text-slate-900">Regístrate aquí</span>
                     </button>
                   </>
                 ) : (
@@ -209,11 +247,11 @@ const SeleccionAcceso = () => {
                     <button
                       type="button"
                       onClick={() => navigate('/auth/olvide-password')}
-                      className="text-sm text-muted-foreground hover:text-blue-600 transition-colors block w-full"
+                      className="text-sm text-slate-600 hover:text-blue-600 transition-colors block w-full font-medium"
                     >
                       ¿Olvidaste tu contraseña?
                     </button>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-slate-600">
                       ¿No tienes cuenta? <span className="font-semibold text-blue-600">Contacta con recepción</span>
                     </p>
                   </>
@@ -225,8 +263,8 @@ const SeleccionAcceso = () => {
 
             {/* Footer */}
             <div className="text-center mt-6">
-              <p className="text-sm text-muted-foreground">
-                ¿Necesitas ayuda? Contacta con recepción
+              <p className="text-xs text-slate-500">
+                ¿Necesitas ayuda? <span className="font-medium text-slate-700">Contacta con recepción</span>
               </p>
             </div>
           </div>
