@@ -29,7 +29,6 @@ const AuthProvider = ({children}) => {
                 console.log(error.response?.data?.msg || error.message)
                 setAuth({})
             }
-
             setCargando(false)
         }
         autenticarUsuario()
