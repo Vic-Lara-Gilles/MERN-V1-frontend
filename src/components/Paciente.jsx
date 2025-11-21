@@ -1,10 +1,11 @@
-import usePacientes from "../hooks/usePacientes"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Edit, Trash2, Calendar, Weight, Ruler, Cake, User, Phone, Mail, MapPin, FileText } from "lucide-react"
+import React, { memo } from "react";
+import usePacientes from "../hooks/usePacientes";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Edit, Trash2, Calendar, Weight, Ruler, Cake, User, Phone, Mail, MapPin, FileText } from "lucide-react";
 
-const Paciente = ({paciente}) => {
+const Paciente = memo(function Paciente({ paciente }) {
 
     const { setEdicion, eliminarPaciente } = usePacientes()
     
@@ -183,6 +184,6 @@ const Paciente = ({paciente}) => {
             </CardContent>
         </Card>
     )
-}
+});
 
-export default Paciente
+export default Paciente;
