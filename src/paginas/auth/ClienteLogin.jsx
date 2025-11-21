@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, PawPrint, AlertCircle } from 'lucide-react';
+import { PageContainer } from '@/components/ui/page-container';
 import clienteAxios from '../../config/axios';
 import useClienteAuth from '../../hooks/useClienteAuth';
 import Alerta from '../../components/Alerta';
@@ -56,7 +57,8 @@ const ClienteLogin = () => {
     const { msg } = alerta;
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 px-4">
+        <PageContainer>
+        <div className="flex items-center justify-center px-4 py-12">
             <div className="max-w-md w-full">
                 {/* Logo y Título */}
                 <div className="text-center mb-8">
@@ -139,6 +141,7 @@ const ClienteLogin = () => {
                 </div>
             </div>
         </div>
+        </PageContainer>
     );
 };
 

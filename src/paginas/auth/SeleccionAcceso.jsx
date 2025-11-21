@@ -237,7 +237,7 @@ const SeleccionAcceso = () => {
                                                 </button>
                                                 <button
                                                     type="button"
-                                                    onClick={() => navigate('/auth/registrar')}
+                                                    onClick={() => navigate('/auth/registro')}
                                                     className="text-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors block w-full"
                                                 >
                                                     ¿No tienes cuenta? <span className="font-semibold text-slate-900 dark:text-white">Regístrate aquí</span>

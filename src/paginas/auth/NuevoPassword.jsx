@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Lock, ArrowRight } from "lucide-react"
+import { PageContainer } from "@/components/ui/page-container"
 
 const NuevoPassword = () => {
 
@@ -66,7 +67,9 @@ const NuevoPassword = () => {
 
     const { msg } = alerta
     return (
-        <>
+        <PageContainer>
+            <div className="min-h-screen flex items-center justify-center px-4 py-8">
+                <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl w-full">
             {/* Left: Branding */}
             <div className="hidden md:flex flex-col justify-center space-y-6">
                 {/* Logo/Icon */}
@@ -156,7 +159,9 @@ const NuevoPassword = () => {
                     </CardContent>
                 </Card>
             </div>
-        </>
+                </div>
+            </div>
+        </PageContainer>
     )       
 }
 

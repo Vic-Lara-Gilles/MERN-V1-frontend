@@ -5,6 +5,7 @@ import clienteAxios from '../../config/axios'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { CheckCircle } from "lucide-react"
 import LoadingSpinner from '../../components/LoadingSpinner';
+import { PageContainer } from "@/components/ui/page-container"
 
 const ConfirnarCuenta = () => {
     const [cuentaConfirmada, setCuentaConfirmada] = useState(false)
@@ -37,7 +38,9 @@ const ConfirnarCuenta = () => {
     },[])
 
     return (
-        <>
+        <PageContainer>
+            <div className="min-h-screen flex items-center justify-center px-4 py-8">
+                <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl w-full">
             {/* Left: Branding */}
             <div className="hidden md:flex flex-col justify-center space-y-6">
                 {/* Logo/Icon */}
@@ -88,7 +91,9 @@ const ConfirnarCuenta = () => {
                     </CardContent>
                 </Card>
             </div>
-        </>
+                </div>
+            </div>
+        </PageContainer>
     );
 };
 
