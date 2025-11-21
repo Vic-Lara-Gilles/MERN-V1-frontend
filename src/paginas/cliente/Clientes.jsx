@@ -1,4 +1,5 @@
 import LoadingSpinner from '../../components/LoadingSpinner';
+import Header from '../../components/Header';
 import { useEffect, useState } from "react"
 import useClientes from "../../hooks/useClientes"
 import { Link } from "react-router-dom"
@@ -46,23 +47,18 @@ const Clientes = () => {
     }
 
     return (
-        <div className="p-6 space-y-6">
-            {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div>
-                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
-                        <Users className="h-8 w-8 text-slate-900 dark:text-lime-500" />
-                        Clientes
-                    </h1>
-                    <p className="text-muted-foreground dark:text-slate-300 mt-1">
-                        Gestión de dueños de mascotas
-                    </p>
-                </div>
-                <Link to="/admin/clientes/nuevo" className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-lime-600 text-white rounded-lg hover:bg-slate-800 dark:hover:bg-lime-700 transition-colors text-sm font-medium">
-                    <Plus className="h-4 w-4" />
-                    Nuevo Cliente
-                </Link>
-            </div>
+        <div>
+            <Header
+                icon={<Users className="h-8 w-8 text-slate-900 dark:text-lime-500" />}
+                title="Clientes"
+                subtitle="Gestión de dueños de mascotas"
+                actions={
+                    <Link to="/admin/clientes/nuevo" className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-lime-600 text-white rounded-lg hover:bg-slate-800 dark:hover:bg-lime-700 transition-colors text-sm font-medium">
+                        <Plus className="h-4 w-4" />
+                        Nuevo Cliente
+                    </Link>
+                }
+            />
 
             {/* Buscador */}
             <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md border border-transparent dark:border-gray-700">
