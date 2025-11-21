@@ -28,8 +28,8 @@ const PortalRutaProtegida = () => {
             </>
         );
     } else {
-        console.log('Cliente no autenticado, redirigiendo a login');
-        return <Navigate to="/portal/login" />;
+        console.log('Cliente no autenticado, redirigiendo a /portal');
+        return <Navigate to="/portal" />;
     }
 };
 
