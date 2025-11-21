@@ -20,11 +20,18 @@ import ThemeToggle from './ThemeToggle';
 const Navbar = () => {
     const location = useLocation();
     const isPortal = location.pathname.startsWith('/portal');
+    const navigate = useNavigate();
 
     const { cerrarSesionCliente } = useClienteAuth();
     const { cerrarSesion, esAdmin, esVeterinario, esRecepcion } = useAuth();
 
     const isActive = (path) => location.pathname === path;
+
+    // Handler para cerrar sesión y redirigir
+    const handleCerrarSesionCliente = () => {
+        cerrarSesionCliente();
+        navigate('/portal');
+    };
 
     // Determinar título y subtítulo según el contexto
     const getTitulo = () => {
@@ -113,7 +120,7 @@ const Navbar = () => {
                             <Button
                                 variant="ghost"
                                 size="sm"
-                                onClick={cerrarSesionCliente}
+                                onClick={handleCerrarSesionCliente}
                                 className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
                             >
                                 <LogOut className="h-4 w-4 mr-2" />
