@@ -1,10 +1,30 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import ThemeToggle from "../components/ThemeToggle";
+import LoadingSpinner from "../components/LoadingSpinner";
+import useAuth from "../hooks/useAuth";
+import useClienteAuth from "../hooks/useClienteAuth";
 
 const AuthLayout = () => {
+    const { auth, cargando } = useAuth();
+    const { cliente, cargando: cargandoCliente } = useClienteAuth();
+
+    // Mostrar loading mientras se verifica autenticación
+    if (cargando || cargandoCliente) {
+        return <LoadingSpinner />;
+    }
+
+    // Redirigir si ya está autenticado
+    if (auth?._id) {
+        return <Navigate to="/admin" replace />;
+    }
+
+    if (cliente?._id) {
+        return <Navigate to="/portal/dashboard" replace />;
+    }
+
     return (
         <>
-            <div className="min-h-screen w-full relative overflow-hidden">
+            <div className="min-h-screen w-full relative overflow-hidden bg-gray-50 dark:bg-gray-950">
                 {/* Theme Toggle - Posición absoluta superior derecha */}
                 <div className="absolute top-4 right-4 z-20">
                     <ThemeToggle />
