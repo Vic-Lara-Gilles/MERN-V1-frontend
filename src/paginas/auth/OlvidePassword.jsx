@@ -6,25 +6,26 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { PageContainer } from "@/components/ui/page-container"
 import { KeyRound, ArrowRight } from "lucide-react"
 
 
 const OlvidePassword = () => {
     const [email, setEmail] = useState('')
     const [alerta, setAlerta] = useState({})
-    
+
     const handleSubmit = async e => {
         e.preventDefault()
 
-        if(email === '' || email.length < 6) {
-            setAlerta({msg: 'El Email es obligatorio', error: true})
+        if (email === '' || email.length < 6) {
+            setAlerta({ msg: 'El Email es obligatorio', error: true })
             return
         }
 
         try {
             // Cambiar endpoint de veterinarios a usuarios
             const { data } = await clienteAxios.post('/usuarios/olvide-password', { email })
-            setAlerta({msg: data.msg})
+            setAlerta({ msg: data.msg })
         } catch (error) {
             setAlerta({
                 msg: error.response?.data?.msg || error.message,
@@ -32,100 +33,104 @@ const OlvidePassword = () => {
             })
         }
     }
-    
+
     const { msg } = alerta
 
     return (
-        <>
-            {/* Left: Branding */}
-            <div className="hidden md:flex flex-col justify-center space-y-6">
-                {/* Logo/Icon */}
-                <div className="inline-flex items-center gap-3 mb-4">
-                    <div className="w-14 h-14 rounded-2xl bg-linear-to-br from-slate-900 to-slate-700 dark:from-lime-600 dark:to-lime-500 flex items-center justify-center shadow-lg">
-                        <KeyRound className="w-7 h-7 text-white" />
-                    </div>
-                    <div>
-                        <h3 className="text-2xl font-bold text-slate-900 dark:text-white">VetManager</h3>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">Sistema de Gestión Veterinaria</p>
-                    </div>
-                </div>
+        <PageContainer>
+            <div className="min-h-screen flex items-center justify-center p-4">
+                <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
+                    {/* Left: Branding */}
+                    <div className="hidden md:flex flex-col justify-center space-y-6 px-4">
+                        {/* Logo/Icon */}
+                        <div className="inline-flex items-center gap-3 mb-4">
+                            <div className="w-14 h-14 rounded-2xl bg-linear-to-br from-slate-900 to-slate-700 dark:from-lime-600 dark:to-lime-500 flex items-center justify-center shadow-lg">
+                                <KeyRound className="w-7 h-7 text-white" />
+                            </div>
+                            <div>
+                                <h3 className="text-2xl font-bold text-slate-900 dark:text-white">VetManager</h3>
+                                <p className="text-sm text-slate-600 dark:text-slate-400">Sistema de Gestión Veterinaria</p>
+                            </div>
+                        </div>
 
-                <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white leading-tight">
-                    ¿Olvidaste tu contraseña?
-                </h2>
-                
-                <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-md leading-relaxed">
-                    No te preocupes, te enviaremos instrucciones para recuperar tu acceso
-                </p>
-                
-                {/* Features list */}
-                <div className="mt-8 space-y-3">
-                    <div className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
-                        <div className="w-2 h-2 rounded-full bg-slate-700 dark:bg-lime-500"></div>
-                        <span className="text-sm">Proceso rápido y seguro</span>
+                        <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white leading-tight">
+                            ¿Olvidaste tu contraseña?
+                        </h2>
+
+                        <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-md leading-relaxed">
+                            No te preocupes, te enviaremos instrucciones para recuperar tu acceso
+                        </p>
+
+                        {/* Features list */}
+                        <div className="mt-8 space-y-3">
+                            <div className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                                <div className="w-2 h-2 rounded-full bg-slate-700 dark:bg-lime-500"></div>
+                                <span className="text-sm">Proceso rápido y seguro</span>
+                            </div>
+                            <div className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                                <div className="w-2 h-2 rounded-full bg-slate-700 dark:bg-lime-500"></div>
+                                <span className="text-sm">Instrucciones por email</span>
+                            </div>
+                            <div className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                                <div className="w-2 h-2 rounded-full bg-slate-700 dark:bg-lime-500"></div>
+                                <span className="text-sm">Soporte disponible 24/7</span>
+                            </div>
+                        </div>
                     </div>
-                    <div className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
-                        <div className="w-2 h-2 rounded-full bg-slate-700 dark:bg-lime-500"></div>
-                        <span className="text-sm">Instrucciones por email</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
-                        <div className="w-2 h-2 rounded-full bg-slate-700 dark:bg-lime-500"></div>
-                        <span className="text-sm">Soporte disponible 24/7</span>
+
+                    {/* Right: Form */}
+                    <div className="flex items-center justify-center w-full">
+                        <Card className="w-full max-w-md shadow-2xl border-0 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm">
+                            <CardHeader className="space-y-1 pb-6">
+                                <CardTitle className="text-2xl font-bold text-slate-900 dark:text-white">Recuperar Contraseña</CardTitle>
+                                <CardDescription className="dark:text-slate-400">
+                                    Ingresa tu email para recibir instrucciones
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                {msg && <Alerta alerta={alerta} />}
+
+                                <form onSubmit={handleSubmit} className="space-y-4">
+                                    <div className="space-y-2">
+                                        <Label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-200">Email</Label>
+                                        <Input
+                                            id="email"
+                                            type="email"
+                                            placeholder="tu@email.com"
+                                            value={email}
+                                            onChange={e => setEmail(e.target.value)}
+                                            className="h-12 px-4 text-base border-slate-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white dark:placeholder-gray-400 focus:border-slate-900 dark:focus:border-lime-500 focus:ring-slate-900 dark:focus:ring-lime-500"
+                                        />
+                                    </div>
+
+                                    <Button
+                                        type="submit"
+                                        className="w-full h-12 text-base font-semibold shadow-lg transition-all hover:shadow-xl mt-6 text-white bg-slate-900 hover:bg-slate-800 dark:bg-lime-600 dark:hover:bg-lime-700"
+                                        size="lg"
+                                    >
+                                        Enviar Instrucciones
+                                        <ArrowRight className="ml-2 h-5 w-5" />
+                                    </Button>
+
+                                    <div className="text-center pt-6 border-t border-slate-200 dark:border-gray-700 mt-6 space-y-3">
+                                        <Link
+                                            className="text-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors block w-full font-medium"
+                                            to="/auth">
+                                            ¿Ya tienes una cuenta? <span className="font-semibold text-slate-900 dark:text-lime-500">Inicia sesión</span>
+                                        </Link>
+                                        <Link
+                                            className="text-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors block w-full"
+                                            to="/auth/registro">
+                                            ¿No tienes cuenta? <span className="font-semibold text-slate-900 dark:text-lime-500">Regístrate</span>
+                                        </Link>
+                                    </div>
+                                </form>
+                            </CardContent>
+                        </Card>
                     </div>
                 </div>
             </div>
-            
-            {/* Right: Form */}
-            <div className="flex items-center justify-center md:justify-end">
-                <Card className="w-full max-w-md shadow-2xl border-0 bg-white dark:bg-gray-800">
-                    <CardHeader className="space-y-1 pb-6">
-                        <CardTitle className="text-2xl font-bold text-slate-900 dark:text-white">Recuperar Contraseña</CardTitle>
-                        <CardDescription className="dark:text-slate-400">
-                            Ingresa tu email para recibir instrucciones
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        { msg && <Alerta alerta={alerta} />}
-                        
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            <div className="space-y-2">
-                                <Label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-200">Email</Label>
-                                <Input 
-                                    id="email"
-                                    type="email"
-                                    placeholder="tu@email.com"
-                                    value={email}
-                                    onChange={e => setEmail(e.target.value)}
-                                    className="h-12 px-4 text-base border-slate-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white dark:placeholder-gray-400 focus:border-slate-900 dark:focus:border-lime-500 focus:ring-slate-900 dark:focus:ring-lime-500"
-                                />
-                            </div>
-
-                            <Button 
-                                type="submit"
-                                className="w-full h-12 text-base font-semibold shadow-lg transition-all hover:shadow-xl mt-6 text-white bg-slate-900 hover:bg-slate-800 dark:bg-lime-600 dark:hover:bg-lime-700"
-                                size="lg"
-                            >
-                                Enviar Instrucciones
-                                <ArrowRight className="ml-2 h-5 w-5" />
-                            </Button>
-
-                            <div className="text-center pt-6 border-t border-slate-200 dark:border-gray-700 mt-6 space-y-3">
-                                <Link
-                                    className="text-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors block w-full font-medium"
-                                    to="/auth/login">
-                                    ¿Ya tienes una cuenta? <span className="font-semibold text-slate-900 dark:text-lime-500">Inicia sesión</span>
-                                </Link>
-                                <Link 
-                                    className="text-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors block w-full"
-                                    to="/auth/registrar">
-                                    ¿No tienes cuenta? <span className="font-semibold text-slate-900 dark:text-lime-500">Regístrate</span>
-                                </Link>
-                            </div>
-                        </form>
-                    </CardContent>
-                </Card>
-            </div>
-        </>
+        </PageContainer>
     );
 };
 
