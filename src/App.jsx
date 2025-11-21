@@ -76,10 +76,10 @@ function App() {
                             <CitasProvider>
                                 <ConsultasProvider>
                                     <Suspense fallback={
-                                        <div className="min-h-screen flex items-center justify-center">
+                                        <div className="min-h-screen flex items-center justify-center bg-background text-foreground transition-colors">
                                             <div className="text-center">
                                                 <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent dark:border-lime-500 dark:border-r-transparent"></div>
-                                                <p className="mt-4 text-slate-600 dark:text-slate-300">Cargando...</p>
+                                                <p className="mt-4 text-muted-foreground">Cargando...</p>
                                             </div>
                                         </div>
                                     }>
