@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react';
 import { User, Lock, Settings } from 'lucide-react';
 import useAuth from '../../hooks/useAuth';
 import Alerta from '../../components/Alerta';
+import Header from '../../components/Header';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 
 const Configuracion = () => {
     const { auth, actualizarPerfil, guardarPassword } = useAuth();
@@ -70,16 +74,12 @@ const Configuracion = () => {
 
     return (
         <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
-            {/* Header */}
-            <div className="mb-8">
-                <h1 className="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
-                    <Settings className="h-8 w-8 text-slate-900 dark:text-lime-500" />
-                    Configuración de Cuenta
-                </h1>
-                <p className="text-slate-600 dark:text-slate-300 mt-2">
-                    Administra tu información personal y seguridad
-                </p>
-            </div>
+            <Header
+                icon={<Settings className="h-8 w-8 text-slate-900 dark:text-lime-500" />}
+                title="Configuración de Cuenta"
+                subtitle="Administra tu información personal y seguridad"
+                className="mb-8"
+            />
 
             {/* Tabs */}
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-slate-200 dark:border-gray-700 overflow-hidden">
@@ -121,11 +121,12 @@ const Configuracion = () => {
                     {tabActivo === 'perfil' && (
                         <form onSubmit={handlePerfilSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
+                                <div className="space-y-2">
+                                    <Label htmlFor="nombre">
                                         Nombre <span className="text-red-500">*</span>
-                                    </label>
-                                    <input
+                                    </Label>
+                                    <Input
+                                        id="nombre"
                                         type="text"
                                         name="nombre"
                                         placeholder="Escribe tu nombre"
@@ -134,15 +135,15 @@ const Configuracion = () => {
                                             ...perfil,
                                             [e.target.name]: e.target.value
                                         })}
-                                        className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent"
                                     />
                                 </div>
 
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
+                                <div className="space-y-2">
+                                    <Label htmlFor="email">
                                         Email <span className="text-red-500">*</span>
-                                    </label>
-                                    <input
+                                    </Label>
+                                    <Input
+                                        id="email"
                                         type="email"
                                         name="email"
                                         placeholder="Escribe tu email"
@@ -151,15 +152,13 @@ const Configuracion = () => {
                                             ...perfil,
                                             [e.target.name]: e.target.value
                                         })}
-                                        className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent"
                                     />
                                 </div>
 
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
-                                        Teléfono
-                                    </label>
-                                    <input
+                                <div className="space-y-2">
+                                    <Label htmlFor="telefono">Teléfono</Label>
+                                    <Input
+                                        id="telefono"
                                         type="text"
                                         name="telefono"
                                         placeholder="Escribe tu teléfono"
@@ -168,18 +167,16 @@ const Configuracion = () => {
                                             ...perfil,
                                             [e.target.name]: e.target.value
                                         })}
-                                        className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent"
                                     />
                                     <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                                         Ingresa número de telefono movil con prefijo: +569
                                     </p>
                                 </div>
 
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
-                                        Sitio Web
-                                    </label>
-                                    <input
+                                <div className="space-y-2">
+                                    <Label htmlFor="web">Sitio Web</Label>
+                                    <Input
+                                        id="web"
                                         type="text"
                                         name="web"
                                         placeholder="Escribe tu sitio web"
@@ -188,18 +185,14 @@ const Configuracion = () => {
                                             ...perfil,
                                             [e.target.name]: e.target.value
                                         })}
-                                        className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent"
                                     />
                                 </div>
                             </div>
 
                             <div className="flex justify-end pt-4 border-t border-slate-200 dark:border-gray-700">
-                                <button
-                                    type="submit"
-                                    className="px-4 py-2 bg-slate-900 dark:bg-lime-600 text-white rounded-lg hover:bg-slate-800 dark:hover:bg-lime-700 transition-colors font-semibold"
-                                >
+                                <Button type="submit">
                                     Guardar Cambios
-                                </button>
+                                </Button>
                             </div>
                         </form>
                     )}
@@ -208,11 +201,12 @@ const Configuracion = () => {
                     {tabActivo === 'password' && (
                         <form onSubmit={handlePasswordSubmit} className="space-y-6">
                             <div className="max-w-md space-y-6">
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
+                                <div className="space-y-2">
+                                    <Label htmlFor="pwd_actual">
                                         Contraseña Actual <span className="text-red-500">*</span>
-                                    </label>
-                                    <input
+                                    </Label>
+                                    <Input
+                                        id="pwd_actual"
                                         type="password"
                                         name="pwd_actual"
                                         placeholder="Escribe tu contraseña actual"
@@ -221,15 +215,15 @@ const Configuracion = () => {
                                             ...password,
                                             [e.target.name]: e.target.value
                                         })}
-                                        className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent"
                                     />
                                 </div>
 
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
+                                <div className="space-y-2">
+                                    <Label htmlFor="pwd_nuevo">
                                         Nueva Contraseña <span className="text-red-500">*</span>
-                                    </label>
-                                    <input
+                                    </Label>
+                                    <Input
+                                        id="pwd_nuevo"
                                         type="password"
                                         name="pwd_nuevo"
                                         placeholder="Escribe tu nueva contraseña"
@@ -238,7 +232,6 @@ const Configuracion = () => {
                                             ...password,
                                             [e.target.name]: e.target.value
                                         })}
-                                        className="w-full px-4 py-3 border border-slate-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent"
                                     />
                                     <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                                         La contraseña debe tener al menos 6 caracteres
@@ -247,12 +240,9 @@ const Configuracion = () => {
                             </div>
 
                             <div className="flex justify-end pt-4 border-t border-slate-200 dark:border-gray-700">
-                                <button
-                                    type="submit"
-                                    className="px-4 py-2 bg-slate-900 dark:bg-lime-600 text-white rounded-lg hover:bg-slate-800 dark:hover:bg-lime-700 transition-colors font-semibold"
-                                >
+                                <Button type="submit">
                                     Cambiar Contraseña
-                                </button>
+                                </Button>
                             </div>
                         </form>
                     )}
