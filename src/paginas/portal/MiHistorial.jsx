@@ -1,10 +1,14 @@
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Calendar, FileText } from 'lucide-react';
 import useClienteAuth from '../../hooks/useClienteAuth';
 import clienteAxios from '../../config/axios';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { PageContainer, PageContent } from '@/components/ui/page-container';
+import Header from '@/components/Header';
 
 const MiHistorial = () => {
     const { cliente } = useClienteAuth();
@@ -54,20 +58,21 @@ const MiHistorial = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-            <main className="container mx-auto px-4 py-8">
-                <div className="mb-8">
-                    <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2">Mi Historial</h2>
-                    <p className="text-gray-600 dark:text-gray-400 text-lg">Citas y consultas médicas de tus mascotas</p>
-                </div>
+        <PageContainer>
+            <Header
+                icon={<Calendar className="h-8 w-8 text-slate-900 dark:text-lime-500" />}
+                title="Mi Historial"
+                subtitle="Citas y consultas médicas de tus mascotas"
+            />
 
+            <PageContent>
                 {/* Tabs */}
-                <div className="flex gap-4 mb-6 border-b">
+                <div className="flex gap-4 border-b border-slate-200 dark:border-gray-700">
                     <button
                         onClick={() => setVistaActiva('citas')}
                         className={`pb-3 px-4 font-semibold transition-colors ${vistaActiva === 'citas'
-                                ? 'text-gray-900 border-b-2 border-blue-600'
-                                : 'text-gray-600 hover:text-gray-900'
+                                ? 'text-slate-900 dark:text-lime-500 border-b-2 border-slate-900 dark:border-lime-500'
+                                : 'text-muted-foreground dark:text-gray-400 hover:text-slate-900 dark:hover:text-white'
                             }`}
                     >
                         <Calendar className="w-4 h-4 inline mr-2" />
@@ -76,8 +81,8 @@ const MiHistorial = () => {
                     <button
                         onClick={() => setVistaActiva('consultas')}
                         className={`pb-3 px-4 font-semibold transition-colors ${vistaActiva === 'consultas'
-                                ? 'text-gray-900 border-b-2 border-blue-600'
-                                : 'text-gray-600 hover:text-gray-900'
+                                ? 'text-slate-900 dark:text-lime-500 border-b-2 border-slate-900 dark:border-lime-500'
+                                : 'text-muted-foreground dark:text-gray-400 hover:text-slate-900 dark:hover:text-white'
                             }`}
                     >
                         <FileText className="w-4 h-4 inline mr-2" />
@@ -86,47 +91,49 @@ const MiHistorial = () => {
                 </div>
 
                 {cargando ? (
-                    <LoadingSpinner />
+                    <div className="flex items-center justify-center py-12">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900 dark:border-lime-500"></div>
+                    </div>
                 ) : (
                     <>
                         {vistaActiva === 'citas' && (
-                            <Card>
+                            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-transparent dark:border-gray-700 overflow-hidden">
                                 {citas.length === 0 ? (
-                                    <CardContent className="p-12 text-center">
-                                        <Calendar className="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                                    <div className="p-12 text-center">
+                                        <Calendar className="w-16 h-16 text-muted-foreground dark:text-gray-500 mx-auto mb-4" />
                                         <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">No tienes citas registradas</h3>
-                                        <p className="text-gray-600 dark:text-gray-400 mb-4">Solicita una cita para tu mascota</p>
-                                        <Button asChild>
+                                        <p className="text-muted-foreground dark:text-slate-300 mb-4">Solicita una cita para tu mascota</p>
+                                        <Button asChild className="bg-slate-900 dark:bg-lime-600 hover:bg-slate-800 dark:hover:bg-lime-700">
                                             <Link to="/portal/solicitar-cita">
                                                 Solicitar Cita
                                             </Link>
                                         </Button>
-                                    </CardContent>
+                                    </div>
                                 ) : (
                                     <div className="overflow-x-auto">
-                                        <table className="min-w-full divide-y divide-gray-200">
-                                            <thead className="bg-gray-50">
+                                        <table className="min-w-full divide-y divide-slate-200 dark:divide-gray-700">
+                                            <thead className="bg-slate-50 dark:bg-gray-900">
                                                 <tr>
-                                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fecha</th>
-                                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mascota</th>
-                                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Veterinario</th>
-                                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Motivo</th>
-                                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
+                                                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground dark:text-gray-400 uppercase tracking-wider">Fecha</th>
+                                                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground dark:text-gray-400 uppercase tracking-wider">Mascota</th>
+                                                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground dark:text-gray-400 uppercase tracking-wider">Veterinario</th>
+                                                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground dark:text-gray-400 uppercase tracking-wider">Motivo</th>
+                                                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground dark:text-gray-400 uppercase tracking-wider">Estado</th>
                                                 </tr>
                                             </thead>
-                                            <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                            <tbody className="bg-white dark:bg-gray-800 divide-y divide-slate-200 dark:divide-gray-700">
                                                 {citas.map((cita) => (
-                                                    <tr key={cita._id} className="hover:bg-gray-50">
-                                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                    <tr key={cita._id} className="hover:bg-slate-50 dark:hover:bg-gray-700">
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-900 dark:text-white">
                                                             {formatearFecha(cita.fecha)}
                                                         </td>
-                                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-white">
                                                             {cita.paciente?.nombre}
                                                         </td>
-                                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-900 dark:text-white">
                                                             Dr(a). {cita.veterinario?.nombre}
                                                         </td>
-                                                        <td className="px-6 py-4 text-sm text-gray-900 max-w-xs truncate">
+                                                        <td className="px-6 py-4 text-sm text-slate-900 dark:text-white max-w-xs truncate">
                                                             {cita.motivo}
                                                         </td>
                                                         <td className="px-6 py-4 whitespace-nowrap">
@@ -140,25 +147,25 @@ const MiHistorial = () => {
                                         </table>
                                     </div>
                                 )}
-                            </Card>
+                            </div>
                         )}
 
                         {vistaActiva === 'consultas' && (
-                            <Card>
+                            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-transparent dark:border-gray-700">
                                 {consultas.length === 0 ? (
-                                    <CardContent className="p-12 text-center">
-                                        <FileText className="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                                    <div className="p-12 text-center">
+                                        <FileText className="w-16 h-16 text-muted-foreground dark:text-gray-500 mx-auto mb-4" />
                                         <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">No tienes consultas registradas</h3>
-                                        <p className="text-gray-600 dark:text-gray-400">El historial médico aparecerá aquí después de las consultas</p>
-                                    </CardContent>
+                                        <p className="text-muted-foreground dark:text-slate-300">El historial médico aparecerá aquí después de las consultas</p>
+                                    </div>
                                 ) : (
-                                    <CardContent className="p-6 space-y-4">
+                                    <div className="p-6 space-y-4">
                                         {consultas.map((consulta) => (
-                                            <div key={consulta._id} className="border rounded-lg p-6">
+                                            <div key={consulta._id} className="border border-slate-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-md transition-shadow">
                                                 <div className="flex items-start justify-between mb-4">
                                                     <div>
                                                         <h3 className="text-lg font-bold text-slate-900 dark:text-white">{consulta.paciente?.nombre}</h3>
-                                                        <p className="text-sm text-gray-600 dark:text-gray-400">{formatearFecha(consulta.fecha)}</p>
+                                                        <p className="text-sm text-muted-foreground dark:text-gray-400">{formatearFecha(consulta.fecha)}</p>
                                                     </div>
                                                     <Badge variant="outline" className={
                                                         consulta.estado === 'completada' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
@@ -168,34 +175,28 @@ const MiHistorial = () => {
                                                 </div>
                                                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                                                     <div>
-                                                        <p className="text-gray-600 dark:text-gray-400 mb-1">Veterinario:</p>
+                                                        <p className="text-muted-foreground dark:text-gray-400 mb-1">Veterinario:</p>
                                                         <p className="font-semibold text-slate-900 dark:text-white">Dr(a). {consulta.veterinario?.nombre}</p>
                                                     </div>
                                                     <div>
-                                                        <p className="text-gray-600 dark:text-gray-400 mb-1">Motivo de Consulta:</p>
+                                                        <p className="text-muted-foreground dark:text-gray-400 mb-1">Motivo de Consulta:</p>
                                                         <p className="font-semibold text-slate-900 dark:text-white">{consulta.motivoConsulta.substring(0, 80)}...</p>
                                                     </div>
                                                     <div className="md:col-span-2">
-                                                        <p className="text-gray-600 dark:text-gray-400 mb-1">Diagnóstico:</p>
+                                                        <p className="text-muted-foreground dark:text-gray-400 mb-1">Diagnóstico:</p>
                                                         <p className="text-slate-900 dark:text-white">{consulta.diagnostico.substring(0, 150)}...</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         ))}
-                                    </CardContent>
+                                    </div>
                                 )}
-                            </Card>
+                            </div>
                         )}
                     </>
                 )}
-            </main>
-
-            <footer className="mt-16 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
-                <div className="container mx-auto px-4 py-6 text-center text-sm text-gray-600 dark:text-gray-400">
-                    <p>© 2025 Clínica Veterinaria. Todos los derechos reservados.</p>
-                </div>
-            </footer>
-        </div>
+            </PageContent>
+        </PageContainer>
     );
 };
 

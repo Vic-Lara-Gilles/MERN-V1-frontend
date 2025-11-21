@@ -1,11 +1,15 @@
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Calendar, Clock, PawPrint } from 'lucide-react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { Calendar, Clock, PawPrint, FileText } from 'lucide-react';
 import useClienteAuth from '../../hooks/useClienteAuth';
 import clienteAxios from '../../config/axios';
 import Alerta from '../../components/Alerta';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { PageContainer, PageContent } from '@/components/ui/page-container';
+import { FormField } from '@/components/ui/form-field';
+import Header from '@/components/Header';
 
 const SolicitarCita = () => {
     const { cliente } = useClienteAuth();
@@ -97,149 +101,135 @@ const SolicitarCita = () => {
         return <LoadingSpinner />;
     }
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-            <main className="container max-w-3xl mx-auto px-4 py-8">
-                <div className="mb-8">
-                    <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2">Solicitar Cita</h2>
-                    <p className="text-gray-600 dark:text-gray-400 text-lg">Completa el formulario para solicitar una cita</p>
-                </div>
+        <PageContainer>
+            <Header
+                icon={<Calendar className="h-8 w-8 text-slate-900 dark:text-lime-500" />}
+                title="Solicitar Cita"
+                subtitle="Completa el formulario para solicitar una cita"
+            />
 
+            <PageContent>
                 {msg && <Alerta alerta={alerta} />}
 
-                <Card>
-                    <CardContent className="p-6">
-                        <div className="mb-6 p-4 bg-blue-50 border-l-4 border-blue-600 rounded">
-                            <p className="text-sm text-slate-900 dark:text-white">
-                                <strong>Importante:</strong> Tu solicitud será revisada por recepción.
-                                Recibirás confirmación por correo electrónico o teléfono.
-                            </p>
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-transparent dark:border-gray-700 p-6">
+                    {cargando ? (
+                        <div className="flex justify-center py-12">
+                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900 dark:border-lime-500"></div>
                         </div>
-
-                        {cargando ? (
-                            <div className="flex justify-center py-12">
-                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                    ) : (
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
+                                    <PawPrint className="w-4 h-4 inline mr-1" />
+                                    Mascota *
+                                </label>
+                                <select
+                                    value={cita.paciente}
+                                    onChange={(e) => setCita({ ...cita, paciente: e.target.value })}
+                                    className="w-full px-4 py-3 border border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent bg-white dark:bg-gray-900 text-slate-900 dark:text-white"
+                                    required
+                                >
+                                    <option value="">Selecciona una mascota</option>
+                                    {pacientes.map((paciente) => (
+                                        <option key={paciente._id} value={paciente._id}>
+                                            {paciente.nombre} ({paciente.especie})
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
-                        ) : (
-                            <form onSubmit={handleSubmit} className="space-y-6">
+
+                            <div className="grid md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                        <PawPrint className="w-4 h-4 inline mr-1" />
-                                        Mascota *
+                                    <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
+                                        <Calendar className="w-4 h-4 inline mr-1" />
+                                        Fecha *
                                     </label>
-                                    <select
-                                        value={cita.paciente}
-                                        onChange={(e) => setCita({ ...cita, paciente: e.target.value })}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        required
-                                    >
-                                        <option value="">Selecciona una mascota</option>
-                                        {pacientes.map((paciente) => (
-                                            <option key={paciente._id} value={paciente._id}>
-                                                {paciente.nombre} ({paciente.especie})
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-
-                                <div className="grid md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                            <Calendar className="w-4 h-4 inline mr-1" />
-                                            Fecha *
-                                        </label>
-                                        <input
-                                            type="date"
-                                            value={cita.fecha}
-                                            onChange={(e) => setCita({ ...cita, fecha: e.target.value })}
-                                            min={new Date().toISOString().split('T')[0]}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                            required
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                            <Clock className="w-4 h-4 inline mr-1" />
-                                            Hora Preferida *
-                                        </label>
-                                        <input
-                                            type="time"
-                                            value={cita.hora}
-                                            onChange={(e) => setCita({ ...cita, hora: e.target.value })}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                        <FileText className="w-4 h-4 inline mr-1" />
-                                        Tipo de Consulta *
-                                    </label>
-                                    <select
-                                        value={cita.tipoConsulta}
-                                        onChange={(e) => setCita({ ...cita, tipoConsulta: e.target.value })}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        required
-                                    >
-                                        <option value="consulta">Consulta General</option>
-                                        <option value="vacunacion">Vacunación</option>
-                                        <option value="revision">Revisión / Control</option>
-                                        <option value="emergencia">Emergencia</option>
-                                        <option value="cirugia">Cirugía</option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                        Motivo de la Consulta *
-                                    </label>
-                                    <textarea
-                                        value={cita.motivo}
-                                        onChange={(e) => setCita({ ...cita, motivo: e.target.value })}
-                                        rows="4"
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        placeholder="Describe brevemente el motivo de la consulta..."
+                                    <input
+                                        type="date"
+                                        value={cita.fecha}
+                                        onChange={(e) => setCita({ ...cita, fecha: e.target.value })}
+                                        min={new Date().toISOString().split('T')[0]}
+                                        className="w-full px-4 py-3 border border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent bg-white dark:bg-gray-900 text-slate-900 dark:text-white"
                                         required
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                        Notas Adicionales (Opcional)
+                                    <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
+                                        <Clock className="w-4 h-4 inline mr-1" />
+                                        Hora Preferida *
                                     </label>
-                                    <textarea
-                                        value={cita.notasAdicionales}
-                                        onChange={(e) => setCita({ ...cita, notasAdicionales: e.target.value })}
-                                        rows="3"
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        placeholder="Información adicional que consideres importante..."
+                                    <input
+                                        type="time"
+                                        value={cita.hora}
+                                        onChange={(e) => setCita({ ...cita, hora: e.target.value })}
+                                        className="w-full px-4 py-3 border border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent bg-white dark:bg-gray-900 text-slate-900 dark:text-white"
+                                        required
                                     />
                                 </div>
+                            </div>
 
-                                <div className="flex gap-4">
-                                    <Button type="submit" className="flex-1">
-                                        Solicitar Cita
-                                    </Button>
-                                    <Button variant="outline" asChild>
-                                        <Link to="/portal/dashboard">
-                                            Cancelar
-                                        </Link>
-                                    </Button>
-                                </div>
-                            </form>
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
+                                    <FileText className="w-4 h-4 inline mr-1" />
+                                    Tipo de Consulta *
+                                </label>
+                                <select
+                                    value={cita.tipoConsulta}
+                                    onChange={(e) => setCita({ ...cita, tipoConsulta: e.target.value })}
+                                    className="w-full px-4 py-3 border border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent bg-white dark:bg-gray-900 text-slate-900 dark:text-white"
+                                    required
+                                >
+                                    <option value="consulta">Consulta General</option>
+                                    <option value="vacunacion">Vacunación</option>
+                                    <option value="revision">Revisión / Control</option>
+                                    <option value="emergencia">Emergencia</option>
+                                    <option value="cirugia">Cirugía</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
+                                    Motivo de la Consulta *
+                                </label>
+                                <textarea
+                                    value={cita.motivo}
+                                    onChange={(e) => setCita({ ...cita, motivo: e.target.value })}
+                                    rows="4"
+                                    className="w-full px-4 py-3 border border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder:text-gray-400"
+                                    placeholder="Describe brevemente el motivo de la consulta..."
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
+                                    Notas Adicionales (Opcional)
+                                </label>
+                                <textarea
+                                    value={cita.notasAdicionales}
+                                    onChange={(e) => setCita({ ...cita, notasAdicionales: e.target.value })}
+                                    rows="3"
+                                    className="w-full px-4 py-3 border border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-slate-900 dark:focus:ring-lime-500 focus:border-transparent bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder:text-gray-400"
+                                    placeholder="Información adicional que consideres importante..."
+                                />
+                            </div>
+
+                            <div className="flex gap-4">
+                                <Button type="submit" className="flex-1 bg-slate-900 dark:bg-lime-600 hover:bg-slate-800 dark:hover:bg-lime-700">
+                                    Solicitar Cita
+                                </Button>
+                                <Button variant="outline" asChild className="border-slate-200 dark:border-gray-600 hover:bg-slate-100 dark:hover:bg-gray-700">
+                                    <Link to="/portal/dashboard">
+                                        Cancelar
+                                    </Link>
+                                </Button>
+                            </div>
+                        </form>
                         )}
-                    </CardContent>
-                </Card>
-            </main>
-
-            <footer className="mt-16 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
-                <div className="container mx-auto px-4 py-6 text-center text-sm text-gray-600 dark:text-gray-400">
-                    <p>© 2025 Clínica Veterinaria. Todos los derechos reservados.</p>
                 </div>
-            </footer>
-        </div>
+            </PageContent>
+        </PageContainer>
     );
 };
 
