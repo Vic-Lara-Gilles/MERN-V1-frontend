@@ -3,7 +3,8 @@ import { useParams, Link } from "react-router-dom"
 import Alerta from '../../components/Alerta'
 import clienteAxios from '../../config/axios'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle, Loader2 } from "lucide-react"
+import { CheckCircle } from "lucide-react"
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 const ConfirnarCuenta = () => {
     const [cuentaConfirmada, setCuentaConfirmada] = useState(false)
@@ -70,10 +71,7 @@ const ConfirnarCuenta = () => {
                     </CardHeader>
                     <CardContent>
                         {cargando && (
-                            <div className="flex flex-col items-center justify-center py-8 space-y-4">
-                                <Loader2 className="h-12 w-12 animate-spin text-slate-900 dark:text-lime-500" />
-                                <p className="text-slate-600 dark:text-slate-300">Confirmando tu cuenta...</p>
-                            </div>
+                            <LoadingSpinner />
                         )}
                         
                         {!cargando && <Alerta alerta={alerta} />}

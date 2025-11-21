@@ -2,8 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserPlus, ArrowLeft } from 'lucide-react';
-import clienteAxios from '../config/axios';
-import FormularioUsuarioForm from '../components/FormularioUsuarioForm';
+import clienteAxios from '../../config/axios';
+import FormularioUsuarioForm from '../../components/FormularioUsuarioForm';
 
 const FormularioUsuario = () => {
   const navigate = useNavigate();

@@ -1,3 +1,4 @@
+import LoadingSpinner from '../../components/LoadingSpinner';
 import { useEffect, useState } from "react"
 import useClientes from "../../hooks/useClientes"
 import { Link } from "react-router-dom"
@@ -41,11 +42,7 @@ const Clientes = () => {
     })
 
     if (cargando) {
-        return (
-            <div className="flex items-center justify-center min-h-screen">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900 dark:border-lime-500"></div>
-            </div>
-        )
+        return <LoadingSpinner />;
     }
 
     return (
