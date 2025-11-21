@@ -1,31 +1,41 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Users, UserPlus, Search, Filter, Shield, Stethoscope, Phone, Mail, CheckCircle, XCircle } from 'lucide-react';
 import clienteAxios from '../../config/axios';
 
 const Usuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
-  const [usuariosFiltrados, setUsuariosFiltrados] = useState([]);
   const [busqueda, setBusqueda] = useState('');
   const [filtroRol, setFiltroRol] = useState('todos');
   const [cargando, setCargando] = useState(true);
 
-  useEffect(() => {
-    obtenerUsuarios();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // Memoized filtered users
+  const usuariosFiltrados = useMemo(() => {
+    let resultado = usuarios;
+    if (busqueda) {
+      resultado = resultado.filter(
+        (usuario) =>
+          usuario.nombre?.toLowerCase().includes(busqueda.toLowerCase()) ||
+          usuario.email?.toLowerCase().includes(busqueda.toLowerCase())
+      );
+    }
+    if (filtroRol !== 'todos') {
+      resultado = resultado.filter((usuario) => usuario.rol === filtroRol);
+    }
+    return resultado;
+  }, [usuarios, busqueda, filtroRol]);
 
   useEffect(() => {
-    filtrarUsuarios();
-  }, [busqueda, filtroRol, usuarios]);
+    obtenerUsuarios();
+  }, []);
+
 
   const obtenerUsuarios = async () => {
     try {
-      const token = localStorage.getItem('token');
       const config = {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       };
       const { data } = await clienteAxios('/usuarios', config);
@@ -37,33 +47,12 @@ const Usuarios = () => {
     }
   };
 
-  const filtrarUsuarios = () => {
-    let resultado = usuarios;
-
-    // Filtrar por búsqueda
-    if (busqueda) {
-      resultado = resultado.filter(
-        (usuario) =>
-          usuario.nombre?.toLowerCase().includes(busqueda.toLowerCase()) ||
-          usuario.email?.toLowerCase().includes(busqueda.toLowerCase())
-      );
-    }
-
-    // Filtrar por rol
-    if (filtroRol !== 'todos') {
-      resultado = resultado.filter((usuario) => usuario.rol === filtroRol);
-    }
-
-    setUsuariosFiltrados(resultado);
-  };
 
   const toggleActivo = async (id, activoActual) => {
     try {
-      const token = localStorage.getItem('token');
       const config = {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
       };
 
@@ -165,7 +154,7 @@ const Usuarios = () => {
               </tr>
             </thead>
             <tbody className="bg-white dark:bg-gray-800 divide-y divide-slate-200 dark:divide-gray-700">
-              {usuariosFiltrados.length === 0 ? (
+              {usuariosFiltrados.length === 0 ? ( 
                 <tr>
                   <td colSpan="5" className="px-6 py-12 text-center text-muted-foreground dark:text-slate-300">
                     No se encontraron usuarios
