@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import usePacientes from "../../hooks/usePacientes"
+import Header from "../../components/Header"
 import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { 
@@ -53,23 +54,18 @@ const Pacientes = () => {
     }
 
     return (
-        <div className="p-6 space-y-6">
-            {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div>
-                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
-                        <PawPrint className="h-8 w-8 text-slate-900 dark:text-lime-500" />
-                        Pacientes
-                    </h1>
-                    <p className="text-muted-foreground dark:text-slate-300 mt-1">
-                        Gestión de mascotas registradas
-                    </p>
-                </div>
-                <Link to="/admin/pacientes/nuevo" className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-lime-600 text-white rounded-lg hover:bg-slate-800 dark:hover:bg-lime-700 transition-colors text-sm font-medium">
-                    <Plus className="h-4 w-4" />
-                    Nuevo Paciente
-                </Link>
-            </div>
+        <div>
+            <Header
+                icon={<PawPrint className="h-8 w-8 text-slate-900 dark:text-lime-500" />}
+                title="Pacientes"
+                subtitle="Gestión de mascotas registradas"
+                actions={
+                    <Link to="/admin/pacientes/nuevo" className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-lime-600 text-white rounded-lg hover:bg-slate-800 dark:hover:bg-lime-700 transition-colors text-sm font-medium">
+                        <Plus className="h-4 w-4" />
+                        Nuevo Paciente
+                    </Link>
+                }
+            />
 
             {/* Buscador y Filtros */}
             <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md border border-transparent dark:border-gray-700 space-y-4">

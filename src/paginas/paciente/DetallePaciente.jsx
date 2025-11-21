@@ -16,7 +16,6 @@ import {
   MapPin
 } from 'lucide-react';
 import usePacientes from '../../hooks/usePacientes';
-import useClientes from '../../hooks/useClientes';
 import useConsultas from '../../hooks/useConsultas';
 import Alerta from '../../components/Alerta';
 import TimelineConsultas from '../../components/TimelineConsultas';
