@@ -4,6 +4,8 @@ import useConsultas from '../../hooks/useConsultas';
 import usePacientes from '../../hooks/usePacientes';
 import useClientes from '../../hooks/useClientes';
 import useAuth from '../../hooks/useAuth';
+import Header from '@/components/Header';
+import StatsCard from '@/components/StatsCard';
 
 const Reportes = () => {
     const { consultas, obtenerConsultas } = useConsultas();
@@ -133,22 +135,64 @@ const Reportes = () => {
     };
 
     return (
-        <div className="p-6 space-y-6">
-            {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div>
-                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
-                        <TrendingUp className="h-8 w-8 text-slate-900 dark:text-lime-500" />
-                        Reportes y Estadísticas
-                    </h1>
-                    <p className="text-muted-foreground dark:text-slate-300 mt-1">
-                        Análisis de consultas médicas y actividad clínica
-                    </p>
-                </div>
+        <div className="space-y-6">
+            <Header
+                icon={<TrendingUp className="h-8 w-8 text-slate-900 dark:text-lime-500" />}
+                title="Reportes y Estadísticas"
+                subtitle="Análisis de consultas médicas y actividad clínica"
+            />
+
+            {/* Tarjetas de Estadísticas Generales */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <StatsCard
+                    title="Total Consultas"
+                    value={totalConsultas}
+                    icon={FileText}
+                    gradient="from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20"
+                    borderColor="border-blue-200 dark:border-blue-700"
+                    textColor="text-blue-600 dark:text-blue-400"
+                />
+
+                <StatsCard
+                    title="Completadas"
+                    value={consultasCompletadas}
+                    gradient="from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20"
+                    borderColor="border-green-200 dark:border-green-700"
+                    textColor="text-green-600 dark:text-green-400"
+                >
+                    <div className="h-12 w-12 rounded-full bg-green-600 dark:bg-green-400 flex items-center justify-center text-white dark:text-green-900 font-bold text-lg opacity-50">
+                        ✓
+                    </div>
+                </StatsCard>
+
+                <StatsCard
+                    title="En Tratamiento"
+                    value={consultasEnTratamiento}
+                    gradient="from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20"
+                    borderColor="border-amber-200 dark:border-amber-700"
+                    textColor="text-amber-600 dark:text-amber-400"
+                >
+                    <div className="h-12 w-12 rounded-full bg-amber-600 dark:bg-amber-400 flex items-center justify-center text-white dark:text-amber-900 font-bold text-lg opacity-50">
+                        ⏱
+                    </div>
+                </StatsCard>
+
+                <StatsCard
+                    title="Total Pacientes"
+                    value={pacientes.length}
+                    icon={PawPrint}
+                    gradient="from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20"
+                    borderColor="border-purple-200 dark:border-purple-700"
+                    textColor="text-purple-600 dark:text-purple-400"
+                />
             </div>
 
             {/* Filtros */}
-            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md border border-transparent dark:border-gray-700 space-y-4">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-transparent dark:border-gray-700 space-y-4">
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
+                    <Filter className="w-5 h-5 text-slate-900 dark:text-lime-500" />
+                    Filtros de Búsqueda
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="relative">
                         <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground dark:text-gray-400" />
@@ -206,12 +250,18 @@ const Reportes = () => {
                 </div>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-6">
-                {/* Top Diagnósticos */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-transparent dark:border-gray-700 p-6">
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">
-                        Top 10 Diagnósticos Más Frecuentes
-                    </h3>
+            {/* Sección de Análisis Clínico */}
+            <div className="space-y-4">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <FileText className="w-6 h-6 text-slate-900 dark:text-lime-500" />
+                    Análisis Clínico
+                </h2>
+                <div className="grid lg:grid-cols-2 gap-6">
+                    {/* Top Diagnósticos */}
+                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-transparent dark:border-gray-700 p-6">
+                        <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">
+                            Top 10 Diagnósticos Más Frecuentes
+                        </h3>
                     {topDiagnosticos.length > 0 ? (
                         <div className="space-y-3">
                             {topDiagnosticos.map(([diagnostico, cantidad], index) => {
@@ -273,14 +323,21 @@ const Reportes = () => {
                         <p className="text-gray-500 dark:text-gray-400 text-center py-4">No hay datos disponibles</p>
                     )}
                 </div>
+                </div>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-6">
-                {/* Consultas por Veterinario */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-transparent dark:border-gray-700 p-6">
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">
-                        Consultas por Veterinario
-                    </h3>
+            {/* Sección de Distribución de Actividad */}
+            <div className="space-y-4">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <Users className="w-6 h-6 text-slate-900 dark:text-lime-500" />
+                    Distribución de Actividad
+                </h2>
+                <div className="grid lg:grid-cols-2 gap-6">
+                    {/* Consultas por Veterinario */}
+                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-transparent dark:border-gray-700 p-6">
+                        <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">
+                            Consultas por Veterinario
+                        </h3>
                     {consultasPorVet.length > 0 ? (
                         <div className="space-y-3">
                             {consultasPorVet.map(([nombre, cantidad], index) => {
@@ -341,10 +398,17 @@ const Reportes = () => {
                         <p className="text-gray-500 dark:text-gray-400 text-center py-4">No hay datos disponibles</p>
                     )}
                 </div>
+                </div>
             </div>
 
-            {/* Distribución de Pacientes por Especie */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-transparent dark:border-gray-700 p-6">
+            {/* Sección de Pacientes */}
+            <div className="space-y-4">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <PawPrint className="w-6 h-6 text-slate-900 dark:text-lime-500" />
+                    Análisis de Pacientes
+                </h2>
+                {/* Distribución de Pacientes por Especie */}
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-transparent dark:border-gray-700 p-6">
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                     <PawPrint className="w-5 h-5 text-slate-900 dark:text-lime-500" />
                     Distribución de Pacientes por Especie
@@ -391,10 +455,11 @@ const Reportes = () => {
                 ) : (
                     <p className="text-gray-500 dark:text-gray-400 text-center py-4">No hay pacientes registrados</p>
                 )}
+                </div>
             </div>
 
             {/* Resumen del período */}
-            <div className="bg-slate-50 dark:bg-gray-800 rounded-lg p-6 border border-slate-200 dark:border-gray-700">
+            <div className="bg-linear-to-r from-slate-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-lg p-6 border border-slate-200 dark:border-gray-700 shadow-sm">
                 <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Resumen del Período</h3>
                 <div className="grid md:grid-cols-3 gap-4 text-sm">
                     <div>
