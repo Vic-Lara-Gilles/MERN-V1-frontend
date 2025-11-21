@@ -128,27 +128,6 @@ const SeleccionAcceso = () => {
                             <div className="grid grid-cols-2 gap-0 bg-slate-50 dark:bg-gray-900">
                                 <button
                                     onClick={() => {
-                                        setTipoAcceso('personal');
-                                        setAlerta({});
-                                        setEmail('');
-                                        setPassword('');
-                                    }}
-                                    className={`relative py-5 px-4 font-semibold text-sm transition-all ${tipoAcceso === 'personal'
-                                            ? 'text-slate-900 dark:text-white bg-white dark:bg-gray-800 shadow-sm'
-                                            : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'
-                                        }`}
-                                >
-                                    <div className="flex items-center justify-center gap-2">
-                                        <Stethoscope className="h-5 w-5" />
-                                        <span>Acceso Personal</span>
-                                    </div>
-                                    {tipoAcceso === 'personal' && (
-                                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-900 dark:bg-lime-500 rounded-t"></div>
-                                    )}
-                                </button>
-
-                                <button
-                                    onClick={() => {
                                         setTipoAcceso('cliente');
                                         setAlerta({});
                                         setEmail('');
@@ -165,6 +144,27 @@ const SeleccionAcceso = () => {
                                     </div>
                                     {tipoAcceso === 'cliente' && (
                                         <div className="absolute bottom-0 left-0 right-0 h-1 bg-blue-600 dark:bg-blue-400 rounded-t"></div>
+                                    )}
+                                </button>
+
+                                <button
+                                    onClick={() => {
+                                        setTipoAcceso('personal');
+                                        setAlerta({});
+                                        setEmail('');
+                                        setPassword('');
+                                    }}
+                                    className={`relative py-5 px-4 font-semibold text-sm transition-all ${tipoAcceso === 'personal'
+                                            ? 'text-slate-900 dark:text-white bg-white dark:bg-gray-800 shadow-sm'
+                                            : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'
+                                        }`}
+                                >
+                                    <div className="flex items-center justify-center gap-2">
+                                        <Stethoscope className="h-5 w-5" />
+                                        <span>Acceso Personal</span>
+                                    </div>
+                                    {tipoAcceso === 'personal' && (
+                                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-900 dark:bg-lime-500 rounded-t"></div>
                                     )}
                                 </button>
                             </div>
