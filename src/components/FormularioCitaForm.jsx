@@ -1,6 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Calendar, Clock, User, PawPrint, FileText, AlertCircle } from 'lucide-react';
 import Alerta from './Alerta';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const FormularioCitaForm = ({
     initialData = null,
@@ -57,7 +68,7 @@ const FormularioCitaForm = ({
             setMascotasDelCliente(mascotas);
 
             // Si solo hay una mascota, seleccionarla automáticamente
-            if (mascotas.length === 1) {
+            if (mascotas.length === 1 && !isEditing) {
                 setFormData(prev => ({
                     ...prev,
                     paciente: mascotas[0]._id
@@ -131,24 +142,22 @@ const FormularioCitaForm = ({
                         Seleccionar Cliente
                     </h2>
                     <div className="grid grid-cols-1 gap-4">
-                        <div>
-                            <label className="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                        <div className="space-y-2">
+                            <Label htmlFor="cliente">
                                 Cliente <span className="text-red-500">*</span>
-                            </label>
-                            <select
-                                name="cliente"
-                                value={formData.cliente}
-                                onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
-                                required
-                            >
-                                <option value="">Seleccionar cliente</option>
-                                {clientes.map(cliente => (
-                                    <option key={cliente._id} value={cliente._id}>
-                                        {cliente.nombre} {cliente.apellido} - {cliente.telefono}
-                                    </option>
-                                ))}
-                            </select>
+                            </Label>
+                            <Select value={formData.cliente} onValueChange={(value) => setFormData({...formData, cliente: value})} required>
+                                <SelectTrigger id="cliente">
+                                    <SelectValue placeholder="Seleccionar cliente" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {clientes.map(cliente => (
+                                        <SelectItem key={cliente._id} value={cliente._id}>
+                                            {cliente.nombre} {cliente.apellido} - {cliente.telefono}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </div>
 
                         {/* Info del cliente seleccionado */}
@@ -184,25 +193,23 @@ const FormularioCitaForm = ({
                             Seleccionar Mascota
                         </h2>
                         <div className="grid grid-cols-1 gap-4">
-                            <div>
-                                <label className="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <div className="space-y-2">
+                                <Label htmlFor="paciente">
                                     Mascota <span className="text-red-500">*</span>
-                                </label>
+                                </Label>
                                 {mascotasDelCliente.length > 0 ? (
-                                    <select
-                                        name="paciente"
-                                        value={formData.paciente}
-                                        onChange={handleChange}
-                                        className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
-                                        required
-                                    >
-                                        <option value="">Seleccionar mascota</option>
-                                        {mascotasDelCliente.map(mascota => (
-                                            <option key={mascota._id} value={mascota._id}>
-                                                {mascota.nombre} - {mascota.especie} ({mascota.raza || 'Sin raza'})
-                                            </option>
-                                        ))}
-                                    </select>
+                                    <Select value={formData.paciente} onValueChange={(value) => setFormData({...formData, paciente: value})} required>
+                                        <SelectTrigger id="paciente">
+                                            <SelectValue placeholder="Seleccionar mascota" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {mascotasDelCliente.map(mascota => (
+                                                <SelectItem key={mascota._id} value={mascota._id}>
+                                                    {mascota.nombre} - {mascota.especie} ({mascota.raza || 'Sin raza'})
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
                                 ) : (
                                     <div className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                                         <div className="flex items-center gap-2">
@@ -249,25 +256,23 @@ const FormularioCitaForm = ({
                         <User className="h-5 w-5 text-purple-600 dark:text-purple-400 mr-2" />
                         Veterinario Asignado
                     </h2>
-                    <div>
-                        <label className="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                    <div className="space-y-2">
+                        <Label htmlFor="veterinario">
                             Veterinario <span className="text-red-500">*</span>
-                        </label>
-                        <select
-                            name="veterinario"
-                            value={formData.veterinario}
-                            onChange={handleChange}
-                            className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
-                            required
-                        >
-                            <option value="">Seleccionar veterinario</option>
-                            {veterinarios.map(vet => (
-                                <option key={vet._id} value={vet._id}>
-                                    Dr(a). {vet.nombre}
-                                    {vet.especialidad && ` - ${vet.especialidad}`}
-                                </option>
-                            ))}
-                        </select>
+                        </Label>
+                        <Select value={formData.veterinario} onValueChange={(value) => setFormData({...formData, veterinario: value})} required>
+                            <SelectTrigger id="veterinario">
+                                <SelectValue placeholder="Seleccionar veterinario" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {veterinarios.map(vet => (
+                                    <SelectItem key={vet._id} value={vet._id}>
+                                        Dr(a). {vet.nombre}
+                                        {vet.especialidad && ` - ${vet.especialidad}`}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
                     </div>
                 </div>
 
@@ -278,33 +283,33 @@ const FormularioCitaForm = ({
                         Fecha y Hora
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                        <div className="space-y-2">
+                            <Label htmlFor="fecha" className="flex items-center gap-2">
                                 <Calendar className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                                 Fecha <span className="text-red-500">*</span>
-                            </label>
-                            <input
+                            </Label>
+                            <Input
                                 type="date"
+                                id="fecha"
                                 name="fecha"
                                 value={formData.fecha}
                                 onChange={handleChange}
                                 min={new Date().toISOString().split('T')[0]}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
                                 required
                             />
                         </div>
-                        <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                        <div className="space-y-2">
+                            <Label htmlFor="hora" className="flex items-center gap-2">
                                 <Clock className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                                 Hora <span className="text-red-500">*</span>
-                            </label>
-                            <input
+                            </Label>
+                            <Input
                                 type="time"
+                                id="hora"
                                 name="hora"
                                 value={formData.hora}
                                 onChange={handleChange}
                                 step="300"
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
                                 required
                             />
                         </div>
@@ -318,72 +323,70 @@ const FormularioCitaForm = ({
                         Detalles de la Cita
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                        <div className="space-y-2">
+                            <Label htmlFor="tipo" className="flex items-center gap-2">
                                 <FileText className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                                 Tipo de Cita <span className="text-red-500">*</span>
-                            </label>
-                            <select
-                                name="tipo"
-                                value={formData.tipo}
-                                onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
-                                required
-                            >
-                                <option value="Consulta">Consulta General</option>
-                                <option value="Vacunación">Vacunación</option>
-                                <option value="Cirugía">Cirugía</option>
-                                <option value="Control">Control</option>
-                                <option value="Emergencia">Emergencia</option>
-                                <option value="Otro">Otro</option>
-                            </select>
+                            </Label>
+                            <Select value={formData.tipo} onValueChange={(value) => setFormData({...formData, tipo: value})} required>
+                                <SelectTrigger id="tipo">
+                                    <SelectValue placeholder="Seleccionar tipo" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="Consulta">Consulta General</SelectItem>
+                                    <SelectItem value="Vacunación">Vacunación</SelectItem>
+                                    <SelectItem value="Cirugía">Cirugía</SelectItem>
+                                    <SelectItem value="Control">Control</SelectItem>
+                                    <SelectItem value="Emergencia">Emergencia</SelectItem>
+                                    <SelectItem value="Otro">Otro</SelectItem>
+                                </SelectContent>
+                            </Select>
                         </div>
-                        <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                        <div className="space-y-2">
+                            <Label htmlFor="estado" className="flex items-center gap-2">
                                 <AlertCircle className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                                 Estado <span className="text-red-500">*</span>
-                            </label>
-                            <select
-                                name="estado"
-                                value={formData.estado}
-                                onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
-                                required
-                            >
-                                <option value="Pendiente">Pendiente</option>
-                                <option value="Confirmada">Confirmada</option>
-                                <option value="En curso">En curso</option>
-                                <option value="Completada">Completada</option>
-                                <option value="Cancelada">Cancelada</option>
-                                <option value="No asistió">No asistió</option>
-                            </select>
+                            </Label>
+                            <Select value={formData.estado} onValueChange={(value) => setFormData({...formData, estado: value})} required>
+                                <SelectTrigger id="estado">
+                                    <SelectValue placeholder="Seleccionar estado" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="Pendiente">Pendiente</SelectItem>
+                                    <SelectItem value="Confirmada">Confirmada</SelectItem>
+                                    <SelectItem value="En curso">En curso</SelectItem>
+                                    <SelectItem value="Completada">Completada</SelectItem>
+                                    <SelectItem value="Cancelada">Cancelada</SelectItem>
+                                    <SelectItem value="No asistió">No asistió</SelectItem>
+                                </SelectContent>
+                            </Select>
                         </div>
-                        <div className="md:col-span-2">
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                        <div className="md:col-span-2 space-y-2">
+                            <Label htmlFor="motivo" className="flex items-center gap-2">
                                 <FileText className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                                 Motivo de la Cita <span className="text-red-500">*</span>
-                            </label>
-                            <textarea
+                            </Label>
+                            <Textarea
+                                id="motivo"
                                 name="motivo"
                                 value={formData.motivo}
                                 onChange={handleChange}
-                                rows="3"
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
+                                rows={3}
                                 placeholder="Describe el motivo de la cita..."
                                 required
                             />
                         </div>
-                        <div className="md:col-span-2">
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                        <div className="md:col-span-2 space-y-2">
+                            <Label htmlFor="observaciones" className="flex items-center gap-2">
                                 <FileText className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                                 Observaciones
-                            </label>
-                            <textarea
+                            </Label>
+                            <Textarea
+                                id="observaciones"
                                 name="observaciones"
                                 value={formData.observaciones}
                                 onChange={handleChange}
-                                rows="3"
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
+                                rows={3}
                                 placeholder="Notas adicionales sobre la cita..."
                             />
                         </div>
@@ -392,19 +395,16 @@ const FormularioCitaForm = ({
 
                 {/* Botones */}
                 <div className="flex items-center justify-end space-x-4 pt-6 border-t border-slate-200 dark:border-gray-700">
-                    <button
+                    <Button
                         type="button"
+                        variant="outline"
                         onClick={onCancel}
-                        className="px-4 py-2 border-2 border-slate-300 dark:border-gray-600 rounded-lg text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors font-medium text-sm"
                     >
                         Cancelar
-                    </button>
-                    <button
-                        type="submit"
-                        className="px-4 py-2 bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white rounded-lg transition-colors font-medium text-sm"
-                    >
+                    </Button>
+                    <Button type="submit">
                         {isEditing ? 'Actualizar Cita' : 'Agendar Cita'}
-                    </button>
+                    </Button>
                 </div>
             </form>
         </div>

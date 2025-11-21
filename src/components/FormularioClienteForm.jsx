@@ -1,6 +1,16 @@
 import { useState } from "react"
 import Alerta from "./Alerta"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Save, Plus, Trash2, PawPrint, User, Mail, Phone, MapPin, FileText, Lock, Info } from "lucide-react"
 
 /**
@@ -105,49 +115,49 @@ const FormularioClienteForm = ({
                         Información Personal
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                        <div className="space-y-2">
+                            <Label htmlFor="nombre" className="flex items-center gap-2">
                                 <User className="h-4 w-4 text-green-600 dark:text-green-400" />
                                 Nombre <span className="text-red-500">*</span>
-                            </label>
-                            <input
+                            </Label>
+                            <Input
                                 type="text"
+                                id="nombre"
                                 name="nombre"
                                 value={formData.nombre}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-900 dark:text-white"
                                 placeholder="Juan"
                                 required
                             />
                         </div>
 
-                        <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                        <div className="space-y-2">
+                            <Label htmlFor="apellido" className="flex items-center gap-2">
                                 <User className="h-4 w-4 text-green-600 dark:text-green-400" />
                                 Apellido <span className="text-red-500">*</span>
-                            </label>
-                            <input
+                            </Label>
+                            <Input
                                 type="text"
+                                id="apellido"
                                 name="apellido"
                                 value={formData.apellido}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-900 dark:text-white"
                                 placeholder="Pérez"
                                 required
                             />
                         </div>
 
-                        <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                        <div className="space-y-2">
+                            <Label htmlFor="rut" className="flex items-center gap-2">
                                 <FileText className="h-4 w-4 text-green-600 dark:text-green-400" />
                                 RUT <span className="text-red-500">*</span>
-                            </label>
-                            <input
+                            </Label>
+                            <Input
                                 type="text"
+                                id="rut"
                                 name="rut"
                                 value={formData.rut}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-900 dark:text-white"
                                 placeholder="12.345.678-9"
                                 required
                             />
@@ -161,54 +171,54 @@ const FormularioClienteForm = ({
                         Información de Contacto
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                        <div className="space-y-2">
+                            <Label htmlFor="email" className="flex items-center gap-2">
                                 <Mail className="h-4 w-4 text-green-600 dark:text-green-400" />
                                 Email <span className="text-red-500">*</span>
-                            </label>
-                            <input
+                            </Label>
+                            <Input
                                 type="email"
+                                id="email"
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-900 dark:text-white"
                                 placeholder="juan@ejemplo.com"
                                 required
                             />
                         </div>
 
-                        <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                        <div className="space-y-2">
+                            <Label htmlFor="telefono" className="flex items-center gap-2">
                                 <Phone className="h-4 w-4 text-green-600 dark:text-green-400" />
                                 Teléfono <span className="text-red-500">*</span>
-                            </label>
-                            <input
+                            </Label>
+                            <Input
                                 type="tel"
+                                id="telefono"
                                 name="telefono"
                                 value={formData.telefono}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-900 dark:text-white"
                                 placeholder="+56 9 1234 5678"
                                 required
                             />
                         </div>
 
                         {!isEditing && (
-                            <div className="md:col-span-2">
-                                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <div className="md:col-span-2 space-y-2">
+                                <Label htmlFor="password" className="flex items-center gap-2">
                                     <Lock className="h-4 w-4 text-green-600 dark:text-green-400" />
                                     Contraseña para Portal Cliente {!formData.password && <span className="text-slate-500 dark:text-gray-500 text-xs">(opcional)</span>}
-                                </label>
-                                <input
+                                </Label>
+                                <Input
                                     type="password"
+                                    id="password"
                                     name="password"
                                     value={formData.password}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-900 dark:text-white"
                                     placeholder="Deja en blanco para generar automáticamente desde el RUT"
                                     minLength={6}
                                 />
-                                <p className="text-xs text-slate-500 dark:text-gray-400 mt-1">
+                                <p className="text-xs text-slate-500 dark:text-gray-400">
                                     {formData.password 
                                         ? "El cliente podrá iniciar sesión con esta contraseña" 
                                         : "Si no ingresas una contraseña, se generará automáticamente usando el RUT (sin puntos ni guión)"}
@@ -224,48 +234,48 @@ const FormularioClienteForm = ({
                         Ubicación
                     </h2>
                     <div className="space-y-4">
-                        <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                        <div className="space-y-2">
+                            <Label htmlFor="direccion" className="flex items-center gap-2">
                                 <MapPin className="h-4 w-4 text-green-600 dark:text-green-400" />
                                 Dirección
-                            </label>
-                            <input
+                            </Label>
+                            <Input
                                 type="text"
+                                id="direccion"
                                 name="direccion"
                                 value={formData.direccion}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-900 dark:text-white"
                                 placeholder="Av. Principal 123, Depto 45"
                             />
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <div className="space-y-2">
+                                <Label htmlFor="ciudad" className="flex items-center gap-2">
                                     <MapPin className="h-4 w-4 text-green-600 dark:text-green-400" />
                                     Ciudad
-                                </label>
-                                <input
+                                </Label>
+                                <Input
                                     type="text"
+                                    id="ciudad"
                                     name="ciudad"
                                     value={formData.ciudad}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-900 dark:text-white"
                                     placeholder="Santiago"
                                 />
                             </div>
 
-                            <div>
-                                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <div className="space-y-2">
+                                <Label htmlFor="comuna" className="flex items-center gap-2">
                                     <MapPin className="h-4 w-4 text-green-600 dark:text-green-400" />
                                     Comuna
-                                </label>
-                                <input
+                                </Label>
+                                <Input
                                     type="text"
+                                    id="comuna"
                                     name="comuna"
                                     value={formData.comuna}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-900 dark:text-white"
                                     placeholder="Las Condes"
                                 />
                             </div>
@@ -283,14 +293,15 @@ const FormularioClienteForm = ({
                                 </div>
                                 Mascotas del Cliente
                             </h2>
-                            <button
+                            <Button
                                 type="button"
+                                variant="outline"
                                 onClick={agregarPaciente}
-                                className="px-4 py-2 gap-2 border-2 border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors font-medium text-sm flex items-center"
+                                className="gap-2 border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20"
                             >
                                 <Plus className="h-4 w-4" />
                                 Agregar Mascota
-                            </button>
+                            </Button>
                         </div>
 
                         {pacientes.map((paciente, index) => (
@@ -316,100 +327,92 @@ const FormularioClienteForm = ({
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
+                                    <div className="space-y-2">
+                                        <Label htmlFor={`nombre-${index}`}>
                                             Nombre <span className="text-red-500">*</span>
-                                        </label>
-                                        <input
+                                        </Label>
+                                        <Input
                                             type="text"
+                                            id={`nombre-${index}`}
                                             value={paciente.nombre}
                                             onChange={(e) => handlePacienteChange(index, 'nombre', e.target.value)}
-                                            className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                                             placeholder="Rex, Luna, etc."
                                             required
                                         />
                                     </div>
 
-                                    <div>
-                                        <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
+                                    <div className="space-y-2">
+                                        <Label htmlFor={`especie-${index}`}>
                                             Especie <span className="text-red-500">*</span>
-                                        </label>
-                                        <select
-                                            value={paciente.especie}
-                                            onChange={(e) => handlePacienteChange(index, 'especie', e.target.value)}
-                                            className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
-                                        >
-                                            <option value="Canino">Canino</option>
-                                            <option value="Felino">Felino</option>
-                                            <option value="Ave">Ave</option>
-                                            <option value="Reptil">Reptil</option>
-                                            <option value="Roedor">Roedor</option>
-                                            <option value="Otro">Otro</option>
-                                        </select>
+                                        </Label>
+                                        <Select value={paciente.especie} onValueChange={(value) => handlePacienteChange(index, 'especie', value)}>
+                                            <SelectTrigger id={`especie-${index}`}>
+                                                <SelectValue placeholder="Seleccionar especie" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="Canino">Canino</SelectItem>
+                                                <SelectItem value="Felino">Felino</SelectItem>
+                                                <SelectItem value="Ave">Ave</SelectItem>
+                                                <SelectItem value="Reptil">Reptil</SelectItem>
+                                                <SelectItem value="Roedor">Roedor</SelectItem>
+                                                <SelectItem value="Otro">Otro</SelectItem>
+                                            </SelectContent>
+                                        </Select>
                                     </div>
 
-                                    <div>
-                                        <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-                                            Raza
-                                        </label>
-                                        <input
+                                    <div className="space-y-2">
+                                        <Label htmlFor={`raza-${index}`}>Raza</Label>
+                                        <Input
                                             type="text"
+                                            id={`raza-${index}`}
                                             value={paciente.raza}
                                             onChange={(e) => handlePacienteChange(index, 'raza', e.target.value)}
-                                            className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                                             placeholder="Pastor Alemán, Persa, etc."
                                         />
                                     </div>
 
-                                    <div>
-                                        <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-                                            Fecha de Nacimiento
-                                        </label>
-                                        <input
+                                    <div className="space-y-2">
+                                        <Label htmlFor={`fechaNacimiento-${index}`}>Fecha de Nacimiento</Label>
+                                        <Input
                                             type="date"
+                                            id={`fechaNacimiento-${index}`}
                                             value={paciente.fechaNacimiento}
                                             onChange={(e) => handlePacienteChange(index, 'fechaNacimiento', e.target.value)}
-                                            className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                                         />
                                     </div>
 
-                                    <div>
-                                        <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-                                            Sexo
-                                        </label>
-                                        <select
-                                            value={paciente.sexo}
-                                            onChange={(e) => handlePacienteChange(index, 'sexo', e.target.value)}
-                                            className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
-                                        >
-                                            <option value="Macho">Macho</option>
-                                            <option value="Hembra">Hembra</option>
-                                        </select>
+                                    <div className="space-y-2">
+                                        <Label htmlFor={`sexo-${index}`}>Sexo</Label>
+                                        <Select value={paciente.sexo} onValueChange={(value) => handlePacienteChange(index, 'sexo', value)}>
+                                            <SelectTrigger id={`sexo-${index}`}>
+                                                <SelectValue placeholder="Seleccionar sexo" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="Macho">Macho</SelectItem>
+                                                <SelectItem value="Hembra">Hembra</SelectItem>
+                                            </SelectContent>
+                                        </Select>
                                     </div>
 
-                                    <div>
-                                        <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-                                            Color
-                                        </label>
-                                        <input
+                                    <div className="space-y-2">
+                                        <Label htmlFor={`color-${index}`}>Color</Label>
+                                        <Input
                                             type="text"
+                                            id={`color-${index}`}
                                             value={paciente.color}
                                             onChange={(e) => handlePacienteChange(index, 'color', e.target.value)}
-                                            className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                                             placeholder="Negro, Blanco, Tricolor, etc."
                                         />
                                     </div>
 
-                                    <div>
-                                        <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-                                            Peso (kg)
-                                        </label>
-                                        <input
+                                    <div className="space-y-2">
+                                        <Label htmlFor={`peso-${index}`}>Peso (kg)</Label>
+                                        <Input
                                             type="number"
                                             step="0.1"
+                                            id={`peso-${index}`}
                                             value={paciente.peso}
                                             onChange={(e) => handlePacienteChange(index, 'peso', e.target.value)}
-                                            className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                                             placeholder="5.5"
                                         />
                                     </div>
@@ -428,28 +431,24 @@ const FormularioClienteForm = ({
                                         </label>
                                     </div>
 
-                                    <div className="md:col-span-2">
-                                        <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-                                            Alergias (separadas por coma)
-                                        </label>
-                                        <input
+                                    <div className="md:col-span-2 space-y-2">
+                                        <Label htmlFor={`alergias-${index}`}>Alergias (separadas por coma)</Label>
+                                        <Input
                                             type="text"
+                                            id={`alergias-${index}`}
                                             value={paciente.alergias}
                                             onChange={(e) => handlePacienteChange(index, 'alergias', e.target.value)}
-                                            className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                                             placeholder="Pollo, Trigo, Polen"
                                         />
                                     </div>
 
-                                    <div className="md:col-span-2">
-                                        <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-                                            Condiciones Médicas (separadas por coma)
-                                        </label>
-                                        <input
+                                    <div className="md:col-span-2 space-y-2">
+                                        <Label htmlFor={`condicionesMedicas-${index}`}>Condiciones Médicas (separadas por coma)</Label>
+                                        <Input
                                             type="text"
+                                            id={`condicionesMedicas-${index}`}
                                             value={paciente.condicionesMedicas}
                                             onChange={(e) => handlePacienteChange(index, 'condicionesMedicas', e.target.value)}
-                                            className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                                             placeholder="Diabetes, Artritis, Displasia de cadera"
                                         />
                                     </div>
@@ -464,17 +463,17 @@ const FormularioClienteForm = ({
                     <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
                         Notas Adicionales
                     </h2>
-                    <div>
-                        <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                    <div className="space-y-2">
+                        <Label htmlFor="notas" className="flex items-center gap-2">
                             <FileText className="h-4 w-4 text-green-600 dark:text-green-400" />
                             Notas
-                        </label>
-                        <textarea
+                        </Label>
+                        <Textarea
+                            id="notas"
                             name="notas"
                             value={formData.notas}
                             onChange={handleChange}
-                            rows="4"
-                            className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-900 dark:text-white resize-none"
+                            rows={4}
                             placeholder="Información adicional sobre el cliente..."
                         />
                     </div>
@@ -501,21 +500,18 @@ const FormularioClienteForm = ({
 
                 {/* Botones */}
                 <div className="flex items-center gap-4 pt-4 border-t border-slate-200 dark:border-gray-700">
-                    <button
-                        type="submit"
-                        className="px-4 py-2 bg-linear-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg transition-colors font-medium text-sm flex items-center gap-2"
-                    >
-                        <Save className="h-4 w-4" />
+                    <Button type="submit">
+                        <Save className="h-4 w-4 mr-2" />
                         {isEditing ? 'Actualizar Cliente' : 'Guardar Cliente'}
-                    </button>
+                    </Button>
                     {onCancel && (
-                        <button
+                        <Button
                             type="button"
+                            variant="outline"
                             onClick={onCancel}
-                            className="px-4 py-2 border-2 border-slate-300 dark:border-gray-600 rounded-lg text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors font-medium text-sm"
                         >
                             Cancelar
-                        </button>
+                        </Button>
                     )}
                 </div>
             </form>

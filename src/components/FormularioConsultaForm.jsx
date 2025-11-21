@@ -15,6 +15,11 @@ import {
     Info
 } from 'lucide-react';
 import Alerta from './Alerta';
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 
 const FormularioConsultaForm = ({
     initialData = null,
@@ -168,44 +173,50 @@ const FormularioConsultaForm = ({
 
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <Label className="flex items-center gap-2">
                                 <PawPrint className="h-4 w-4 text-orange-600 dark:text-orange-400" />
                                 Paciente <span className="text-red-500">*</span>
-                            </label>
-                            <select
+                            </Label>
+                            <Select
                                 name="paciente"
                                 value={formData.paciente}
-                                onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-900 dark:text-white"
+                                onValueChange={(value) => setFormData({ ...formData, paciente: value })}
                                 required
                             >
-                                <option value="">Seleccionar paciente</option>
-                                {pacientes.map((paciente) => (
-                                    <option key={paciente._id} value={paciente._id}>
-                                        {paciente.nombre} - {paciente.especie} ({paciente.propietario?.nombre} {paciente.propietario?.apellido})
-                                    </option>
-                                ))}
-                            </select>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Seleccionar paciente" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {pacientes.map((paciente) => (
+                                        <SelectItem key={paciente._id} value={paciente._id}>
+                                            {paciente.nombre} - {paciente.especie} ({paciente.propietario?.nombre} {paciente.propietario?.apellido})
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </div>
 
                         <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <Label className="flex items-center gap-2">
                                 <Calendar className="h-4 w-4 text-orange-600 dark:text-orange-400" />
                                 Cita Asociada (opcional)
-                            </label>
-                            <select
+                            </Label>
+                            <Select
                                 name="cita"
                                 value={formData.cita}
-                                onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-900 dark:text-white"
+                                onValueChange={(value) => setFormData({ ...formData, cita: value })}
                             >
-                                <option value="">Sin cita asociada</option>
-                                {citasDelPaciente.map((cita) => (
-                                    <option key={cita._id} value={cita._id}>
-                                        {new Date(cita.fecha).toLocaleDateString('es-CL')} - {cita.motivo}
-                                    </option>
-                                ))}
-                            </select>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Sin cita asociada" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {citasDelPaciente.map((cita) => (
+                                        <SelectItem key={cita._id} value={cita._id}>
+                                            {new Date(cita.fecha).toLocaleDateString('es-CL')} - {cita.motivo}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </div>
                     </div>
 
@@ -244,34 +255,37 @@ const FormularioConsultaForm = ({
 
                     <div className="grid md:grid-cols-2 gap-4 mt-4">
                         <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <Label className="flex items-center gap-2">
                                 <Calendar className="h-4 w-4 text-orange-600 dark:text-orange-400" />
                                 Fecha de Consulta <span className="text-red-500">*</span>
-                            </label>
-                            <input
+                            </Label>
+                            <Input
                                 type="date"
                                 name="fecha"
                                 value={formData.fecha}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-900 dark:text-white"
                                 required
                             />
                         </div>
 
                         <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <Label className="flex items-center gap-2">
                                 <AlertCircle className="h-4 w-4 text-orange-600 dark:text-orange-400" />
                                 Estado
-                            </label>
-                            <select
+                            </Label>
+                            <Select
                                 name="estado"
                                 value={formData.estado}
-                                onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-900 dark:text-white"
+                                onValueChange={(value) => setFormData({ ...formData, estado: value })}
                             >
-                                <option value="completada">Completada</option>
-                                <option value="en-tratamiento">En Tratamiento</option>
-                            </select>
+                                <SelectTrigger>
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="completada">Completada</SelectItem>
+                                    <SelectItem value="en-tratamiento">En Tratamiento</SelectItem>
+                                </SelectContent>
+                            </Select>
                         </div>
                     </div>
                 </div>
@@ -285,34 +299,32 @@ const FormularioConsultaForm = ({
 
                     <div className="space-y-4">
                         <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <Label className="flex items-center gap-2">
                                 <FileText className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                                 Motivo de la Consulta <span className="text-red-500">*</span>
-                            </label>
-                            <textarea
+                            </Label>
+                            <Textarea
                                 name="motivoConsulta"
                                 value={formData.motivoConsulta}
                                 onChange={handleChange}
-                                rows="3"
+                                rows={3}
                                 placeholder="Ej: Control de rutina, vacunación, síntomas de enfermedad..."
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
                                 required
-                            ></textarea>
+                            />
                         </div>
 
                         <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <Label className="flex items-center gap-2">
                                 <AlertCircle className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                                 Síntomas Observados
-                            </label>
-                            <textarea
+                            </Label>
+                            <Textarea
                                 name="sintomas"
                                 value={formData.sintomas}
                                 onChange={handleChange}
-                                rows="3"
+                                rows={3}
                                 placeholder="Describe los síntomas que presenta el paciente..."
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
-                            ></textarea>
+                            />
                         </div>
                     </div>
                 </div>
@@ -326,63 +338,59 @@ const FormularioConsultaForm = ({
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <Label className="flex items-center gap-2">
                                 <Weight className="h-4 w-4 text-red-600 dark:text-red-400" />
                                 Peso (kg)
-                            </label>
-                            <input
+                            </Label>
+                            <Input
                                 type="number"
                                 step="0.1"
                                 name="peso"
                                 value={formData.peso}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 dark:bg-gray-900 dark:text-white"
                                 placeholder="Ej: 5.5"
                             />
                         </div>
 
                         <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <Label className="flex items-center gap-2">
                                 <Thermometer className="h-4 w-4 text-red-600 dark:text-red-400" />
                                 Temperatura (°C)
-                            </label>
-                            <input
+                            </Label>
+                            <Input
                                 type="number"
                                 step="0.1"
                                 name="temperatura"
                                 value={formData.temperatura}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 dark:bg-gray-900 dark:text-white"
                                 placeholder="Ej: 38.5"
                             />
                         </div>
 
                         <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <Label className="flex items-center gap-2">
                                 <Heart className="h-4 w-4 text-red-600 dark:text-red-400" />
                                 Frec. Cardíaca (lpm)
-                            </label>
-                            <input
+                            </Label>
+                            <Input
                                 type="number"
                                 name="frecuenciaCardiaca"
                                 value={formData.frecuenciaCardiaca}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 dark:bg-gray-900 dark:text-white"
                                 placeholder="Ej: 120"
                             />
                         </div>
 
                         <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <Label className="flex items-center gap-2">
                                 <Activity className="h-4 w-4 text-red-600 dark:text-red-400" />
                                 Frec. Respiratoria (rpm)
-                            </label>
-                            <input
+                            </Label>
+                            <Input
                                 type="number"
                                 name="frecuenciaRespiratoria"
                                 value={formData.frecuenciaRespiratoria}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 dark:bg-gray-900 dark:text-white"
                                 placeholder="Ej: 30"
                             />
                         </div>
@@ -398,34 +406,32 @@ const FormularioConsultaForm = ({
 
                     <div className="space-y-4">
                         <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <Label className="flex items-center gap-2">
                                 <Stethoscope className="h-4 w-4 text-green-600 dark:text-green-400" />
                                 Diagnóstico <span className="text-red-500">*</span>
-                            </label>
-                            <textarea
+                            </Label>
+                            <Textarea
                                 name="diagnostico"
                                 value={formData.diagnostico}
                                 onChange={handleChange}
-                                rows="3"
+                                rows={3}
                                 placeholder="Describe el diagnóstico médico..."
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-900 dark:text-white"
                                 required
-                            ></textarea>
+                            />
                         </div>
 
                         <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <Label className="flex items-center gap-2">
                                 <FileText className="h-4 w-4 text-green-600 dark:text-green-400" />
                                 Tratamiento Recomendado
-                            </label>
-                            <textarea
+                            </Label>
+                            <Textarea
                                 name="tratamiento"
                                 value={formData.tratamiento}
                                 onChange={handleChange}
-                                rows="3"
+                                rows={3}
                                 placeholder="Describe el tratamiento a seguir..."
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-900 dark:text-white"
-                            ></textarea>
+                            />
                         </div>
                     </div>
                 </div>
@@ -437,14 +443,14 @@ const FormularioConsultaForm = ({
                             <Pill className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                             <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Medicamentos</h2>
                         </div>
-                        <button
+                        <Button
                             type="button"
                             onClick={agregarMedicamento}
-                            className="flex items-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 shadow-md"
+                            className="flex items-center gap-2"
                         >
                             <Plus className="w-4 h-4" />
                             Agregar Medicamento
-                        </button>
+                        </Button>
                     </div>
 
                     {medicamentos.length === 0 ? (
@@ -454,53 +460,50 @@ const FormularioConsultaForm = ({
                             {medicamentos.map((medicamento, index) => (
                                 <div key={index} className="grid md:grid-cols-4 gap-4 p-4 border-2 border-slate-200 dark:border-gray-600 rounded-lg bg-slate-50 dark:bg-gray-900">
                                     <div>
-                                        <label className="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-1">Nombre</label>
-                                        <input
+                                        <Label className="block mb-1">Nombre</Label>
+                                        <Input
                                             type="text"
                                             value={medicamento.nombre}
                                             onChange={(e) => actualizarMedicamento(index, 'nombre', e.target.value)}
-                                            className="w-full px-3 py-2 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white"
                                             placeholder="Nombre del medicamento"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-1">Dosis</label>
-                                        <input
+                                        <Label className="block mb-1">Dosis</Label>
+                                        <Input
                                             type="text"
                                             value={medicamento.dosis}
                                             onChange={(e) => actualizarMedicamento(index, 'dosis', e.target.value)}
-                                            className="w-full px-3 py-2 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white"
                                             placeholder="Ej: 10mg"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-1">Frecuencia</label>
-                                        <input
+                                        <Label className="block mb-1">Frecuencia</Label>
+                                        <Input
                                             type="text"
                                             value={medicamento.frecuencia}
                                             onChange={(e) => actualizarMedicamento(index, 'frecuencia', e.target.value)}
-                                            className="w-full px-3 py-2 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white"
                                             placeholder="Ej: Cada 8 horas"
                                         />
                                     </div>
                                     <div className="flex items-end gap-2">
                                         <div className="flex-1">
-                                            <label className="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-1">Duración</label>
-                                            <input
+                                            <Label className="block mb-1">Duración</Label>
+                                            <Input
                                                 type="text"
                                                 value={medicamento.duracion}
                                                 onChange={(e) => actualizarMedicamento(index, 'duracion', e.target.value)}
-                                                className="w-full px-3 py-2 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-white"
                                                 placeholder="Ej: 7 días"
                                             />
                                         </div>
-                                        <button
+                                        <Button
                                             type="button"
                                             onClick={() => eliminarMedicamento(index)}
-                                            className="px-3 py-2 bg-red-600 dark:bg-red-500 text-white rounded-lg hover:bg-red-700 dark:hover:bg-red-600 shadow-md"
+                                            variant="destructive"
+                                            size="icon"
                                         >
                                             <Trash2 className="w-4 h-4" />
-                                        </button>
+                                        </Button>
                                     </div>
                                 </div>
                             ))}
@@ -515,14 +518,14 @@ const FormularioConsultaForm = ({
                             <FileText className="w-5 h-5 text-orange-600 dark:text-orange-400" />
                             <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Exámenes y Procedimientos</h2>
                         </div>
-                        <button
+                        <Button
                             type="button"
                             onClick={agregarExamen}
-                            className="flex items-center gap-2 px-4 py-2 bg-orange-600 dark:bg-orange-500 text-white rounded-lg hover:bg-orange-700 dark:hover:bg-orange-600 shadow-md"
+                            className="flex items-center gap-2"
                         >
                             <Plus className="w-4 h-4" />
                             Agregar Examen
-                        </button>
+                        </Button>
                     </div>
 
                     {examenes.length === 0 ? (
@@ -532,43 +535,41 @@ const FormularioConsultaForm = ({
                             {examenes.map((examen, index) => (
                                 <div key={index} className="grid md:grid-cols-3 gap-4 p-4 border-2 border-slate-200 dark:border-gray-600 rounded-lg bg-slate-50 dark:bg-gray-900">
                                     <div>
-                                        <label className="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-1">Tipo de Examen</label>
-                                        <input
+                                        <Label className="block mb-1">Tipo de Examen</Label>
+                                        <Input
                                             type="text"
                                             value={examen.tipo}
                                             onChange={(e) => actualizarExamen(index, 'tipo', e.target.value)}
-                                            className="w-full px-3 py-2 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-800 dark:text-white"
                                             placeholder="Ej: Hemograma"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-1">Descripción</label>
-                                        <input
+                                        <Label className="block mb-1">Descripción</Label>
+                                        <Input
                                             type="text"
                                             value={examen.descripcion}
                                             onChange={(e) => actualizarExamen(index, 'descripcion', e.target.value)}
-                                            className="w-full px-3 py-2 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-800 dark:text-white"
                                             placeholder="Detalle del examen"
                                         />
                                     </div>
                                     <div className="flex items-end gap-2">
                                         <div className="flex-1">
-                                            <label className="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-1">Resultado</label>
-                                            <input
+                                            <Label className="block mb-1">Resultado</Label>
+                                            <Input
                                                 type="text"
                                                 value={examen.resultado}
                                                 onChange={(e) => actualizarExamen(index, 'resultado', e.target.value)}
-                                                className="w-full px-3 py-2 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-800 dark:text-white"
                                                 placeholder="Resultado obtenido"
                                             />
                                         </div>
-                                        <button
+                                        <Button
                                             type="button"
                                             onClick={() => eliminarExamen(index)}
-                                            className="px-3 py-2 bg-red-600 dark:bg-red-500 text-white rounded-lg hover:bg-red-700 dark:hover:bg-red-600 shadow-md"
+                                            variant="destructive"
+                                            size="icon"
                                         >
                                             <Trash2 className="w-4 h-4" />
-                                        </button>
+                                        </Button>
                                     </div>
                                 </div>
                             ))}
@@ -582,31 +583,29 @@ const FormularioConsultaForm = ({
 
                     <div className="space-y-4">
                         <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <Label className="flex items-center gap-2">
                                 <FileText className="h-4 w-4 text-slate-600 dark:text-slate-400" />
                                 Observaciones Generales
-                            </label>
-                            <textarea
+                            </Label>
+                            <Textarea
                                 name="observaciones"
                                 value={formData.observaciones}
                                 onChange={handleChange}
-                                rows="3"
+                                rows={3}
                                 placeholder="Cualquier observación adicional..."
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-slate-500 dark:bg-gray-900 dark:text-white"
-                            ></textarea>
+                            />
                         </div>
 
                         <div>
-                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                            <Label className="flex items-center gap-2">
                                 <Calendar className="h-4 w-4 text-slate-600 dark:text-slate-400" />
                                 Próxima Revisión
-                            </label>
-                            <input
+                            </Label>
+                            <Input
                                 type="date"
                                 name="proximaRevision"
                                 value={formData.proximaRevision}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-slate-500 dark:bg-gray-900 dark:text-white"
                             />
                         </div>
                     </div>
@@ -614,19 +613,16 @@ const FormularioConsultaForm = ({
 
                 {/* Botones */}
                 <div className="flex justify-end gap-4 pt-6">
-                    <button
+                    <Button
                         type="button"
                         onClick={onCancel}
-                        className="px-4 py-2 border-2 border-slate-300 dark:border-gray-600 rounded-lg text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors font-medium text-sm"
+                        variant="outline"
                     >
                         Cancelar
-                    </button>
-                    <button
-                        type="submit"
-                        className="px-4 py-2 bg-linear-to-r from-slate-900 to-slate-800 dark:from-lime-600 dark:to-lime-700 hover:from-slate-800 hover:to-slate-700 dark:hover:from-lime-700 dark:hover:to-lime-800 text-white rounded-lg transition-colors font-medium text-sm"
-                    >
+                    </Button>
+                    <Button type="submit">
                         {isEditing ? 'Actualizar Consulta' : 'Guardar Consulta'}
-                    </button>
+                    </Button>
                 </div>
             </form>
         </div>

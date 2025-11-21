@@ -1,6 +1,16 @@
 import { useState } from 'react';
 import { UserPlus, Mail, Phone, User, Shield, Stethoscope, Award } from 'lucide-react';
 import Alerta from './Alerta';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const FormularioUsuarioForm = ({ onSubmit, initialData = {}, alerta }) => {
   const [usuario, setUsuario] = useState({
@@ -28,133 +38,118 @@ const FormularioUsuarioForm = ({ onSubmit, initialData = {}, alerta }) => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Nombre */}
-          <div>
-            <label htmlFor="nombre" className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-              <div className="flex items-center gap-2">
-                <User className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-                Nombre Completo <span className="text-red-500">*</span>
-              </div>
-            </label>
-            <input
+          <div className="space-y-2">
+            <Label htmlFor="nombre" className="flex items-center gap-2">
+              <User className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+              Nombre Completo <span className="text-red-500">*</span>
+            </Label>
+            <Input
               type="text"
               id="nombre"
               value={usuario.nombre}
               onChange={(e) => setUsuario({ ...usuario, nombre: e.target.value })}
-              className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-colors"
               placeholder="Ej: Dr. Juan Pérez"
+              required
             />
           </div>
 
           {/* Email */}
-          <div>
-            <label htmlFor="email" className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-              <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-                Email <span className="text-red-500">*</span>
-              </div>
-            </label>
-            <input
+          <div className="space-y-2">
+            <Label htmlFor="email" className="flex items-center gap-2">
+              <Mail className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+              Email <span className="text-red-500">*</span>
+            </Label>
+            <Input
               type="email"
               id="email"
               value={usuario.email}
               onChange={(e) => setUsuario({ ...usuario, email: e.target.value })}
-              className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-colors"
               placeholder="usuario@veterinaria.com"
+              required
             />
           </div>
 
           {/* Password - solo para nuevos usuarios */}
           {!initialData._id && (
-            <div>
-              <label htmlFor="password" className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-                <div className="flex items-center gap-2">
-                  <Shield className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-                  Contraseña <span className="text-red-500">*</span>
-                </div>
-              </label>
-              <input
+            <div className="space-y-2">
+              <Label htmlFor="password" className="flex items-center gap-2">
+                <Shield className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                Contraseña <span className="text-red-500">*</span>
+              </Label>
+              <Input
                 type="password"
                 id="password"
                 value={usuario.password}
                 onChange={(e) => setUsuario({ ...usuario, password: e.target.value })}
-                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-colors"
                 placeholder="Mínimo 6 caracteres"
+                minLength={6}
+                required
               />
               <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Mínimo 6 caracteres</p>
             </div>
           )}
 
           {/* Teléfono */}
-          <div>
-            <label htmlFor="telefono" className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-              <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-                Teléfono
-              </div>
-            </label>
-            <input
+          <div className="space-y-2">
+            <Label htmlFor="telefono" className="flex items-center gap-2">
+              <Phone className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+              Teléfono
+            </Label>
+            <Input
               type="tel"
               id="telefono"
               value={usuario.telefono}
               onChange={(e) => setUsuario({ ...usuario, telefono: e.target.value })}
-              className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-colors"
               placeholder="+56 9 1234 5678"
             />
           </div>
 
           {/* Rol */}
-          <div>
-            <label htmlFor="rol" className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-              <div className="flex items-center gap-2">
-                <Shield className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-                Rol <span className="text-red-500">*</span>
-              </div>
-            </label>
-            <select
-              id="rol"
-              value={usuario.rol}
-              onChange={(e) => setUsuario({ ...usuario, rol: e.target.value })}
-              className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent bg-white dark:bg-gray-900 text-slate-900 dark:text-white transition-colors"
-            >
-              <option value="veterinario">Veterinario</option>
-              <option value="recepcion">Recepción</option>
-              <option value="admin">Administrador</option>
-            </select>
+          <div className="space-y-2">
+            <Label htmlFor="rol" className="flex items-center gap-2">
+              <Shield className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+              Rol <span className="text-red-500">*</span>
+            </Label>
+            <Select value={usuario.rol} onValueChange={(value) => setUsuario({ ...usuario, rol: value })}>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccionar rol" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="veterinario">Veterinario</SelectItem>
+                <SelectItem value="recepcion">Recepción</SelectItem>
+                <SelectItem value="admin">Administrador</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Especialidad (solo para veterinarios) */}
           {usuario.rol === 'veterinario' && (
             <>
-              <div>
-                <label htmlFor="especialidad" className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-                  <div className="flex items-center gap-2">
-                    <Stethoscope className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-                    Especialidad <span className="text-red-500">*</span>
-                  </div>
-                </label>
-                <input
+              <div className="space-y-2">
+                <Label htmlFor="especialidad" className="flex items-center gap-2">
+                  <Stethoscope className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                  Especialidad <span className="text-red-500">*</span>
+                </Label>
+                <Input
                   type="text"
                   id="especialidad"
                   value={usuario.especialidad}
                   onChange={(e) => setUsuario({ ...usuario, especialidad: e.target.value })}
-                  className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-colors"
                   placeholder="Ej: Cirugía, Medicina General, Traumatología"
+                  required
                 />
               </div>
 
-              <div>
-                <label htmlFor="licencia" className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-                  <div className="flex items-center gap-2">
-                    <Award className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-                    Licencia Profesional
-                  </div>
-                </label>
-                <input
+              <div className="space-y-2">
+                <Label htmlFor="licencia" className="flex items-center gap-2">
+                  <Award className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                  Licencia Profesional
+                </Label>
+                <Input
                   type="text"
                   id="licencia"
                   value={usuario.licenciaProfesional}
                   onChange={(e) => setUsuario({ ...usuario, licenciaProfesional: e.target.value })}
-                  className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent bg-white dark:bg-gray-900 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-colors"
                   placeholder="Número de licencia profesional"
                 />
               </div>
@@ -163,13 +158,10 @@ const FormularioUsuarioForm = ({ onSubmit, initialData = {}, alerta }) => {
 
           {/* Botones */}
           <div className="flex gap-4 pt-6 border-t-2 border-slate-200 dark:border-gray-700">
-            <button
-              type="submit"
-              className="flex-1 bg-linear-to-r from-purple-600 to-purple-700 dark:from-purple-500 dark:to-purple-600 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-purple-800 dark:hover:from-purple-600 dark:hover:to-purple-700 transition-colors font-medium text-sm flex items-center justify-center gap-2"
-            >
-              <UserPlus className="h-4 w-4" />
+            <Button type="submit" className="flex-1">
+              <UserPlus className="h-4 w-4 mr-2" />
               {initialData._id ? 'Actualizar Usuario' : 'Crear Usuario'}
-            </button>
+            </Button>
           </div>
         </form>
       </div>
