@@ -5,6 +5,7 @@ import useCitas from '../../hooks/useCitas';
 import useAuth from '../../hooks/useAuth';
 import Alerta from '../../components/Alerta';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import Header from '../../components/Header';
 
 const Citas = () => {
     const { citas, obtenerCitas, eliminarCita, cambiarEstadoCita, cargando, alerta } = useCitas();
@@ -90,30 +91,25 @@ const Citas = () => {
     }
 
     return (
-        <div className="p-6 space-y-6">
+        <div>
             {alerta.msg && <Alerta alerta={alerta} />}
 
-            {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div>
-                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
-                        <Calendar className="h-8 w-8 text-slate-900 dark:text-lime-500" />
-                        Agenda de Citas
-                    </h1>
-                    <p className="text-muted-foreground dark:text-slate-300 mt-1">
-                        Gestiona las citas de la clínica veterinaria
-                    </p>
-                </div>
-                {auth.rol !== 'veterinario' && (
-                    <Link
-                        to="/admin/citas/nueva"
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-lime-600 text-white rounded-lg hover:bg-slate-800 dark:hover:bg-lime-700 transition-colors text-sm font-medium"
-                    >
-                        <Plus className="h-4 w-4" />
-                        <span>Nueva Cita</span>
-                    </Link>
-                )}
-            </div>
+            <Header
+                icon={<Calendar className="h-8 w-8 text-slate-900 dark:text-lime-500" />}
+                title="Agenda de Citas"
+                subtitle="Gestiona las citas de la clínica veterinaria"
+                actions={
+                    auth.rol !== 'veterinario' && (
+                        <Link
+                            to="/admin/citas/nueva"
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-lime-600 text-white rounded-lg hover:bg-slate-800 dark:hover:bg-lime-700 transition-colors text-sm font-medium"
+                        >
+                            <Plus className="h-4 w-4" />
+                            <span>Nueva Cita</span>
+                        </Link>
+                    )
+                }
+            />
 
             {/* Buscador y Filtros */}
             <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md border border-transparent dark:border-gray-700 space-y-4">
