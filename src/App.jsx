@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AuthLayout from './layout/AuthLayout';
 import RutaProtegida from './layout/RutaProtegida';
 import RutaProtegidaRol from './layout/RutaProtegidaRol';
@@ -57,7 +57,7 @@ const Reportes = lazy(() => import('./paginas/reporte/Reportes'));
 // Usuarios
 const Usuarios = lazy(() => import('./paginas/usuario/Usuarios'));
 const FormularioUsuario = lazy(() => import('./paginas/usuario/FormularioUsuario'));
-const UsuarioDetalle = lazy(() => import('./paginas/usuario/UsuarioDetalle'));
+const UsuarioDetalle = lazy(() => import('./paginas/usuario/DetalleUsuario'));
 
 import { AuthProvider } from './context/AuthProvider';
 import { PacientesProvider } from './context/PacientesProvider';
@@ -78,8 +78,15 @@ function App() {
                                 <ConsultasProvider>
                                     <Suspense fallback={<LoadingSpinner />}>
                                         <Routes>
-                                            {/* Página de Selección Inicial */}
-                                            <Route index element={<SeleccionAcceso />} />
+                                            {/* Redirect root to auth */}
+                                            <Route path="/" element={<Navigate to="/auth" replace />} />
+                                            
+                                            {/* Rutas de Autenticación - Agrupadas bajo /auth */}
+                                            <Route path="/auth" element={<SeleccionAcceso />} />
+                                            <Route path="/auth/registro" element={<Registrar />} />
+                                            <Route path="/auth/olvide-password" element={<OlvidePassword />} />
+                                            <Route path="/auth/restablecer-password/:token" element={<NuevoPassword />} />
+                                            <Route path="/auth/confirmar/:token" element={<ConfirmarCuenta />} />
 
                                             {/* Rutas Cliente */}
                                             <Route path="/portal" element={<PortalLayout />}>
@@ -89,15 +96,6 @@ function App() {
                                                     <Route path="mi-historial" element={<MiHistorial />} />
                                                     <Route path="solicitar-cita" element={<SolicitarCita />} />
                                                 </Route>
-                                            </Route>
-
-                                            {/* Rutas Autenticación Interna */}
-                                            <Route path="/auth" element={<AuthLayout />}>
-                                                <Route path="login" element={<Login />} />
-                                                <Route path="registrar" element={<Registrar />} />
-                                                <Route path="olvide-password" element={<OlvidePassword />} />
-                                                <Route path="olvide-password/:token" element={<NuevoPassword />} />
-                                                <Route path="confirmar/:id" element={<ConfirmarCuenta />} />
                                             </Route>
 
                                             <Route path="/admin" element={<RutaProtegida />}>
