@@ -1,55 +1,70 @@
-import{ BrowserRouter, Routes, Route } from 'react-router-dom'
-import AuthLayout from './layout/AuthLayout'
-import RutaProtegida from './layout/RutaProtegida'
-import RutaProtegidaRol from './layout/RutaProtegidaRol'
+import React, { Suspense, lazy } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AuthLayout from './layout/AuthLayout';
+import RutaProtegida from './layout/RutaProtegida';
+import RutaProtegidaRol from './layout/RutaProtegidaRol';
 
 // Portal Cliente
-import PortalLayout from './layout/PortalLayout'
-import PortalRutaProtegida from './layout/PortalRutaProtegida'
-import ClienteDashboard from './paginas/ClienteDashboard'
-import MisMascotas from './paginas/MisMascotas'
-import MiHistorial from './paginas/MiHistorial'
-import SolicitarCita from './paginas/SolicitarCita'
+import PortalLayout from './layout/PortalLayout';
+import PortalRutaProtegida from './layout/PortalRutaProtegida';
+const ClienteDashboard = lazy(() => import('./paginas/portal/ClienteDashboard'));
+const MisMascotas = lazy(() => import('./paginas/portal/MisMascotas'));
+const MiHistorial = lazy(() => import('./paginas/portal/MiHistorial'));
+const SolicitarCita = lazy(() => import('./paginas/portal/SolicitarCita'));
 
 // Página de selección
-import SeleccionAcceso from './paginas/SeleccionAcceso'
+const SeleccionAcceso = lazy(() => import('./paginas/auth/SeleccionAcceso'));
 
-import Login from './paginas/Login'
-import Registrar from './paginas/Registrar'
-import OlvidePassword from './paginas/OlvidePassword'
-import ConfirmarCuenta from './paginas/ConfirmarCuenta'
-import NuevoPassword from './paginas/NuevoPassword'
-import Dashboard from './paginas/Dashboard'
-import AdministrarPacientes from './paginas/AdministrarPacientes'
-import Configuracion from './paginas/Configuracion'
-import Clientes from './paginas/Clientes'
-import NuevoCliente from './paginas/NuevoCliente'
-import EditarCliente from './paginas/EditarCliente'
-import DetalleCliente from './paginas/DetalleCliente'
-import Pacientes from './paginas/Pacientes'
-import NuevoPaciente from './paginas/NuevoPaciente'
-import EditarPaciente from './paginas/EditarPaciente'
-import DetallePaciente from './paginas/DetallePaciente'
-import Citas from './paginas/Citas'
-import NuevaCita from './paginas/NuevaCita'
-import EditarCita from './paginas/EditarCita'
-import AgendaVeterinario from './paginas/AgendaVeterinario'
-import Consultas from './paginas/Consultas'
-import NuevaConsulta from './paginas/NuevaConsulta'
-import EditarConsulta from './paginas/EditarConsulta'
-import DetalleConsulta from './paginas/DetalleConsulta'
-import ImprimirReceta from './paginas/ImprimirReceta'
-import Reportes from './paginas/Reportes'
-import Usuarios from './paginas/Usuarios'
-import FormularioUsuario from './paginas/FormularioUsuario'
-import UsuarioDetalle from './paginas/UsuarioDetalle'
+// Autenticación
+const Login = lazy(() => import('./paginas/auth/Login'));
+const Registrar = lazy(() => import('./paginas/auth/Registrar'));
+const OlvidePassword = lazy(() => import('./paginas/auth/OlvidePassword'));
+const ConfirmarCuenta = lazy(() => import('./paginas/auth/ConfirmarCuenta'));
+const NuevoPassword = lazy(() => import('./paginas/auth/NuevoPassword'));
 
-import { AuthProvider } from './context/AuthProvider'
-import { PacientesProvider} from './context/PacientesProvider'
-import { ClientesProvider } from './context/ClientesProvider'
-import { CitasProvider } from './context/CitasProvider'
-import { ConsultasProvider } from './context/ConsultasProvider'
-import { ClienteAuthProvider } from './context/ClienteAuthProvider'
+// Admin
+const Dashboard = lazy(() => import('./paginas/admin/Dashboard'));
+const Configuracion = lazy(() => import('./paginas/admin/Configuracion'));
+
+// Clientes
+const Clientes = lazy(() => import('./paginas/cliente/Clientes'));
+const NuevoCliente = lazy(() => import('./paginas/cliente/NuevoCliente'));
+const EditarCliente = lazy(() => import('./paginas/cliente/EditarCliente'));
+const DetalleCliente = lazy(() => import('./paginas/cliente/DetalleCliente'));
+
+// Pacientes
+const Pacientes = lazy(() => import('./paginas/paciente/Pacientes'));
+const NuevoPaciente = lazy(() => import('./paginas/paciente/NuevoPaciente'));
+const EditarPaciente = lazy(() => import('./paginas/paciente/EditarPaciente'));
+const DetallePaciente = lazy(() => import('./paginas/paciente/DetallePaciente'));
+
+// Citas
+const Citas = lazy(() => import('./paginas/cita/Citas'));
+const NuevaCita = lazy(() => import('./paginas/cita/NuevaCita'));
+const EditarCita = lazy(() => import('./paginas/cita/EditarCita'));
+const AgendaVeterinario = lazy(() => import('./paginas/cita/AgendaVeterinario'));
+
+// Consultas
+const Consultas = lazy(() => import('./paginas/consulta/Consultas'));
+const NuevaConsulta = lazy(() => import('./paginas/consulta/NuevaConsulta'));
+const EditarConsulta = lazy(() => import('./paginas/consulta/EditarConsulta'));
+const DetalleConsulta = lazy(() => import('./paginas/consulta/DetalleConsulta'));
+const ImprimirReceta = lazy(() => import('./paginas/consulta/ImprimirReceta'));
+
+// Reportes
+const Reportes = lazy(() => import('./paginas/reporte/Reportes'));
+
+// Usuarios
+const Usuarios = lazy(() => import('./paginas/usuario/Usuarios'));
+const FormularioUsuario = lazy(() => import('./paginas/usuario/FormularioUsuario'));
+const UsuarioDetalle = lazy(() => import('./paginas/usuario/UsuarioDetalle'));
+
+import { AuthProvider } from './context/AuthProvider';
+import { PacientesProvider } from './context/PacientesProvider';
+import { ClientesProvider } from './context/ClientesProvider';
+import { CitasProvider } from './context/CitasProvider';
+import { ConsultasProvider } from './context/ConsultasProvider';
+import { ClienteAuthProvider } from './context/ClienteAuthProvider';
 
 function App() {
     return (
@@ -60,9 +75,17 @@ function App() {
                         <ClientesProvider>
                             <CitasProvider>
                                 <ConsultasProvider>
-                                    <Routes>
-                                        {/* Página de Selección Inicial */}
-                                        <Route index element={<SeleccionAcceso />} />
+                                    <Suspense fallback={
+                                        <div className="min-h-screen flex items-center justify-center">
+                                            <div className="text-center">
+                                                <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent dark:border-lime-500 dark:border-r-transparent"></div>
+                                                <p className="mt-4 text-slate-600 dark:text-slate-300">Cargando...</p>
+                                            </div>
+                                        </div>
+                                    }>
+                                        <Routes>
+                                            {/* Página de Selección Inicial */}
+                                            <Route index element={<SeleccionAcceso />} />
 
                                         {/* Rutas Cliente */}
                                         <Route path="/portal" element={<PortalLayout />}>
@@ -191,15 +214,16 @@ function App() {
                                 <Route path="configuracion" element={<Configuracion />} />
                             </Route>
 
-                                </Routes>
-                            </ConsultasProvider>
-                        </CitasProvider>
-                    </ClientesProvider>
-                </PacientesProvider>
-            </AuthProvider>
-        </BrowserRouter>
+                                        </Routes>
+                                    </Suspense>
+                                </ConsultasProvider>
+                            </CitasProvider>
+                        </ClientesProvider>
+                    </PacientesProvider>
+                </AuthProvider>
+            </BrowserRouter>
         </ClienteAuthProvider>
-    )
-};
+    );
+}
 
 export default App;

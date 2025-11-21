@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import Alerta from "./Alerta"
 import { Button } from "@/components/ui/button"
-import { Save } from "lucide-react"
+import { Save, PawPrint, User, FileText, Calendar, Heart, Palette, Weight, Activity, AlertCircle, Stethoscope } from "lucide-react"
 
 const FormularioPacienteForm = ({ 
     initialData = null, 
@@ -74,18 +74,19 @@ const FormularioPacienteForm = ({
     }
 
     return (
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border-2 border-slate-200 dark:border-gray-700 p-6">
             {alerta?.msg && <Alerta alerta={alerta} />}
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Información Básica */}
                 <div>
-                    <h2 className="text-lg font-semibold text-slate-900 mb-4">
+                    <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
                         Información Básica
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">
+                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                                <PawPrint className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                                 Nombre de la Mascota <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -93,21 +94,22 @@ const FormularioPacienteForm = ({
                                 name="nombre"
                                 value={formData.nombre}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                                 placeholder="Max, Luna, Rocky..."
                                 required
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">
+                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                                <User className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                                 Propietario <span className="text-red-500">*</span>
                             </label>
                             <select
                                 name="propietario"
                                 value={formData.propietario}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                                 required
                             >
                                 <option value="">Seleccionar Cliente</option>
@@ -120,14 +122,15 @@ const FormularioPacienteForm = ({
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">
+                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                                <PawPrint className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                                 Especie <span className="text-red-500">*</span>
                             </label>
                             <select
                                 name="especie"
                                 value={formData.especie}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                                 required
                             >
                                 <option value="Canino">Canino</option>
@@ -140,7 +143,8 @@ const FormularioPacienteForm = ({
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">
+                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                                <FileText className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                                 Raza
                             </label>
                             <input
@@ -148,13 +152,14 @@ const FormularioPacienteForm = ({
                                 name="raza"
                                 value={formData.raza}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                                 placeholder="Labrador, Siamés, etc."
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">
+                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                                <Calendar className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                                 Fecha de Nacimiento
                             </label>
                             <input
@@ -162,19 +167,20 @@ const FormularioPacienteForm = ({
                                 name="fechaNacimiento"
                                 value={formData.fechaNacimiento}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">
+                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                                <Heart className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                                 Sexo
                             </label>
                             <select
                                 name="sexo"
                                 value={formData.sexo}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                             >
                                 <option value="Macho">Macho</option>
                                 <option value="Hembra">Hembra</option>
@@ -182,7 +188,8 @@ const FormularioPacienteForm = ({
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">
+                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                                <Palette className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                                 Color
                             </label>
                             <input
@@ -190,13 +197,14 @@ const FormularioPacienteForm = ({
                                 name="color"
                                 value={formData.color}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                                 placeholder="Negro, Blanco, Atigrado..."
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">
+                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                                <Weight className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                                 Peso (kg)
                             </label>
                             <input
@@ -205,7 +213,7 @@ const FormularioPacienteForm = ({
                                 name="peso"
                                 value={formData.peso}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                                 placeholder="5.5"
                             />
                         </div>
@@ -214,12 +222,13 @@ const FormularioPacienteForm = ({
 
                 {/* Información Médica */}
                 <div>
-                    <h2 className="text-lg font-semibold text-slate-900 mb-4">
+                    <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
                         Información Médica
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">
+                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                                <Activity className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                                 Microchip
                             </label>
                             <input
@@ -227,7 +236,7 @@ const FormularioPacienteForm = ({
                                 name="microchip"
                                 value={formData.microchip}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                                 placeholder="Número de microchip"
                             />
                         </div>
@@ -238,15 +247,16 @@ const FormularioPacienteForm = ({
                                 name="esterilizado"
                                 checked={formData.esterilizado}
                                 onChange={handleChange}
-                                className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                             />
-                            <label className="ml-2 text-sm font-medium text-slate-700">
+                            <label className="ml-2 text-sm font-medium text-slate-700 dark:text-gray-300">
                                 Esterilizado/Castrado
                             </label>
                         </div>
 
                         <div className="md:col-span-2">
-                            <label className="block text-sm font-medium text-slate-700 mb-2">
+                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                                <AlertCircle className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                                 Alergias
                             </label>
                             <input
@@ -254,16 +264,17 @@ const FormularioPacienteForm = ({
                                 name="alergias"
                                 value={formData.alergias}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                                 placeholder="Separar con comas: pollo, trigo, penicilina..."
                             />
-                            <p className="text-xs text-muted-foreground mt-1">
+                            <p className="text-xs text-slate-500 dark:text-gray-400 mt-1">
                                 Separar múltiples alergias con comas
                             </p>
                         </div>
 
                         <div className="md:col-span-2">
-                            <label className="block text-sm font-medium text-slate-700 mb-2">
+                            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                                <Stethoscope className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                                 Condiciones Médicas
                             </label>
                             <input
@@ -271,10 +282,10 @@ const FormularioPacienteForm = ({
                                 name="condicionesMedicas"
                                 value={formData.condicionesMedicas}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:text-white"
                                 placeholder="Separar con comas: diabetes, cardiopatía..."
                             />
-                            <p className="text-xs text-muted-foreground mt-1">
+                            <p className="text-xs text-slate-500 dark:text-gray-400 mt-1">
                                 Separar múltiples condiciones con comas
                             </p>
                         </div>
@@ -282,21 +293,21 @@ const FormularioPacienteForm = ({
                 </div>
 
                 {/* Botones */}
-                <div className="flex items-center gap-4 pt-4 border-t">
-                    <Button
+                <div className="flex items-center gap-4 pt-4 border-t border-slate-200 dark:border-gray-700">
+                    <button
                         type="submit"
-                        className="gap-2"
+                        className="px-4 py-2 bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg transition-colors font-medium text-sm flex items-center gap-2"
                     >
                         <Save className="h-4 w-4" />
                         {isEditing ? 'Actualizar Paciente' : 'Guardar Paciente'}
-                    </Button>
-                    <Button
+                    </button>
+                    <button
                         type="button"
-                        variant="outline"
                         onClick={onCancel}
+                        className="px-4 py-2 border-2 border-slate-300 dark:border-gray-600 rounded-lg text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors font-medium text-sm"
                     >
                         Cancelar
-                    </Button>
+                    </button>
                 </div>
             </form>
         </div>

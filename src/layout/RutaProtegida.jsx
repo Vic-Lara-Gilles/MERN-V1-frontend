@@ -1,5 +1,5 @@
 import { Outlet, Navigate } from "react-router-dom"
-import Header from "../components/Header"
+import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import useAuth from "../hooks/useAuth"
 
@@ -18,8 +18,7 @@ const RutaProtegida = () => {
     
     return (
         <>      
-            <Header />
-                
+            <Navbar />
                 {auth?._id ? (   
                     <main className="min-h-screen">
                         <div className="container mx-auto py-8 px-4">

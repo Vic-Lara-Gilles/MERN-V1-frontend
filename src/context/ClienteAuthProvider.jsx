@@ -9,12 +9,12 @@ const ClienteAuthProvider = ({ children }) => {
 
   useEffect(() => {
     const autenticarCliente = async () => {
-      console.log('🔄 ClienteAuthProvider - Iniciando autenticación');
+      console.log('ClienteAuthProvider - Iniciando autenticación');
       const token = localStorage.getItem('token_cliente');
-      console.log('🔑 Token encontrado:', token ? 'Sí' : 'No');
+      console.log('Token encontrado:', token ? 'Sí' : 'No');
       
       if (!token) {
-        console.log('⚠️ No hay token, saltando autenticación');
+        console.log('No hay token, saltando autenticación');
         setCargando(false);
         return;
       }
@@ -27,18 +27,18 @@ const ClienteAuthProvider = ({ children }) => {
       };
 
       try {
-        console.log('📡 Obteniendo perfil del cliente');
+        console.log('Obteniendo perfil del cliente');
         const { data } = await clienteAxios('/clientes/portal/perfil', config);
-        console.log('✅ Perfil obtenido:', data);
+        console.log('Perfil obtenido:', data);
         setCliente(data);
       } catch (error) {
-        console.error('❌ Error al obtener perfil:', error);
-        console.error('❌ Error response:', error.response?.data);
+        console.error('Error al obtener perfil:', error);
+        console.error('Error response:', error.response?.data);
         setCliente({});
       }
 
       setCargando(false);
-      console.log('✅ Autenticación completada');
+      console.log('Autenticación completada');
     };
     autenticarCliente();
   }, []);

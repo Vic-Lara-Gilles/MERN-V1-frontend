@@ -123,23 +123,23 @@ const FormularioCitaForm = ({
     <div className="max-w-4xl mx-auto">
       {alerta?.msg && <Alerta alerta={alerta} />}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 space-y-6">
+      <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border-2 border-slate-200 dark:border-gray-700 p-6 space-y-6">
         {/* Sección 1: Cliente */}
         <div>
-          <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-            <User className="h-5 w-5 text-gray-900 mr-2" />
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center">
+            <User className="h-5 w-5 text-purple-600 dark:text-purple-400 mr-2" />
             Seleccionar Cliente
           </h2>
           <div className="grid grid-cols-1 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
                 Cliente <span className="text-red-500">*</span>
               </label>
               <select
                 name="cliente"
                 value={formData.cliente}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
                 required
               >
                 <option value="">Seleccionar cliente</option>
@@ -153,22 +153,22 @@ const FormularioCitaForm = ({
 
             {/* Info del cliente seleccionado */}
             {clienteSeleccionado && (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                <h3 className="font-semibold text-green-900 mb-2">Información del Cliente</h3>
+              <div className="bg-green-50 dark:bg-green-900/20 border-2 border-green-200 dark:border-green-800 rounded-lg p-4">
+                <h3 className="font-semibold text-green-900 dark:text-green-300 mb-2">Información del Cliente</h3>
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   <div>
-                    <span className="text-green-700">Nombre:</span>
-                    <span className="ml-2 text-green-900 font-medium">
+                    <span className="text-green-700 dark:text-green-400">Nombre:</span>
+                    <span className="ml-2 text-green-900 dark:text-green-200 font-medium">
                       {clienteSeleccionado.nombre} {clienteSeleccionado.apellido}
                     </span>
                   </div>
                   <div>
-                    <span className="text-green-700">Teléfono:</span>
-                    <span className="ml-2 text-green-900 font-medium">{clienteSeleccionado.telefono}</span>
+                    <span className="text-green-700 dark:text-green-400">Teléfono:</span>
+                    <span className="ml-2 text-green-900 dark:text-green-200 font-medium">{clienteSeleccionado.telefono}</span>
                   </div>
                   <div className="col-span-2">
-                    <span className="text-green-700">Email:</span>
-                    <span className="ml-2 text-green-900 font-medium">{clienteSeleccionado.email}</span>
+                    <span className="text-green-700 dark:text-green-400">Email:</span>
+                    <span className="ml-2 text-green-900 dark:text-green-200 font-medium">{clienteSeleccionado.email}</span>
                   </div>
                 </div>
               </div>
@@ -179,13 +179,13 @@ const FormularioCitaForm = ({
         {/* Sección 2: Mascota del Cliente */}
         {formData.cliente && (
           <div>
-            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-              <PawPrint className="h-5 w-5 text-gray-900 mr-2" />
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center">
+              <PawPrint className="h-5 w-5 text-purple-600 dark:text-purple-400 mr-2" />
               Seleccionar Mascota
             </h2>
             <div className="grid grid-cols-1 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
                   Mascota <span className="text-red-500">*</span>
                 </label>
                 {mascotasDelCliente.length > 0 ? (
@@ -193,7 +193,7 @@ const FormularioCitaForm = ({
                     name="paciente"
                     value={formData.paciente}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
                     required
                   >
                     <option value="">Seleccionar mascota</option>
@@ -204,10 +204,10 @@ const FormularioCitaForm = ({
                     ))}
                   </select>
                 ) : (
-                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                  <div className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                     <div className="flex items-center gap-2">
-                      <AlertCircle className="h-5 w-5 text-yellow-600" />
-                      <p className="text-sm text-yellow-800">
+                      <AlertCircle className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+                      <p className="text-sm text-yellow-800 dark:text-yellow-300">
                         Este cliente no tiene mascotas registradas. Por favor, registra una mascota primero.
                       </p>
                     </div>
@@ -217,24 +217,24 @@ const FormularioCitaForm = ({
 
               {/* Info del paciente seleccionado */}
               {pacienteSeleccionado && (
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <h3 className="font-semibold text-blue-900 mb-2">Información de la Mascota</h3>
+                <div className="bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                  <h3 className="font-semibold text-blue-900 dark:text-blue-300 mb-2">Información de la Mascota</h3>
                   <div className="grid grid-cols-2 gap-2 text-sm">
                     <div>
-                      <span className="text-gray-900">Nombre:</span>
-                      <span className="ml-2 text-blue-900 font-medium">{pacienteSeleccionado.nombre}</span>
+                      <span className="text-slate-700 dark:text-slate-300">Nombre:</span>
+                      <span className="ml-2 text-blue-900 dark:text-blue-200 font-medium">{pacienteSeleccionado.nombre}</span>
                     </div>
                     <div>
-                      <span className="text-gray-900">Especie:</span>
-                      <span className="ml-2 text-blue-900 font-medium">{pacienteSeleccionado.especie}</span>
+                      <span className="text-slate-700 dark:text-slate-300">Especie:</span>
+                      <span className="ml-2 text-blue-900 dark:text-blue-200 font-medium">{pacienteSeleccionado.especie}</span>
                     </div>
                     <div>
-                      <span className="text-gray-900">Raza:</span>
-                      <span className="ml-2 text-blue-900 font-medium">{pacienteSeleccionado.raza || 'N/A'}</span>
+                      <span className="text-slate-700 dark:text-slate-300">Raza:</span>
+                      <span className="ml-2 text-blue-900 dark:text-blue-200 font-medium">{pacienteSeleccionado.raza || 'N/A'}</span>
                     </div>
                     <div>
-                      <span className="text-gray-900">Sexo:</span>
-                      <span className="ml-2 text-blue-900 font-medium">{pacienteSeleccionado.sexo || 'N/A'}</span>
+                      <span className="text-slate-700 dark:text-slate-300">Sexo:</span>
+                      <span className="ml-2 text-blue-900 dark:text-blue-200 font-medium">{pacienteSeleccionado.sexo || 'N/A'}</span>
                     </div>
                   </div>
                 </div>
@@ -245,19 +245,19 @@ const FormularioCitaForm = ({
 
         {/* Sección 3: Veterinario */}
         <div>
-          <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-            <User className="h-5 w-5 text-gray-900 mr-2" />
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center">
+            <User className="h-5 w-5 text-purple-600 dark:text-purple-400 mr-2" />
             Veterinario Asignado
           </h2>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
               Veterinario <span className="text-red-500">*</span>
             </label>
             <select
               name="veterinario"
               value={formData.veterinario}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
               required
             >
               <option value="">Seleccionar veterinario</option>
@@ -273,13 +273,14 @@ const FormularioCitaForm = ({
 
         {/* Sección 4: Fecha y Hora */}
         <div>
-          <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-            <Calendar className="h-5 w-5 text-gray-900 mr-2" />
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center">
+            <Calendar className="h-5 w-5 text-purple-600 dark:text-purple-400 mr-2" />
             Fecha y Hora
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                <Calendar className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                 Fecha <span className="text-red-500">*</span>
               </label>
               <input
@@ -288,12 +289,13 @@ const FormularioCitaForm = ({
                 value={formData.fecha}
                 onChange={handleChange}
                 min={new Date().toISOString().split('T')[0]}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                <Clock className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                 Hora <span className="text-red-500">*</span>
               </label>
               <input
@@ -302,7 +304,7 @@ const FormularioCitaForm = ({
                 value={formData.hora}
                 onChange={handleChange}
                 step="300"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
                 required
               />
             </div>
@@ -311,20 +313,21 @@ const FormularioCitaForm = ({
 
         {/* Sección 5: Detalles de la Cita */}
         <div>
-          <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-            <FileText className="h-5 w-5 text-gray-900 mr-2" />
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center">
+            <FileText className="h-5 w-5 text-purple-600 dark:text-purple-400 mr-2" />
             Detalles de la Cita
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                <FileText className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                 Tipo de Cita <span className="text-red-500">*</span>
               </label>
               <select
                 name="tipo"
                 value={formData.tipo}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
                 required
               >
                 <option value="Consulta">Consulta General</option>
@@ -336,14 +339,15 @@ const FormularioCitaForm = ({
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                <AlertCircle className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                 Estado <span className="text-red-500">*</span>
               </label>
               <select
                 name="estado"
                 value={formData.estado}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
                 required
               >
                 <option value="Pendiente">Pendiente</option>
@@ -355,7 +359,8 @@ const FormularioCitaForm = ({
               </select>
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                <FileText className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                 Motivo de la Cita <span className="text-red-500">*</span>
               </label>
               <textarea
@@ -363,13 +368,14 @@ const FormularioCitaForm = ({
                 value={formData.motivo}
                 onChange={handleChange}
                 rows="3"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
                 placeholder="Describe el motivo de la cita..."
                 required
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-300 mb-2">
+                <FileText className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                 Observaciones
               </label>
               <textarea
@@ -377,7 +383,7 @@ const FormularioCitaForm = ({
                 value={formData.observaciones}
                 onChange={handleChange}
                 rows="3"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-3 border-2 border-slate-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-900 dark:text-white"
                 placeholder="Notas adicionales sobre la cita..."
               />
             </div>
@@ -385,17 +391,17 @@ const FormularioCitaForm = ({
         </div>
 
         {/* Botones */}
-        <div className="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
+        <div className="flex items-center justify-end space-x-4 pt-6 border-t border-slate-200 dark:border-gray-700">
           <button
             type="button"
             onClick={onCancel}
-            className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+            className="px-4 py-2 border-2 border-slate-300 dark:border-gray-600 rounded-lg text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors font-medium text-sm"
           >
             Cancelar
           </button>
           <button
             type="submit"
-            className="px-6 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
+            className="px-4 py-2 bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white rounded-lg transition-colors font-medium text-sm"
           >
             {isEditing ? 'Actualizar Cita' : 'Agendar Cita'}
           </button>

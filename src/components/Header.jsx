@@ -1,199 +1,112 @@
-import { Link, useLocation } from "react-router-dom"
-import useAuth from "../hooks/useAuth"
-import ThemeToggle from "./ThemeToggle"
-import { Button } from "@/components/ui/button"
+import { useLocation } from 'react-router-dom';
 import { 
-    LogOut, 
-    Users, 
-    KeyRound, 
-    UserCog, 
-    LayoutDashboard,
-    UserCheck,
-    PawPrint,
-    Calendar,
-    FileText,
-    BarChart3,
-    Settings
-} from "lucide-react"
+  ShieldCheck, 
+  Stethoscope, 
+  UserCheck, 
+  PawPrint,
+  Sparkles
+} from 'lucide-react';
+import useAuth from '../hooks/useAuth';
+import useClienteAuth from '../hooks/useClienteAuth';
 
 const Header = () => {
+  const location = useLocation();
+  const isPortal = location.pathname.startsWith('/portal');
+  
+  const { auth, esAdmin, esVeterinario, esRecepcion } = useAuth();
+  const { cliente } = useClienteAuth();
 
-    const { cerrarSesion, auth, esAdmin, esVeterinario, esRecepcion } = useAuth()
-    const location = useLocation()
+  // Determinar el usuario actual y su rol
+  const usuario = isPortal ? cliente : auth;
+  
+  // Determinar el ícono según el rol
+  const getIcono = () => {
+    if (isPortal) {
+      return <PawPrint className="h-8 w-8" />;
+    }
+    if (esAdmin()) {
+      return <ShieldCheck className="h-8 w-8" />;
+    }
+    if (esVeterinario()) {
+      return <Stethoscope className="h-8 w-8" />;
+    }
+    if (esRecepcion()) {
+      return <UserCheck className="h-8 w-8" />;
+    }
+    return <Sparkles className="h-8 w-8" />;
+  };
 
-    const isActive = (path) => location.pathname === path
+  // Determinar el título según el rol
+  const getTitulo = () => {
+    if (isPortal) {
+      return 'Portal del Cliente';
+    }
+    if (esAdmin()) {
+      return 'Panel de Administración';
+    }
+    if (esVeterinario()) {
+      return 'Panel Veterinario';
+    }
+    if (esRecepcion()) {
+      return 'Panel de Recepción';
+    }
+    return 'Panel de Control';
+  };
 
-    return (
-        
-        <header className="border-b border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
-            <div className="container mx-auto px-6 py-4">
-                <div className="flex flex-col lg:flex-row justify-between items-center gap-4 relative">
-                    {/* Theme Toggle - Esquina superior derecha */}
-                    <div className="absolute top-0 right-0 lg:top-auto lg:right-0">
-                        <ThemeToggle />
-                    </div>
-                    
-                    <div className="flex items-center gap-3">
-                        <div className="h-12 w-12 rounded-xl bg-linear-to-br from-slate-900 to-slate-700 dark:from-lime-600 dark:to-lime-500 flex items-center justify-center shadow-lg">
-                            <PawPrint className="h-7 w-7 text-white" />
-                        </div>
-                        <div>
-                            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-                                Veterinaria
-                            </h1>
-                            <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">
-                                {esAdmin() && "Panel de Administración"}
-                                {esVeterinario() && "Panel Veterinario"}
-                                {esRecepcion() && "Panel de Recepción"}
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <div className="flex flex-col items-center gap-3 lg:mr-12">
-                        <nav className="flex flex-wrap justify-center items-center gap-2">
-                            {/* Sección Principal */}
-                            <div className="flex items-center gap-2">
-                                {/* Dashboard */}
-                                <Button 
-                                    variant={isActive("/admin") ? "default" : "ghost"}
-                                    size="sm"
-                                    asChild
-                                    className={isActive("/admin") ? "bg-slate-900 hover:bg-slate-800 dark:bg-lime-600 dark:hover:bg-lime-700" : "hover:bg-slate-100 dark:hover:bg-gray-700 dark:text-slate-200"}
-                                >
-                                    <Link to="/admin" className="gap-2">
-                                        <LayoutDashboard className="h-4 w-4" />
-                                        Dashboard
-                                    </Link>
-                                </Button>
+  // Determinar el subtítulo según el rol
+  const getSubtitulo = () => {
+    if (isPortal) {
+      return 'Gestiona la información de tus mascotas y consulta su historial médico';
+    }
+    if (esAdmin()) {
+      return 'Panel de control completo de tu clínica veterinaria';
+    }
+    if (esVeterinario()) {
+      return 'Gestiona tus consultas, pacientes y agenda médica';
+    }
+    if (esRecepcion()) {
+      return 'Administra citas, clientes y recepción de la clínica';
+    }
+    return 'Panel de control de tu clínica veterinaria';
+  };
 
-                                {/* Usuarios - Solo Admin */}
-                                {esAdmin() && (
-                                    <Button 
-                                        variant={isActive("/admin/usuarios") ? "default" : "ghost"}
-                                        size="sm"
-                                        asChild
-                                        className={isActive("/admin/usuarios") ? "bg-slate-900 hover:bg-slate-800 dark:bg-lime-600 dark:hover:bg-lime-700" : "hover:bg-slate-100 dark:hover:bg-gray-700 dark:text-slate-200"}
-                                    >
-                                        <Link to="/admin/usuarios" className="gap-2">
-                                            <Users className="h-4 w-4" />
-                                            Usuarios
-                                        </Link>
-                                    </Button>
-                                )}
+  // Determinar color de gradiente según el rol
+  const getGradientClass = () => {
+    if (isPortal) {
+      return 'from-lime-600 to-lime-500';
+    }
+    return 'from-slate-900 to-slate-700 dark:from-lime-600 dark:to-lime-500';
+  };
 
-                                {/* Clientes - Admin y Recepción */}
-                                {(esAdmin() || esRecepcion()) && (
-                                    <Button 
-                                        variant={isActive("/admin/clientes") ? "default" : "ghost"}
-                                        size="sm"
-                                        asChild
-                                        className={isActive("/admin/clientes") ? "bg-slate-900 hover:bg-slate-800 dark:bg-lime-600 dark:hover:bg-lime-700" : "hover:bg-slate-100 dark:hover:bg-gray-700 dark:text-slate-200"}
-                                    >
-                                        <Link to="/admin/clientes" className="gap-2">
-                                            <UserCheck className="h-4 w-4" />
-                                            Clientes
-                                        </Link>
-                                    </Button>
-                                )}
+  return (
+    <div className="mb-8 bg-linear-to-r from-slate-50 to-slate-100 dark:from-gray-900 dark:to-gray-800 rounded-xl p-6 border border-slate-200 dark:border-gray-700 shadow-sm">
+      <div className="flex items-start gap-4">
+        {/* Ícono del rol */}
+        <div className={`h-16 w-16 rounded-xl bg-linear-to-br ${getGradientClass()} flex items-center justify-center shadow-lg shrink-0`}>
+          <div className="text-white">
+            {getIcono()}
+          </div>
+        </div>
 
-                                {/* Pacientes */}
-                                <Button 
-                                    variant={isActive("/admin/pacientes") ? "default" : "ghost"}
-                                    size="sm"
-                                    asChild
-                                    className={isActive("/admin/pacientes") ? "bg-slate-900 hover:bg-slate-800 dark:bg-lime-600 dark:hover:bg-lime-700" : "hover:bg-slate-100 dark:hover:bg-gray-700 dark:text-slate-200"}
-                                >
-                                    <Link to="/admin/pacientes" className="gap-2">
-                                        <PawPrint className="h-4 w-4" />
-                                        Pacientes
-                                    </Link>
-                                </Button>
+        {/* Contenido */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-1">
+            <h1 className="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white">
+              ¡Bienvenido, {usuario?.nombre}!
+            </h1>
+          </div>
+          
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-2">
+            {getTitulo()}
+          </p>
 
-                                {/* Citas */}
-                                <Button 
-                                    variant={isActive("/admin/citas") ? "default" : "ghost"}
-                                    size="sm"
-                                    asChild
-                                    className={isActive("/admin/citas") ? "bg-slate-900 hover:bg-slate-800 dark:bg-lime-600 dark:hover:bg-lime-700" : "hover:bg-slate-100 dark:hover:bg-gray-700 dark:text-slate-200"}
-                                >
-                                    <Link to="/admin/citas" className="gap-2">
-                                        <Calendar className="h-4 w-4" />
-                                        Citas
-                                    </Link>
-                                </Button>
-                            </div>
+          <p className="text-slate-600 dark:text-slate-300 text-base leading-relaxed">
+            {getSubtitulo()}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-                            {/* Separador - Solo si hay secciones profesionales */}
-                            {(esAdmin() || esVeterinario()) && (
-                                <div className="h-8 w-px bg-slate-200 dark:bg-gray-700 hidden lg:block" />
-                            )}
-
-                            {/* Sección Profesional - Admin y Veterinarios */}
-                            {(esAdmin() || esVeterinario()) && (
-                                <div className="flex items-center gap-2">
-                                    {/* Consultas */}
-                                    <Button 
-                                        variant={isActive("/admin/consultas") ? "default" : "ghost"}
-                                        size="sm"
-                                        asChild
-                                        className={isActive("/admin/consultas") ? "bg-slate-900 hover:bg-slate-800 dark:bg-lime-600 dark:hover:bg-lime-700" : "hover:bg-slate-100 dark:hover:bg-gray-700 dark:text-slate-200"}
-                                    >
-                                        <Link to="/admin/consultas" className="gap-2">
-                                            <FileText className="h-4 w-4" />
-                                            Consultas
-                                        </Link>
-                                    </Button>
-
-                                    {/* Reportes */}
-                                    <Button 
-                                        variant={isActive("/admin/reportes") ? "default" : "ghost"}
-                                        size="sm"
-                                        asChild
-                                        className={isActive("/admin/reportes") ? "bg-slate-900 hover:bg-slate-800 dark:bg-lime-600 dark:hover:bg-lime-700" : "hover:bg-slate-100 dark:hover:bg-gray-700 dark:text-slate-200"}
-                                    >
-                                        <Link to="/admin/reportes" className="gap-2">
-                                            <BarChart3 className="h-4 w-4" />
-                                            Reportes
-                                        </Link>
-                                    </Button>
-                                </div>
-                            )}
-
-                            {/* Separador */}
-                            <div className="h-8 w-px bg-slate-200 dark:bg-gray-700 hidden lg:block" />
-
-                            {/* Sección Usuario */}
-                            <div className="flex items-center gap-2">
-                                {/* Configuración */}
-                                <Button 
-                                    variant={isActive("/admin/configuracion") ? "default" : "ghost"}
-                                    size="sm"
-                                    asChild
-                                    className={isActive("/admin/configuracion") ? "bg-slate-900 hover:bg-slate-800 dark:bg-lime-600 dark:hover:bg-lime-700" : "hover:bg-slate-100 dark:hover:bg-gray-700 dark:text-slate-200"}
-                                >
-                                    <Link to="/admin/configuracion" className="gap-2">
-                                        <UserCog className="h-4 w-4" />
-                                        Configuración
-                                    </Link>
-                                </Button>
-                                
-                                {/* Salir */}
-                                <Button
-                                    variant="destructive"
-                                    size="sm"
-                                    onClick={cerrarSesion}
-                                    className="gap-2"
-                                >
-                                    <LogOut className="h-4 w-4" />
-                                    Salir
-                                </Button>
-                            </div>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </header>
-    )
-}
-
-export default Header
+export default Header;
