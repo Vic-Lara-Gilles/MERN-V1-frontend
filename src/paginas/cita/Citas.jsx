@@ -91,7 +91,7 @@ const Citas = () => {
     }
 
     return (
-        <div>
+        <div className="space-y-6">
             {alerta.msg && <Alerta alerta={alerta} />}
 
             <Header

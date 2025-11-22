@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Calendar, TrendingUp, Users, PawPrint, FileText, Download, Filter } from 'lucide-react';
+import { Calendar, TrendingUp, Users, PawPrint, FileText, Download, Filter, CheckCircle, Clock, UserCheck, Mail } from 'lucide-react';
 import useConsultas from '../../hooks/useConsultas';
 import usePacientes from '../../hooks/usePacientes';
 import useClientes from '../../hooks/useClientes';
 import useAuth from '../../hooks/useAuth';
 import Header from '@/components/Header';
 import StatsCard from '@/components/StatsCard';
+import clienteAxios from '../../config/axios';
 
 const Reportes = () => {
     const { consultas, obtenerConsultas } = useConsultas();
@@ -16,11 +17,13 @@ const Reportes = () => {
     const [fechaInicio, setFechaInicio] = useState('');
     const [fechaFin, setFechaFin] = useState('');
     const [filtroVeterinario, setFiltroVeterinario] = useState('');
+    const [aprobaciones, setAprobaciones] = useState([]);
 
     useEffect(() => {
         obtenerConsultas();
         obtenerPacientes();
         obtenerClientes();
+        obtenerAprobaciones();
 
         // Establecer fecha de inicio: hace 30 días
         const hoy = new Date();
@@ -29,6 +32,50 @@ const Reportes = () => {
         setFechaInicio(hace30Dias.toISOString().split('T')[0]);
         setFechaFin(hoy.toISOString().split('T')[0]);
     }, []);
+
+    const obtenerAprobaciones = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+
+            // Obtener usuarios y clientes confirmados
+            const [usuariosRes, clientesRes] = await Promise.all([
+                clienteAxios('/usuarios', config),
+                clienteAxios('/clientes', config),
+            ]);
+
+            // Filtrar solo los confirmados y combinarlos
+            const usuariosConfirmados = usuariosRes.data
+                .filter(u => u.confirmado)
+                .map(u => ({
+                    ...u,
+                    tipo: 'usuario',
+                    fechaConfirmacion: u.updatedAt || u.createdAt,
+                }));
+
+            const clientesConfirmados = clientesRes.data
+                .filter(c => c.emailVerificado)
+                .map(c => ({
+                    ...c,
+                    tipo: 'cliente',
+                    fechaConfirmacion: c.updatedAt || c.createdAt,
+                }));
+
+            // Combinar y ordenar por fecha
+            const todasAprobaciones = [...usuariosConfirmados, ...clientesConfirmados]
+                .sort((a, b) => new Date(b.fechaConfirmacion) - new Date(a.fechaConfirmacion))
+                .slice(0, 50); // Últimas 50 aprobaciones
+
+            setAprobaciones(todasAprobaciones);
+        } catch (error) {
+            console.error('Error al obtener aprobaciones:', error);
+        }
+    };
 
     // Filtrar consultas por rango de fechas
     const consultasFiltradas = consultas.filter((consulta) => {
@@ -477,6 +524,119 @@ const Reportes = () => {
                         <p className="text-gray-500 dark:text-gray-400">Total de clientes:</p>
                         <p className="font-semibold text-slate-900 dark:text-white">{clientes.length}</p>
                     </div>
+                </div>
+            </div>
+
+            {/* Historial de Aprobaciones de Cuentas */}
+            <div className="space-y-4">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <CheckCircle className="w-6 h-6 text-slate-900 dark:text-lime-500" />
+                    Historial de Aprobaciones de Cuentas
+                </h2>
+                
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-transparent dark:border-gray-700 overflow-hidden">
+                    <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                            Últimas 50 confirmaciones de email de usuarios y clientes
+                        </p>
+                    </div>
+                    
+                    {aprobaciones.length > 0 ? (
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead className="bg-gray-50 dark:bg-gray-900">
+                                    <tr>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                            Estado
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                            Tipo
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                            Nombre
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                            Email
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                            Rol/Tipo
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                            Fecha de Confirmación
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                    {aprobaciones.map((item, index) => (
+                                        <tr key={`${item.tipo}-${item._id}-${index}`} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <CheckCircle className="h-5 w-5 text-green-500" />
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium ${
+                                                    item.tipo === 'usuario'
+                                                        ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400'
+                                                        : 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400'
+                                                }`}>
+                                                    {item.tipo === 'usuario' ? (
+                                                        <UserCheck className="h-3 w-3" />
+                                                    ) : (
+                                                        <Users className="h-3 w-3" />
+                                                    )}
+                                                    {item.tipo === 'usuario' ? 'Usuario' : 'Cliente'}
+                                                </span>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="text-sm font-medium text-gray-900 dark:text-white">
+                                                    {item.nombre} {item.apellido || ''}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                                                    <Mail className="h-4 w-4 text-gray-400" />
+                                                    {item.email}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                {item.tipo === 'usuario' ? (
+                                                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                                        item.rol === 'admin'
+                                                            ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400'
+                                                            : item.rol === 'veterinario'
+                                                            ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400'
+                                                            : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+                                                    }`}>
+                                                        {item.rol === 'admin' ? 'Admin' : item.rol === 'veterinario' ? 'Veterinario' : 'Recepción'}
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                                                        {item.rut || 'Cliente'}
+                                                    </span>
+                                                )}
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                                                    <Clock className="h-4 w-4 text-gray-400" />
+                                                    {new Date(item.fechaConfirmacion).toLocaleString('es-CL', {
+                                                        year: 'numeric',
+                                                        month: 'short',
+                                                        day: 'numeric',
+                                                        hour: '2-digit',
+                                                        minute: '2-digit'
+                                                    })}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : (
+                        <div className="p-12 text-center">
+                            <CheckCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                            <p className="text-gray-500 dark:text-gray-400">No hay aprobaciones registradas aún</p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

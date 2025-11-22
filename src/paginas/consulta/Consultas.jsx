@@ -81,7 +81,7 @@ const Consultas = () => {
     }
 
     return (
-        <div>
+        <div className="space-y-6">
             <Header
                 icon={<FileText className="h-8 w-8 text-slate-900 dark:text-lime-500" />}
                 title="Consultas Médicas"
