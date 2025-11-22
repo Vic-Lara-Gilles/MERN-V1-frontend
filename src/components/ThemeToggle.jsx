@@ -15,7 +15,7 @@ const ThemeToggle = () => {
     return (
         <button
             onClick={toggleTheme}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all shadow-sm"
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-md border border-gray-300/40 dark:border-gray-600/40 hover:bg-white dark:hover:bg-gray-700 transition-all shadow-2xl"
             title={nextLabel}
             aria-label={label}
         >

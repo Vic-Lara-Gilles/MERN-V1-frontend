@@ -20,6 +20,7 @@ const FormularioPacienteForm = ({
     isEditing = false,
     clientes = []
 }) => {
+    const [localAlerta, setLocalAlerta] = useState({})
     const [formData, setFormData] = useState({
         nombre: '',
         especie: 'Canino',
@@ -68,9 +69,32 @@ const FormularioPacienteForm = ({
         e.preventDefault()
 
         // Validaciones
-        if ([formData.nombre, formData.especie, formData.propietario].includes('')) {
+        if (!formData.nombre.trim()) {
+            setLocalAlerta({
+                msg: 'El nombre de la mascota es obligatorio',
+                error: true
+            })
             return
         }
+
+        if (!formData.especie) {
+            setLocalAlerta({
+                msg: 'La especie es obligatoria',
+                error: true
+            })
+            return
+        }
+
+        if (!formData.propietario) {
+            setLocalAlerta({
+                msg: 'Debes seleccionar un propietario',
+                error: true
+            })
+            return
+        }
+
+        // Limpiar alerta local
+        setLocalAlerta({})
 
         // Convertir strings separados por comas a arrays
         const datosEnviar = {
@@ -84,7 +108,7 @@ const FormularioPacienteForm = ({
 
     return (
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border-2 border-slate-200 dark:border-gray-700 p-6">
-            {alerta?.msg && <Alerta alerta={alerta} />}
+            {(alerta?.msg || localAlerta?.msg) && <Alerta alerta={alerta?.msg ? alerta : localAlerta} />}
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Información Básica */}

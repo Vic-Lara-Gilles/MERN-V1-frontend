@@ -13,19 +13,66 @@ import {
 } from '@/components/ui/select';
 
 const FormularioUsuarioForm = ({ onSubmit, initialData = {}, alerta }) => {
+  const [localAlerta, setLocalAlerta] = useState({})
   const [usuario, setUsuario] = useState({
     nombre: initialData.nombre || '',
     email: initialData.email || '',
-    password: initialData.password || '',
     telefono: initialData.telefono || '',
     rol: initialData.rol || 'veterinario',
     especialidad: initialData.especialidad || '',
     licenciaProfesional: initialData.licenciaProfesional || '',
-    confirmado: initialData.confirmado !== undefined ? initialData.confirmado : true,
+    confirmado: initialData.confirmado !== undefined ? initialData.confirmado : false,
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validaciones
+    if (!usuario.nombre.trim()) {
+      setLocalAlerta({
+        msg: 'El nombre es obligatorio',
+        error: true
+      })
+      return
+    }
+
+    if (!usuario.email.trim()) {
+      setLocalAlerta({
+        msg: 'El email es obligatorio',
+        error: true
+      })
+      return
+    }
+
+    // Validar formato de email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(usuario.email)) {
+      setLocalAlerta({
+        msg: 'El email no es válido',
+        error: true
+      })
+      return
+    }
+
+    if (!usuario.rol) {
+      setLocalAlerta({
+        msg: 'El rol es obligatorio',
+        error: true
+      })
+      return
+    }
+
+    if (usuario.rol === 'veterinario' && !usuario.especialidad.trim()) {
+      setLocalAlerta({
+        msg: 'La especialidad es obligatoria para veterinarios',
+        error: true
+      })
+      return
+    }
+
+    // Limpiar alerta local
+    setLocalAlerta({})
+
     onSubmit(usuario);
   };
 
@@ -34,7 +81,7 @@ const FormularioUsuarioForm = ({ onSubmit, initialData = {}, alerta }) => {
   return (
     <div className="max-w-4xl">
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border-2 border-slate-200 dark:border-gray-700 p-8">
-        {msg && <Alerta alerta={alerta} />}
+        {(msg || localAlerta?.msg) && <Alerta alerta={msg ? alerta : localAlerta} />}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Nombre */}
@@ -68,26 +115,6 @@ const FormularioUsuarioForm = ({ onSubmit, initialData = {}, alerta }) => {
               required
             />
           </div>
-
-          {/* Password - solo para nuevos usuarios */}
-          {!initialData._id && (
-            <div className="space-y-2">
-              <Label htmlFor="password" className="flex items-center gap-2">
-                <Shield className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-                Contraseña <span className="text-red-500">*</span>
-              </Label>
-              <Input
-                type="password"
-                id="password"
-                value={usuario.password}
-                onChange={(e) => setUsuario({ ...usuario, password: e.target.value })}
-                placeholder="Mínimo 6 caracteres"
-                minLength={6}
-                required
-              />
-              <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Mínimo 6 caracteres</p>
-            </div>
-          )}
 
           {/* Teléfono */}
           <div className="space-y-2">
@@ -182,11 +209,11 @@ const FormularioUsuarioForm = ({ onSubmit, initialData = {}, alerta }) => {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-600 dark:text-blue-400 font-bold mt-0.5">•</span>
-              <span>El usuario recibirá un email de confirmación</span>
+              <span>El usuario recibirá un email con un enlace para confirmar su cuenta</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-600 dark:text-blue-400 font-bold mt-0.5">•</span>
-              <span>La contraseña puede ser cambiada posteriormente por el usuario</span>
+              <span>Después de confirmar el email, el usuario deberá crear su propia contraseña</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-600 dark:text-blue-400 font-bold mt-0.5">•</span>

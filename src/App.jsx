@@ -13,11 +13,9 @@ const MiHistorial = lazy(() => import('./paginas/portal/MiHistorial'));
 const SolicitarCita = lazy(() => import('./paginas/portal/SolicitarCita'));
 
 // Página de selección
-const SeleccionAcceso = lazy(() => import('./paginas/auth/SeleccionAcceso'));
+const SeleccionAcceso = lazy(() => import('./paginas/auth/Login'));
 
 // Autenticación
-const Login = lazy(() => import('./paginas/auth/Login'));
-const Registrar = lazy(() => import('./paginas/auth/Registrar'));
 const OlvidePassword = lazy(() => import('./paginas/auth/OlvidePassword'));
 const ConfirmarCuenta = lazy(() => import('./paginas/auth/ConfirmarCuenta'));
 const NuevoPassword = lazy(() => import('./paginas/auth/NuevoPassword'));
@@ -65,28 +63,30 @@ import { ClientesProvider } from './context/ClientesProvider';
 import { CitasProvider } from './context/CitasProvider';
 import { ConsultasProvider } from './context/ConsultasProvider';
 import { ClienteAuthProvider } from './context/ClienteAuthProvider';
+import { NotificacionesProvider } from './context/NotificacionesProvider';
 import LoadingSpinner from './components/LoadingSpinner';
+import NotificacionesContainer from './components/NotificacionesContainer';
+import NotificationFloatingButton from './components/NotificationFloatingButton';
 
 function App() {
     return (
         <ClienteAuthProvider>
             <BrowserRouter>
                 <AuthProvider>
-                    <PacientesProvider>
-                        <ClientesProvider>
-                            <CitasProvider>
-                                <ConsultasProvider>
-                                    <Suspense fallback={<LoadingSpinner />}>
+                    <NotificacionesProvider>
+                        <PacientesProvider>
+                            <ClientesProvider>
+                                <CitasProvider>
+                                    <ConsultasProvider>
+                                        <NotificacionesContainer />
+                                        <NotificationFloatingButton />
+                                        <Suspense fallback={<LoadingSpinner />}>
                                         <Routes>
-                                            {/* Redirect root to auth */}
-                                            <Route path="/" element={<Navigate to="/auth" replace />} />
-                                            
-                                            {/* Rutas de Autenticación - Agrupadas bajo /auth */}
-                                            <Route path="/auth" element={<SeleccionAcceso />} />
-                                            <Route path="/auth/registro" element={<Registrar />} />
-                                            <Route path="/auth/olvide-password" element={<OlvidePassword />} />
-                                            <Route path="/auth/restablecer-password/:token" element={<NuevoPassword />} />
-                                            <Route path="/auth/confirmar/:token" element={<ConfirmarCuenta />} />
+                                            {/* Rutas de Autenticación */}
+                                            <Route path="/" element={<SeleccionAcceso />} />
+                                            <Route path="/olvide-password" element={<OlvidePassword />} />
+                                            <Route path="/restablecer-password/:token" element={<NuevoPassword />} />
+                                            <Route path="/confirmar/:token" element={<ConfirmarCuenta />} />
 
                                             {/* Rutas Cliente */}
                                             <Route path="/portal" element={<PortalLayout />}>
@@ -211,10 +211,11 @@ function App() {
                             </CitasProvider>
                         </ClientesProvider>
                     </PacientesProvider>
-                </AuthProvider>
-            </BrowserRouter>
-        </ClienteAuthProvider>
-    );
+                </NotificacionesProvider>
+            </AuthProvider>
+        </BrowserRouter>
+    </ClienteAuthProvider>
+);
 }
 
 export default App;

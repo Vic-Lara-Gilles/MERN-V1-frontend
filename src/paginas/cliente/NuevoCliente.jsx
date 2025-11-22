@@ -9,20 +9,12 @@ const NuevoCliente = () => {
     const { guardarCliente, alerta } = useClientes()
 
     const handleSubmit = async (datos) => {
-        // Validaciones
-        if ([datos.nombre, datos.apellido, datos.rut, datos.email, datos.telefono].includes('')) {
-            return
-        }
-
-        // Marcar email como verificado cuando se crea desde el panel admin
-        const datosConVerificacion = {
-            ...datos,
-            emailVerificado: true
-        }
-
-        const resultado = await guardarCliente(datosConVerificacion)
+        // El formulario ya tiene validación HTML5 (required)
+        // pero agregamos validación adicional por seguridad
+        const resultado = await guardarCliente(datos)
         
         if (resultado) {
+            // Navegar de vuelta a la lista después de crear exitosamente
             navigate('/admin/clientes')
         }
     }

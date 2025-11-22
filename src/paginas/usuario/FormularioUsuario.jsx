@@ -11,17 +11,9 @@ const FormularioUsuario = () => {
 
   const handleSubmit = async (usuario) => {
     // Validaciones
-    if ([usuario.nombre, usuario.email, usuario.password, usuario.rol].includes('')) {
+    if ([usuario.nombre, usuario.email, usuario.rol].includes('')) {
       setAlerta({
-        msg: 'Nombre, Email, Password y Rol son obligatorios',
-        error: true,
-      });
-      return;
-    }
-
-    if (usuario.password.length < 6) {
-      setAlerta({
-        msg: 'El password debe tener al menos 6 caracteres',
+        msg: 'Nombre, Email y Rol son obligatorios',
         error: true,
       });
       return;
@@ -47,13 +39,14 @@ const FormularioUsuario = () => {
       await clienteAxios.post('/usuarios', usuario, config);
 
       setAlerta({
-        msg: 'Usuario creado correctamente',
+        msg: 'Usuario creado correctamente. Redirigiendo...',
         error: false,
       });
 
+      // Redirigir inmediatamente a la lista de usuarios
       setTimeout(() => {
         navigate('/admin/usuarios');
-      }, 2000);
+      }, 1500);
     } catch (error) {
       setAlerta({
         msg: error.response?.data?.msg || 'Error al crear usuario',

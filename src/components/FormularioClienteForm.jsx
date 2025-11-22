@@ -25,6 +25,7 @@ const FormularioClienteForm = ({
     alerta,
     isEditing = false 
 }) => {
+    const [localAlerta, setLocalAlerta] = useState({})
     const [formData, setFormData] = useState({
         nombre: initialData.nombre || '',
         apellido: initialData.apellido || '',
@@ -89,6 +90,60 @@ const FormularioClienteForm = ({
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        // Validaciones
+        if (!formData.nombre.trim()) {
+            setLocalAlerta({
+                msg: 'El nombre es obligatorio',
+                error: true
+            })
+            return
+        }
+
+        if (!formData.apellido.trim()) {
+            setLocalAlerta({
+                msg: 'El apellido es obligatorio',
+                error: true
+            })
+            return
+        }
+
+        if (!formData.rut.trim()) {
+            setLocalAlerta({
+                msg: 'El RUT es obligatorio',
+                error: true
+            })
+            return
+        }
+
+        if (!formData.email.trim()) {
+            setLocalAlerta({
+                msg: 'El email es obligatorio',
+                error: true
+            })
+            return
+        }
+
+        // Validar formato de email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(formData.email)) {
+            setLocalAlerta({
+                msg: 'El email no es válido',
+                error: true
+            })
+            return
+        }
+
+        if (!formData.telefono.trim()) {
+            setLocalAlerta({
+                msg: 'El teléfono es obligatorio',
+                error: true
+            })
+            return
+        }
+
+        // Limpiar alerta local
+        setLocalAlerta({})
+
         // Preparar datos para enviar
         const datosCompletos = {
             ...formData,
@@ -106,7 +161,7 @@ const FormularioClienteForm = ({
 
     return (
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border-2 border-slate-200 dark:border-gray-700 p-6">
-            {alerta?.msg && <Alerta alerta={alerta} />}
+            {(alerta?.msg || localAlerta?.msg) && <Alerta alerta={alerta?.msg ? alerta : localAlerta} />}
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Información Personal */}
